@@ -3,10 +3,10 @@
 /* ===== 可自行修改的設定 ===== */
 const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
 const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
-const GOOGLE_FORM_URL = "https://forms.gle/56Sig9MX1sSV5yY8A";         // RSVP Google Form 連結（viewform）
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSevk9-oICKqWG-lS0ljfWUIlROAPz-B_nDWbd0kDayKmC3ZQA/viewform";         // RSVP 表單完整網址：https://docs.google.com/forms/d/e/.../viewform（不能用 forms.gle 短網址）
 const PHOTO_UPLOAD_FORM_URL = "";   // 照片上傳 Google Form 連結
-// 選填：Google Form 預填欄位 ID（格式 "entry.123456789"），留空則不預填
-const FORM_ENTRY = { name: "", phone: "", email: "", attend: "", guests: "", diet: "", note: "" };
+// RSVP 欄位 ID（格式 "entry.123456789"），name、phone、attend 必填
+const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
 
 const WEDDING = {
   title: "Jimmy & Shenny 婚禮",
@@ -102,20 +102,29 @@ $("#btn-ical").addEventListener("click", () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 
-/* ===== RSVP ===== */
-$("#rsvp-form").addEventListener("submit", (e) => {
+/* ===== RSVP（直接送進 Google 表單，不跳頁） ===== */
+$("#rsvp-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = e.target;
-  if (!f.name.value.trim() || !f.phone.value.trim()) return toast("請填寫姓名與聯絡電話");
+  if (!f.elements.name.value.trim() || !f.elements.phone.value.trim()) return toast("請填寫姓名與聯絡電話");
   if (!GOOGLE_FORM_URL) return toast("RSVP 表單尚未設定，請在 script.js 填入 GOOGLE_FORM_URL");
-  const p = new URLSearchParams();
+  if (!FORM_ENTRY.name || !FORM_ENTRY.phone || !FORM_ENTRY.attend) return toast("RSVP 欄位 ID 尚未設定，請填入 FORM_ENTRY");
+  const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
+  const body = new URLSearchParams();
   Object.keys(FORM_ENTRY).forEach((k) => {
-    if (!FORM_ENTRY[k]) return;
-    const v = k === "attend" ? f.attend.value : f[k].value;
-    p.set(FORM_ENTRY[k], v);
+    const el = f.elements[k];
+    if (FORM_ENTRY[k] && el) body.append(FORM_ENTRY[k], el.value);
   });
-  const url = GOOGLE_FORM_URL + (p.toString() ? (GOOGLE_FORM_URL.includes("?") ? "&" : "?") + p : "");
-  window.location.href = url;
+  const btn = f.querySelector("button[type=submit]");
+  btn.disabled = true;
+  try {
+    await fetch(action, { method: "POST", mode: "no-cors", body });
+    toast("已送出，謝謝你的回覆！");
+    f.reset();
+  } catch (err) {
+    toast("送出失敗，請檢查網路後再試一次");
+  }
+  btn.disabled = false;
 });
 
 /* ===== 賓客照片上傳 ===== */
