@@ -187,3 +187,10 @@ footer p{margin:0}
 .st-b{bottom:1.5rem;left:3%;transform:rotate(-8deg)}
 .st-c{bottom:3.2rem;right:2%;transform:rotate(6deg)}
 @media(min-width:700px){.info-wrap{grid-template-columns:1.1fr 1fr}.hero-title{font-size:6rem}}
+
+/* 修正：首頁文字顏色與撕紙條 */
+.hero .hero-title{color:#fbf3c9}
+.hero .hero-title small{color:#fbf3c9}
+.hero .hero-date{color:#f3e7a8}
+.hero .hero-names{color:#fbf3c9}
+.strip{height:44px;margin:-1rem -4% -1rem}
