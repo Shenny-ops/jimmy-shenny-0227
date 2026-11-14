@@ -194,3 +194,18 @@ footer p{margin:0}
 .hero .hero-date{color:#f3e7a8}
 .hero .hero-names{color:#fbf3c9}
 .strip{height:44px;margin:-1rem -4% -1rem}
+
+/* 修正：手機版首頁文字對比（照片偏亮時也看得清楚） */
+.hero .hero-bg{background:linear-gradient(rgba(25,22,8,.6),rgba(25,22,8,.35) 50%,rgba(25,22,8,.7)),url("../assets/images/hero.jpg") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
+.hero .hero-top,.hero .hero-bottom{color:#fffbe6;text-shadow:0 2px 14px rgba(0,0,0,.8),0 0 4px rgba(0,0,0,.6)}
+.hero .hero-title,.hero .hero-title small,.hero .hero-names{color:#fffbe6}
+.hero .hero-date{color:#f6e7a6}
+.hero-top{z-index:2}.hero-bottom,.hero-band{z-index:2}
+
+/* 修正：信封三角形縮短、首頁文字間距 */
+.env-flap{clip-path:polygon(0 0,100% 0,50% 45%)}
+.env-front{clip-path:polygon(0 100%,0 0,50% 41%,100% 0,100% 100%)}
+.env-seal{top:45%}
+.env-label{z-index:5}
+.hero .hero-title{line-height:1.25}
+.hero .hero-title small{margin:1.2rem 0}
