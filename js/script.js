@@ -1,7 +1,7 @@
 "use strict";
 
 /* ===== 可自行修改的設定 ===== */
-const GOOGLE_MAP_URL = "";          // 留空會自動用地址搜尋
+const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
 const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
 const GOOGLE_FORM_URL = "";         // RSVP Google Form 連結（viewform）
 const PHOTO_UPLOAD_FORM_URL = "";   // 照片上傳 Google Form 連結
@@ -10,11 +10,11 @@ const FORM_ENTRY = { name: "", phone: "", email: "", attend: "", guests: "", die
 
 const WEDDING = {
   title: "Jimmy & Shenny 婚禮",
-  address: "新竹市東區中華路二段1號2樓",
-  start: "20270227T093000",
-  end: "20270227T120000",
+  address: "桃園市新屋區社子里社福路325號",
+  start: "20270227T143000",
+  end: "20270227T170000",
   tz: "Asia/Taipei",
-  target: new Date("2027-02-27T09:30:00+08:00")
+  target: new Date("2027-02-27T14:30:00+08:00")
 };
 
 const $ = (s) => document.querySelector(s);
@@ -78,7 +78,7 @@ $("#btn-google-cal").href =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   `&text=${encodeURIComponent(WEDDING.title)}` +
   `&dates=${WEDDING.start}/${WEDDING.end}&ctz=${WEDDING.tz}` +
-  `&location=${q}&details=${encodeURIComponent("證婚典禮 09:30 AM，09:00 AM 開放入場")}`;
+  `&location=${q}&details=${encodeURIComponent("婚禮演講 14:30，13:30 開放入場")}`;
 
 $("#btn-ical").addEventListener("click", () => {
   const ics = [
@@ -90,7 +90,7 @@ $("#btn-ical").addEventListener("click", () => {
     `DTEND;TZID=${WEDDING.tz}:${WEDDING.end}`,
     `SUMMARY:${WEDDING.title}`,
     `LOCATION:${WEDDING.address}`,
-    "DESCRIPTION:證婚典禮 09:30 AM，09:00 AM 開放入場",
+    "DESCRIPTION:婚禮演講 14:30，13:30 開放入場",
     "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:明天是 Jimmy & Shenny 的婚禮", "END:VALARM",
     "END:VEVENT", "END:VCALENDAR"
   ].join("\r\n");
