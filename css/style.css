@@ -133,3 +133,57 @@ footer p{margin:0}
   .section{padding:5rem 2rem}
 }
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* ===== Collage v2：更接近 Canva 手帳拼貼 ===== */
+.hero{display:block;padding:0}
+.hero-bg{background:linear-gradient(rgba(30,28,10,.45),rgba(30,28,10,.1) 45%,rgba(30,28,10,.6)),url("../assets/images/hero.jpg") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
+.hero-top{position:absolute;top:12%;left:0;right:0;text-align:center;color:#fbf3c9;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+.hero-title{margin:0;font:600 clamp(3.2rem,17vw,5.4rem)/1.05 var(--serif);letter-spacing:.2em;padding-left:.2em}
+.hero-title small{display:block;font-size:1.4rem;letter-spacing:.4em;margin:.3rem 0}
+.hero-bottom{position:absolute;left:0;right:0;bottom:5.5rem;text-align:center;color:#fbf3c9;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.hero-date{margin:0;font:600 2.2rem var(--serif);letter-spacing:.2em}
+.hero-names{margin:.2rem 0 0;font:600 1.2rem var(--serif);letter-spacing:.3em}
+.hero-band{position:absolute;left:0;right:0;bottom:0;margin:0;background:var(--olive) var(--grain);color:#f3e7a8;text-align:center;
+  padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom));font:500 16px var(--serif);letter-spacing:.2em}
+
+/* 撕破的報紙條 */
+.strip{position:relative;z-index:5;height:64px;margin:-1.4rem -4% -1.4rem;overflow:hidden;white-space:nowrap;background:var(--paper) var(--grain);
+  color:#8d8670;font:italic 500 18px/64px var(--serif);letter-spacing:.06em;box-shadow:0 3px 8px rgba(60,50,20,.25);transform:rotate(-1.2deg);
+  clip-path:polygon(0 12%,3% 0,8% 14%,14% 2%,21% 16%,28% 3%,36% 14%,44% 0,53% 15%,61% 2%,70% 14%,78% 0,86% 13%,94% 2%,100% 12%,
+  100% 88%,96% 100%,89% 86%,81% 100%,72% 87%,63% 100%,54% 86%,45% 100%,36% 88%,27% 100%,18% 86%,9% 100%,0 88%)}
+
+/* 膠帶 */
+.tape,.polaroid::before{content:"";position:absolute;width:92px;height:26px;background:repeating-linear-gradient(135deg,rgba(200,169,106,.7) 0 8px,rgba(222,198,140,.7) 8px 16px);
+  box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.polaroid{position:relative}
+.polaroid::before{top:-12px;left:50%;margin-left:-46px;transform:rotate(-4deg);z-index:2}
+
+/* 資訊區：米色紙 + 清單 + 貼照片 */
+.info-sec{background:var(--cream) var(--grain)}
+.info-wrap{display:grid;gap:2.2rem;max-width:860px;margin:0 auto;align-items:center}
+.info-list{list-style:none;margin:0;padding:0;display:grid;gap:1.3rem}
+.info-list li{display:flex;gap:1rem;align-items:center}
+.info-list i{font-size:1.9rem;color:var(--olive);width:2.4rem;text-align:center}
+.info-list h3{margin:0;font:600 1.1rem var(--serif);color:var(--brown);letter-spacing:.2em}
+.info-list p{margin:0;font-size:1.15rem;letter-spacing:.08em;color:var(--olive-dark);font-weight:600}
+.scrap{position:relative;margin:0 auto;width:min(86%,380px);background:#e0cfa8 var(--grain);padding:1rem;transform:rotate(2deg);box-shadow:var(--shadow)}
+.scrap img{aspect-ratio:4/5;object-fit:cover;width:100%;background:linear-gradient(135deg,#d9cfae,#b9b27a)}
+.scrap .tape{top:-14px;left:50%;margin-left:-46px;transform:rotate(3deg);z-index:2}
+.note{max-width:420px;margin:2.6rem auto 0;padding:1.2rem 1.4rem;background:var(--paper) var(--grain);border-left:4px solid var(--gold);
+  box-shadow:var(--shadow);font:600 1.25rem/1.8 "Noto Serif TC",serif;color:var(--olive-dark);transform:rotate(-1deg)}
+.note cite{display:block;text-align:right;font:600 1.5rem var(--hand);color:var(--brown);margin-top:.4rem}
+
+/* 月曆：手繪紅圈 */
+.cal-grid .d.wedding{background:none;box-shadow:none;color:#fff;font-weight:600;border:2.5px solid #e0453a;border-radius:52% 46% 50% 44%/46% 52% 44% 50%;transform:rotate(-8deg) scale(1.2)}
+.cal-grid .d.wedding::after{display:none}
+
+/* 相簿拼貼 */
+.collage{padding-top:5.5rem;padding-bottom:5.5rem}
+.polaroid{padding:.7rem .7rem .5rem}
+
+/* 貼紙（把 PNG 放進 assets/textures/，沒放會自動隱藏） */
+.sticker{position:absolute;width:clamp(72px,22vw,130px);pointer-events:none;z-index:3;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+.st-a{top:4.5rem;right:3%;transform:rotate(12deg)}
+.st-b{bottom:1.5rem;left:3%;transform:rotate(-8deg)}
+.st-c{bottom:3.2rem;right:2%;transform:rotate(6deg)}
+@media(min-width:700px){.info-wrap{grid-template-columns:1.1fr 1fr}.hero-title{font-size:6rem}}
