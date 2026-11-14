@@ -9,7 +9,7 @@ const PHOTO_UPLOAD_FORM_URL = "";   // 照片上傳 Google Form 連結
 const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
 
 const WEDDING = {
-  title: "Jimmy & Shenny 婚禮",
+  title: "哲鳴 & 心萱 婚禮",
   address: "桃園市新屋區社子里社福路325號",
   start: "20270227T143000",
   end: "20270227T170000",
@@ -91,7 +91,7 @@ $("#btn-ical").addEventListener("click", () => {
     `SUMMARY:${WEDDING.title}`,
     `LOCATION:${WEDDING.address}`,
     "DESCRIPTION:婚禮演講 14:30，13:30 開放入場",
-    "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:明天是 Jimmy & Shenny 的婚禮", "END:VALARM",
+    "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:明天是哲鳴 & 心萱的婚禮", "END:VALARM",
     "END:VEVENT", "END:VCALENDAR"
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
