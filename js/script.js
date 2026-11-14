@@ -3,7 +3,7 @@
 /* ===== 可自行修改的設定 ===== */
 const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
 const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
-const GOOGLE_FORM_URL = "";         // RSVP Google Form 連結（viewform）
+const GOOGLE_FORM_URL = "https://forms.gle/56Sig9MX1sSV5yY8A";         // RSVP Google Form 連結（viewform）
 const PHOTO_UPLOAD_FORM_URL = "";   // 照片上傳 Google Form 連結
 // 選填：Google Form 預填欄位 ID（格式 "entry.123456789"），留空則不預填
 const FORM_ENTRY = { name: "", phone: "", email: "", attend: "", guests: "", diet: "", note: "" };
