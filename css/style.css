@@ -219,22 +219,3 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 .hero .hero-title{line-height:1.35}
 .hero .hero-title small{margin:2.4rem 0;letter-spacing:.5em;padding-left:.5em}
 .hero-top{top:9%}
-
-/* ===== 拼貼裝飾：撕破報紙、各式紙膠帶、貼紙 ===== */
-.deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
-.deco img{position:absolute;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))}
-.washi{position:absolute;width:112px;height:30px;box-shadow:0 2px 4px rgba(0,0,0,.22);opacity:.92;
-  clip-path:polygon(0 0,3% 20%,0 40%,3% 60%,0 80%,3% 100%,100% 100%,97% 80%,100% 60%,97% 40%,100% 20%,97% 0)}
-.w-kraft{background:repeating-linear-gradient(90deg,#c9a977 0 7px,#d8bd8f 7px 14px)}
-.w-pink{background:repeating-linear-gradient(0deg,rgba(255,255,255,.45) 0 4px,transparent 4px 8px),repeating-linear-gradient(90deg,#e8bcc2 0 8px,#f4d9dc 8px 16px)}
-.w-gold{background:repeating-linear-gradient(135deg,#c8a96a 0 6px,#e2cb97 6px 12px)}
-.w-dots{background:radial-gradient(circle,#8a6a4a 2px,transparent 2.6px) 0 0/12px 12px,#efe3c4}
-.news{position:absolute;width:clamp(120px,36vw,200px);padding:.6rem .8rem .9rem;background:#f1ecdc var(--grain);color:#9a937a;
-  font:italic 500 16px/1.4 var(--serif);box-shadow:0 3px 8px rgba(60,50,20,.28);
-  clip-path:polygon(0 6%,6% 0,14% 5%,23% 0,33% 5%,44% 0,56% 5%,68% 0,80% 5%,91% 0,100% 6%,100% 92%,93% 100%,82% 94%,70% 100%,58% 94%,45% 100%,33% 94%,21% 100%,10% 94%,0 100%)}
-#info{padding-bottom:7.5rem}
-#memories{padding-bottom:7rem}
-#countdown{padding-bottom:6rem}
-.cal{position:relative}
-.cal::before{content:"";position:absolute;top:-14px;left:50%;width:100px;height:28px;margin-left:-50px;transform:rotate(-3deg);z-index:2;
-  background:repeating-linear-gradient(135deg,#c8a96a 0 6px,#e2cb97 6px 12px);box-shadow:0 2px 4px rgba(0,0,0,.22)}
