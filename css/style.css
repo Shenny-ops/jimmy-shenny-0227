@@ -279,10 +279,5 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 .hero .hero-date::before,.hero .hero-date::after{background:rgba(246,226,173,.9)}
 .hero .hero-title small::before,.hero .hero-title small::after{background:rgba(246,226,173,.85)}
 
-/* 封面：照片下方改成橄欖綠底板，日期與姓名放在底板上，不再壓到人物 */
-.hero{--panel:11.5rem}
-.hero .hero-bg{bottom:var(--panel)}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--panel);background:var(--olive) var(--grain);z-index:1}
-.hero-bottom{bottom:4.7rem;z-index:2}
-.hero-band{background:none;border-top:1px solid rgba(246,226,173,.3);z-index:2}
-.hero-top{top:10%}
+/* SAVE THE DATE 再下移一點點 */
+.hero-top{top:9%}
