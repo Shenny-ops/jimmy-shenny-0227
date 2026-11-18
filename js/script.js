@@ -4,7 +4,8 @@
 const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
 const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSevk9-oICKqWG-lS0ljfWUIlROAPz-B_nDWbd0kDayKmC3ZQA/viewform";         // RSVP 表單完整網址：https://docs.google.com/forms/d/e/.../viewform（不能用 forms.gle 短網址）
-const PHOTO_UPLOAD_FORM_URL = "https://photos.app.goo.gl/ybbu48afMHoQkgUr8";   // 照片上傳 Google Form 連結
+const PHOTO_UPLOAD_SCRIPT_URL = ""; // Google Apps Script 網頁應用程式網址（結尾是 /exec），填了就能在網站直接上傳
+const PHOTO_UPLOAD_FORM_URL = "https://photos.app.goo.gl/ybbu48afMHoQkgUr8";   // 照片上傳連結（Google 相簿或表單）
 // RSVP 欄位 ID（格式 "entry.123456789"），name、phone、attend 必填
 const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
 
@@ -129,10 +130,57 @@ $("#rsvp-form").addEventListener("submit", async (e) => {
   btn.disabled = false;
 });
 
-/* ===== 賓客照片上傳 ===== */
+/* ===== 賓客照片上傳（直接上傳到 Google 雲端；未設定時退回表單） ===== */
+async function compressImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res(i);
+      i.onerror = rej;
+      i.src = url;
+    });
+    const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.naturalWidth * scale);
+    c.height = Math.round(img.naturalHeight * scale);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    return c.toDataURL("image/jpeg", 0.82).split(",")[1];
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 $("#upload-btn").addEventListener("click", () => {
-  if (!PHOTO_UPLOAD_FORM_URL) return toast("照片上傳表單尚未設定，請在 script.js 填入 PHOTO_UPLOAD_FORM_URL");
-  window.open(PHOTO_UPLOAD_FORM_URL, "_blank", "noopener");
+  if (PHOTO_UPLOAD_SCRIPT_URL) return $("#photo-input").click();
+  if (PHOTO_UPLOAD_FORM_URL) return window.open(PHOTO_UPLOAD_FORM_URL, "_blank", "noopener");
+  toast("照片上傳尚未設定，請在 script.js 填入 PHOTO_UPLOAD_SCRIPT_URL");
+});
+
+$("#photo-input").addEventListener("change", async (e) => {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  const btn = $("#upload-btn");
+  const label = btn.textContent;
+  btn.disabled = true;
+  let ok = 0;
+  for (let i = 0; i < files.length; i++) {
+    btn.textContent = `上傳中 ${i + 1} / ${files.length}…`;
+    try {
+      const data = await compressImage(files[i]);
+      const res = await fetch(PHOTO_UPLOAD_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ name: files[i].name.replace(/\.[^.]+$/, "") + ".jpg", data })
+      });
+      const json = await res.json();
+      if (json.ok) ok++;
+    } catch (err) { /* 略過失敗的單張 */ }
+  }
+  btn.disabled = false;
+  btn.textContent = label;
+  e.target.value = "";
+  toast(ok === files.length ? `已上傳 ${ok} 張，謝謝你！` : `成功 ${ok} / ${files.length} 張，失敗的請再試一次`);
 });
 
 /* ===== 相簿 / 動畫套件 ===== */
@@ -144,8 +192,26 @@ if (window.Swiper) {
     slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: false,
     pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-    breakpoints: { 700: { slidesPerView: 2, centeredSlides: false } }
+    breakpoints: { 700: { slidesPerView: 2, centeredSlides: false }, 1000: { slidesPerView: 3, centeredSlides: false } }
   });
 }
 if (window.GLightbox) GLightbox({ selector: ".glightbox", touchNavigation: true, loop: true });
 if (window.AOS) AOS.init({ duration: 800, once: true, offset: 60 });
+
+/* ===== 交通資訊手風琴：預設收合，同時只展開一項 ===== */
+document.querySelectorAll(".acc-head").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const item = btn.parentElement;
+    const willOpen = !item.classList.contains("open");
+    document.querySelectorAll(".acc-item").forEach((it) => {
+      it.classList.remove("open");
+      it.querySelector(".acc-head").setAttribute("aria-expanded", "false");
+      it.querySelector(".acc-hint b").textContent = "點擊展開";
+    });
+    if (willOpen) {
+      item.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      item.querySelector(".acc-hint b").textContent = "收合";
+    }
+  });
+});
