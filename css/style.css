@@ -52,7 +52,7 @@ img{max-width:100%;display:block}
 
 /* Hero */
 .hero{position:relative;min-height:100svh;display:grid;place-items:center;padding:2rem 1rem;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(rgba(60,55,20,.35),rgba(60,55,20,.55)),url("../assets/images/hero.jpg") center/cover,
+.hero-bg{position:absolute;inset:0;background:linear-gradient(rgba(60,55,20,.35),rgba(60,55,20,.55)),url("../assets/images/hero.jpg?v=2") center/cover,
   linear-gradient(135deg,#8a8a46,var(--olive))}
 .hero-paper{position:relative;background:var(--paper) var(--grain);padding:2.6rem 1.8rem 2.4rem;text-align:center;width:min(92vw,440px);
   box-shadow:var(--shadow);transform:rotate(-1.5deg)}
@@ -136,7 +136,7 @@ footer p{margin:0}
 
 /* ===== Collage v2：更接近 Canva 手帳拼貼 ===== */
 .hero{display:block;padding:0}
-.hero-bg{background:linear-gradient(rgba(30,28,10,.45),rgba(30,28,10,.1) 45%,rgba(30,28,10,.6)),url("../assets/images/hero.jpg") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
+.hero-bg{background:linear-gradient(rgba(30,28,10,.45),rgba(30,28,10,.1) 45%,rgba(30,28,10,.6)),url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
 .hero-top{position:absolute;top:12%;left:0;right:0;text-align:center;color:#fbf3c9;text-shadow:0 2px 12px rgba(0,0,0,.55)}
 .hero-title{margin:0;font:600 clamp(3.2rem,17vw,5.4rem)/1.05 var(--serif);letter-spacing:.2em;padding-left:.2em}
 .hero-title small{display:block;font-size:1.4rem;letter-spacing:.4em;margin:.3rem 0}
@@ -196,7 +196,7 @@ footer p{margin:0}
 .strip{height:44px;margin:-1rem -4% -1rem}
 
 /* 修正：手機版首頁文字對比（照片偏亮時也看得清楚） */
-.hero .hero-bg{background:linear-gradient(rgba(25,22,8,.6),rgba(25,22,8,.35) 50%,rgba(25,22,8,.7)),url("../assets/images/hero.jpg") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
+.hero .hero-bg{background:linear-gradient(rgba(25,22,8,.6),rgba(25,22,8,.35) 50%,rgba(25,22,8,.7)),url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
 .hero .hero-top,.hero .hero-bottom{color:#fffbe6;text-shadow:0 2px 14px rgba(0,0,0,.8),0 0 4px rgba(0,0,0,.6)}
 .hero .hero-title,.hero .hero-title small,.hero .hero-names{color:#fffbe6}
 .hero .hero-date{color:#f6e7a6}
