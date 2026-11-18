@@ -75,6 +75,57 @@ const q = encodeURIComponent(WEDDING.address);
 $("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api=1&query=${q}`;
 $("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
+/* ==========================
+   Transportation Accordion
+========================== */
+
+const accordionItems =
+    document.querySelectorAll('.accordion-item');
+
+accordionItems.forEach(item => {
+
+    const header =
+        item.querySelector('.accordion-header');
+
+    const content =
+        item.querySelector('.accordion-content');
+
+    header.addEventListener('click', () => {
+
+        const currentOpen =
+            document.querySelector(
+                '.accordion-item.active'
+            );
+
+        if (
+            currentOpen &&
+            currentOpen !== item
+        ) {
+
+            currentOpen.classList.remove('active');
+
+            currentOpen.querySelector(
+                '.accordion-content'
+            ).style.maxHeight = null;
+        }
+
+        item.classList.toggle('active');
+
+        if (item.classList.contains('active')) {
+
+            content.style.maxHeight =
+                content.scrollHeight + 'px';
+
+        } else {
+
+            content.style.maxHeight = null;
+
+        }
+
+    });
+
+});
+
 /* ===== 加入行事曆 ===== */
 $("#btn-google-cal").href =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
