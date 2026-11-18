@@ -281,3 +281,7 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 
 /* SAVE THE DATE 再下移一點點 */
 .hero-top{top:9%}
+
+/* 確保 Open Invitation 按鈕一定可以點（手機） */
+#open-btn{position:relative;z-index:10;touch-action:manipulation;cursor:pointer}
+#envelope-screen{overflow-y:auto}
