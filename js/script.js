@@ -140,7 +140,7 @@ document.querySelectorAll(".polaroid img").forEach((img) => {
 if (window.Swiper) {
   new Swiper("#photo-swiper", {
     slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: false,
-    pagination: { el: ".swiper-pagination", clickable: true },
+    pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     breakpoints: { 700: { slidesPerView: 2, centeredSlides: false } }
   });
