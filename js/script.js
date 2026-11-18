@@ -75,50 +75,6 @@ const q = encodeURIComponent(WEDDING.address);
 $("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api=1&query=${q}`;
 $("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const items = document.querySelectorAll(".accordion-item");
-
-    items.forEach(item => {
-
-        const header = item.querySelector(".accordion-header");
-        const content = item.querySelector(".accordion-content");
-
-        header.addEventListener("click", () => {
-
-            items.forEach(otherItem => {
-
-                if (otherItem !== item) {
-
-                    otherItem.classList.remove("active");
-
-                    otherItem.querySelector(
-                        ".accordion-content"
-                    ).style.maxHeight = null;
-
-                }
-
-            });
-
-            item.classList.toggle("active");
-
-            if (item.classList.contains("active")) {
-
-                content.style.maxHeight =
-                    content.scrollHeight + "px";
-
-            } else {
-
-                content.style.maxHeight = null;
-
-            }
-
-        });
-
-    });
-
-});
-
 /* ===== 加入行事曆 ===== */
 $("#btn-google-cal").href =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
