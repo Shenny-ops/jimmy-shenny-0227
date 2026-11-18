@@ -99,6 +99,134 @@ img{max-width:100%;display:block}
 .cal-grid .d.wedding{color:var(--olive-dark);font-weight:600;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--brown);transform:rotate(-6deg) scale(1.15);z-index:1}
 .cal-grid .d.wedding::after{content:"♥";position:absolute;top:-10px;right:-6px;font-size:16px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 
+/* ==========================
+   Transportation Section
+========================== */
+
+.transport-section {
+    margin-top: 3rem;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-title h3 {
+    margin-top: 0.5rem;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+}
+
+.accordion-item {
+    background: rgba(255,255,255,0.75);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+}
+
+.accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px;
+
+    text-align: left;
+}
+
+.accordion-header h4 {
+    margin-top: 4px;
+    font-size: 1rem;
+}
+
+.accordion-number {
+    font-size: 0.8rem;
+    color: #8f6f4f;
+    letter-spacing: 1px;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform .3s ease;
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(45deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition:
+        max-height 0.4s ease,
+        padding 0.4s ease;
+}
+
+.content-inner {
+    padding: 0 18px 20px;
+}
+
+.content-inner h5 {
+    margin-top: 12px;
+}
+
+.content-inner p {
+    line-height: 1.8;
+    color: #555;
+}
+
+.transport-icon {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.content-inner hr {
+    border: none;
+    border-top: 1px dashed #d9c7b5;
+    margin: 20px 0;
+}
+
+/* Entrance Photo */
+
+.venue-photo {
+    margin-top: 20px;
+}
+
+.venue-photo img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Mobile */
+
+@media screen and (max-width: 768px) {
+
+    .accordion-header {
+        padding: 16px;
+    }
+
+    .section-title h3 {
+        font-size: 1.2rem;
+    }
+
+    .accordion-header h4 {
+        font-size: 0.95rem;
+    }
+
+}
+
 /* Gallery */
 .swiper{width:100%;max-width:520px;margin:0 auto;padding:1.5rem 0 3rem}
 .swiper-slide{display:flex;justify-content:center;width:78%}
