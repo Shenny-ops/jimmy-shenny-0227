@@ -75,52 +75,45 @@ const q = encodeURIComponent(WEDDING.address);
 $("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api=1&query=${q}`;
 $("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
-/* ==========================
-   Transportation Accordion
-========================== */
+document.addEventListener("DOMContentLoaded", () => {
 
-const accordionItems =
-    document.querySelectorAll('.accordion-item');
+    const items = document.querySelectorAll(".accordion-item");
 
-accordionItems.forEach(item => {
+    items.forEach(item => {
 
-    const header =
-        item.querySelector('.accordion-header');
+        const header = item.querySelector(".accordion-header");
+        const content = item.querySelector(".accordion-content");
 
-    const content =
-        item.querySelector('.accordion-content');
+        header.addEventListener("click", () => {
 
-    header.addEventListener('click', () => {
+            items.forEach(otherItem => {
 
-        const currentOpen =
-            document.querySelector(
-                '.accordion-item.active'
-            );
+                if (otherItem !== item) {
 
-        if (
-            currentOpen &&
-            currentOpen !== item
-        ) {
+                    otherItem.classList.remove("active");
 
-            currentOpen.classList.remove('active');
+                    otherItem.querySelector(
+                        ".accordion-content"
+                    ).style.maxHeight = null;
 
-            currentOpen.querySelector(
-                '.accordion-content'
-            ).style.maxHeight = null;
-        }
+                }
 
-        item.classList.toggle('active');
+            });
 
-        if (item.classList.contains('active')) {
+            item.classList.toggle("active");
 
-            content.style.maxHeight =
-                content.scrollHeight + 'px';
+            if (item.classList.contains("active")) {
 
-        } else {
+                content.style.maxHeight =
+                    content.scrollHeight + "px";
 
-            content.style.maxHeight = null;
+            } else {
 
-        }
+                content.style.maxHeight = null;
+
+            }
+
+        });
 
     });
 
