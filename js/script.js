@@ -4,7 +4,7 @@
 const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
 const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSevk9-oICKqWG-lS0ljfWUIlROAPz-B_nDWbd0kDayKmC3ZQA/viewform";         // RSVP 表單完整網址：https://docs.google.com/forms/d/e/.../viewform（不能用 forms.gle 短網址）
-const PHOTO_UPLOAD_FORM_URL = "https://forms.gle/oXd939Krc2ntj7LJ8";   // 照片上傳 Google Form 連結
+const PHOTO_UPLOAD_FORM_URL = "https://drive.google.com/drive/folders/1hGuYirC6sGZW8wnskcdxoNwnoxcMfgg0?usp=drive_link";   // 照片上傳 Google Form 連結
 // RSVP 欄位 ID（格式 "entry.123456789"），name、phone、attend 必填
 const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
 
