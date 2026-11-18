@@ -285,3 +285,35 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 /* 確保 Open Invitation 按鈕一定可以點（手機） */
 #open-btn{position:relative;z-index:10;touch-action:manipulation;cursor:pointer}
 #envelope-screen{overflow-y:auto}
+
+/* ===== 交通資訊（手風琴，色系與 Find Us 一致） ===== */
+.transit{max-width:520px;margin:2.6rem auto 0}
+.transit-title{text-align:center;font:600 1.7rem var(--serif);letter-spacing:.25em;padding-left:.25em;color:var(--olive);margin:0 0 1.1rem}
+.acc-item{background:var(--paper) var(--grain);border:1px solid rgba(200,169,106,.65);box-shadow:var(--shadow);margin-bottom:.9rem;border-radius:4px;overflow:hidden}
+.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;gap:.8rem;min-height:60px;padding:.8rem 1.1rem;background:none;border:0;cursor:pointer;text-align:left;
+  font:600 1.15rem "Noto Serif TC",serif;color:var(--olive-dark);transition:background .25s,color .25s;-webkit-tap-highlight-color:transparent}
+.acc-head .num{color:var(--gold);font-family:var(--serif);margin-right:.2rem}
+.acc-hint{display:inline-flex;align-items:center;gap:.45rem;font:500 1rem "Noto Serif TC",serif;color:var(--brown);white-space:nowrap}
+.acc-hint i{font-size:.8rem;transition:transform .3s}
+.acc-item.open .acc-head{background:var(--olive);color:var(--cream)}
+.acc-item.open .acc-head .num,.acc-item.open .acc-hint{color:#f6e2ad}
+.acc-item.open .acc-hint i{transform:rotate(90deg)}
+.acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.acc-item.open .acc-panel{grid-template-rows:1fr}
+.acc-inner{overflow:hidden}
+.acc-inner>div{padding:1.1rem 1.2rem 1.3rem}
+.acc-inner h4{margin:0 0 .2rem;font:600 1.1rem "Noto Serif TC",serif;color:var(--olive)}
+.acc-inner p{margin:0 0 1rem}
+.acc-inner p:last-child{margin-bottom:0}
+.entrance{max-width:520px;margin:1.8rem auto 0;text-align:center}
+.entrance figcaption{font:600 1.15rem var(--serif);letter-spacing:.15em;color:var(--brown);margin-bottom:.7rem}
+.entrance img{width:100%;border:8px solid #fff;box-shadow:var(--shadow);transform:rotate(-1deg)}
+
+/* ===== Our Story：箭頭與圓點在橄欖綠底上看得見；電腦版顯示更多張 ===== */
+.collage .swiper-button-prev,.collage .swiper-button-next{color:#f6e2ad;display:none}
+.collage .swiper-pagination-bullet{background:#f6edd9;opacity:.5}
+.collage .swiper-pagination-bullet-active{background:#f6e2ad;opacity:1}
+@media(min-width:700px){
+  .collage .swiper{max-width:940px;padding-left:3.4rem;padding-right:3.4rem}
+  .collage .swiper-button-prev,.collage .swiper-button-next{display:flex}
+}
