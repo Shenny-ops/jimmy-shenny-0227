@@ -267,3 +267,14 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 .hero .hero-names{font-family:"Noto Serif TC",serif;font-weight:300;font-size:1.5rem;letter-spacing:.55em;padding-left:.55em;color:#f6edd9;margin:.9rem 0 0}
 
 .hero-band{letter-spacing:.32em;color:#e8dfc4;font-weight:400}
+
+/* 微調：標題縮小上移、日期姓名下移、暖棕變淡、金色更亮 */
+.hero-top{top:7%}
+.hero .hero-title{font-size:clamp(3rem,15vw,5rem)}
+.hero .hero-title small{margin:1.3rem auto}
+.hero-bottom{bottom:4.3rem}
+.hero .hero-bg{filter:sepia(.14) saturate(1.05) contrast(1.02) brightness(.98)}
+.hero .hero-bg::after{background:linear-gradient(rgba(70,40,18,.32),rgba(70,40,18,.06) 42%,rgba(70,40,18,.34))}
+.hero .hero-date{color:#f6e2ad}
+.hero .hero-date::before,.hero .hero-date::after{background:rgba(246,226,173,.9)}
+.hero .hero-title small::before,.hero .hero-title small::after{background:rgba(246,226,173,.85)}
