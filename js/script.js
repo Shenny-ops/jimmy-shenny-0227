@@ -1,324 +1,151 @@
-:root{
-  --olive:#6B6B2D; --cream:#F5F1E8; --gold:#C8A96A; --brown:#8A6A4A; --paper:#F8F5ED;
-  --olive-dark:#55551F; --ink:#3d3a2a;
-  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .33  0 0 0 0 .2  0 0 0 .13 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  --shadow:0 6px 18px rgba(80,60,30,.28);
-  --serif:"Cormorant Garamond","Noto Serif TC",serif;
-  --hand:"Caveat","Noto Serif TC",cursive;
+"use strict";
+
+/* ===== 可自行修改的設定 ===== */
+const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
+const APPLE_MAP_URL = "";           // 留空會自動用地址搜尋
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSevk9-oICKqWG-lS0ljfWUIlROAPz-B_nDWbd0kDayKmC3ZQA/viewform";         // RSVP 表單完整網址：https://docs.google.com/forms/d/e/.../viewform（不能用 forms.gle 短網址）
+const PHOTO_UPLOAD_FORM_URL = "";   // 照片上傳 Google Form 連結
+// RSVP 欄位 ID（格式 "entry.123456789"），name、phone、attend 必填
+const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
+
+const WEDDING = {
+  title: "哲鳴 & 心萱 婚禮",
+  address: "桃園市新屋區社子里社福路325號",
+  start: "20270227T143000",
+  end: "20270227T170000",
+  tz: "Asia/Taipei",
+  target: new Date("2027-02-27T14:30:00+08:00")
+};
+
+const $ = (s) => document.querySelector(s);
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toast.id);
+  toast.id = setTimeout(() => t.classList.remove("show"), 3200);
 }
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;font-family:"Noto Serif TC","Cormorant Garamond",serif;font-size:17px;line-height:1.8;color:var(--ink);
-  background:var(--cream) var(--grain);padding-bottom:env(safe-area-inset-bottom)}
-body.locked{overflow:hidden}
-img{max-width:100%;display:block}
-.hand{font-family:var(--hand);font-weight:600}
-.serif{font-family:var(--serif);font-weight:600}
-.center{text-align:center;margin:0 auto 1rem}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-/* Buttons */
-.btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;min-height:56px;padding:.7rem 1.6rem;
-  border:0;border-radius:6px;font:600 17px/1.3 "Noto Serif TC",serif;color:#fff;text-decoration:none;cursor:pointer;
-  box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
-.btn:active{transform:translateY(2px);box-shadow:0 2px 6px rgba(80,60,30,.3)}
-.btn small{font:500 16px var(--serif);opacity:.85}
-.btn-gold{background:var(--gold);color:#3b2f12}
-.btn-olive{background:var(--olive)} .btn-brown{background:var(--brown)}
-.btn-row{display:flex;flex-direction:column;gap:1rem;align-items:stretch;max-width:420px;margin:1.5rem auto 0}
+/* ===== 信封動畫（約 2 秒） ===== */
+$("#open-btn").addEventListener("click", () => {
+  if (window.__opened) return;
+  window.__opened = true;
+  $("#open-btn").disabled = true;
+  $("#open-btn").style.opacity = "0";
+  $("#envelope").classList.add("open");
+  setTimeout(() => {
+    $("#envelope-screen").classList.add("done");
+    document.body.classList.remove("locked");
+    window.scrollTo(0, 0);
+    if (window.AOS) AOS.refresh();
+  }, 1700);
+});
 
-/* Envelope */
-#envelope-screen{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3rem;
-  background:var(--olive) var(--grain);transition:opacity .6s ease,visibility .6s;padding:1rem}
-#envelope-screen.done{opacity:0;visibility:hidden}
-.envelope{position:relative;width:min(86vw,360px);aspect-ratio:3/2;perspective:900px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.35))}
-.envelope>*{position:absolute;inset:0}
-.env-back{background:#d9cfae;border-radius:4px}
-.env-letter{inset:6% 6%;background:var(--paper) var(--grain);display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:1px solid var(--gold);transition:transform 1s cubic-bezier(.5,0,.2,1) .6s;text-align:center}
-.env-letter .hand{font-size:2.2rem;margin:0;color:var(--olive);line-height:1.1}
-.env-letter .serif{margin:.3rem 0 0;color:var(--brown);font-size:1.3rem}
-.env-front{background:#e8dfc3 var(--grain);clip-path:polygon(0 100%,0 0,50% 58%,100% 0,100% 100%);border-radius:4px}
-.env-flap{background:#cfc49f var(--grain);clip-path:polygon(0 0,100% 0,50% 62%);transform-origin:top;
-  transition:transform .8s ease,z-index 0s .4s;z-index:3;border-radius:4px 4px 0 0}
-.env-seal{inset:auto;left:50%;top:62%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--gold);color:#fff;
-  display:grid;place-items:center;z-index:4;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:opacity .3s}
-.env-label{inset:auto 0 8% 0;text-align:center;z-index:2;transition:opacity .3s}
-.env-label h1{font-size:2rem;line-height:1;margin:0;color:var(--olive-dark)}
-.env-label p{margin:.2rem 0 0;color:var(--brown);font-size:1.1rem;letter-spacing:.12em}
-.envelope.open .env-flap{transform:rotateX(180deg);z-index:0}
-.envelope.open .env-seal,.envelope.open .env-label{opacity:0}
-.envelope.open .env-letter{transform:translateY(-62%) scale(1.06);z-index:2}
-
-/* Hero */
-.hero{position:relative;min-height:100svh;display:grid;place-items:center;padding:2rem 1rem;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(rgba(60,55,20,.35),rgba(60,55,20,.55)),url("../assets/images/hero.jpg?v=2") center/cover,
-  linear-gradient(135deg,#8a8a46,var(--olive))}
-.hero-paper{position:relative;background:var(--paper) var(--grain);padding:2.6rem 1.8rem 2.4rem;text-align:center;width:min(92vw,440px);
-  box-shadow:var(--shadow);transform:rotate(-1.5deg)}
-.torn{clip-path:polygon(0 2%,4% 0,9% 2%,15% 0,22% 1.5%,30% 0,38% 2%,46% 0,54% 1.5%,62% 0,70% 2%,78% 0,86% 1.5%,93% 0,100% 2%,
-  100% 97%,95% 100%,88% 98%,80% 100%,71% 98%,62% 100%,53% 98%,44% 100%,35% 98%,26% 100%,17% 98%,8% 100%,0 98%)}
-.hero-sub{font-size:2rem;color:var(--brown);margin:0}
-.hero-title{font:600 clamp(2.8rem,15vw,4.6rem)/1 var(--serif);color:var(--olive);margin:.4rem 0;letter-spacing:.04em}
-.hero-date{font:600 2.2rem var(--serif);color:var(--gold);margin:.2rem 0;letter-spacing:.12em;text-shadow:0 1px 0 rgba(0,0,0,.08)}
-.hero-names{margin:.3rem 0 0;font-size:1.4rem;color:var(--brown)}
-.scroll-hint{position:absolute;bottom:calc(1.2rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);color:#fff;font-size:1.5rem;
-  min-width:48px;min-height:48px;display:grid;place-items:center}
-
-/* Sections */
-.section{padding:4rem 1.2rem;position:relative}
-.section.olive{background:var(--olive) var(--grain);color:var(--cream)}
-.section.cream2{background:#ece5d2 var(--grain)}
-.title{font-size:clamp(2.4rem,10vw,3.4rem);text-align:center;margin:0 0 1.6rem;color:var(--olive);line-height:1.1}
-.title.light{color:var(--gold)}
-
-/* Countdown */
-.count-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:480px;margin:0 auto}
-.tag-card{background:var(--paper) var(--grain);border:2px dashed var(--gold);padding:1.1rem .5rem;text-align:center;box-shadow:var(--shadow);
-  display:flex;flex-direction:column}
-.tag-card:nth-child(odd){transform:rotate(-1.5deg)} .tag-card:nth-child(even){transform:rotate(1.5deg)}
-.tag-card b{font:600 3rem/1 var(--serif);color:var(--olive)}
-.tag-card span{font:600 1.1rem var(--hand);color:var(--brown);font-size:1.4rem}
-
-/* Info cards */
-.info-grid{display:grid;gap:1.2rem;max-width:520px;margin:0 auto}
-.paper-card{background:var(--paper) var(--grain);color:var(--ink);padding:1.6rem 1.4rem;text-align:center;box-shadow:var(--shadow);
-  border-radius:4px;position:relative;border:1px solid rgba(200,169,106,.6)}
-.info-grid .paper-card:nth-child(odd){transform:rotate(-1deg)} .info-grid .paper-card:nth-child(even){transform:rotate(1deg)}
-.paper-card::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:26px;margin-left:-42px;background:rgba(200,169,106,.55);transform:rotate(-3deg)}
-.ico{font-size:2rem}
-.paper-card h3{margin:.2rem 0;font:600 1.5rem var(--serif);color:var(--olive)}
-.paper-card p{margin:0;font-size:1.15rem}
-
-/* Calendar */
-.cal{max-width:460px;margin:0 auto;background:var(--olive) var(--grain);color:var(--cream);padding:1.2rem 1rem 1.4rem;box-shadow:var(--shadow);border:3px solid var(--paper);outline:1px dashed var(--gold);outline-offset:-10px}
-.cal-head{font-size:2.2rem;text-align:center;color:var(--gold);margin-bottom:.6rem}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
-.cal-grid .dow{font:600 16px var(--serif);color:var(--gold);padding:.2rem 0}
-.cal-grid .d{aspect-ratio:1;display:grid;place-items:center;font-size:17px;position:relative}
-.cal-grid .d.wedding{color:var(--olive-dark);font-weight:600;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--brown);transform:rotate(-6deg) scale(1.15);z-index:1}
-.cal-grid .d.wedding::after{content:"♥";position:absolute;top:-10px;right:-6px;font-size:16px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
-
-/* Gallery */
-.swiper{width:100%;max-width:520px;margin:0 auto;padding:1.5rem 0 3rem}
-.swiper-slide{display:flex;justify-content:center;width:78%}
-.polaroid{display:block;background:#fff;padding:.7rem .7rem .4rem;box-shadow:var(--shadow);text-decoration:none;color:var(--brown);text-align:center;width:100%}
-.polaroid img{aspect-ratio:4/5;object-fit:cover;width:100%;background:linear-gradient(135deg,#d9cfae,#b9b27a)}
-.polaroid span{display:block;font-size:1.6rem;padding:.4rem 0 .2rem}
-.tilt-l{transform:rotate(-3deg)} .tilt-r{transform:rotate(3deg)}
-.swiper-button-prev,.swiper-button-next{color:var(--olive);--swiper-navigation-size:28px}
-.swiper-pagination-bullet-active{background:var(--olive)}
-
-/* Form */
-.form{max-width:520px;margin:0 auto;text-align:left;display:grid;gap:1rem;transform:none}
-.form::before{display:none}
-.form label,.form legend{display:grid;gap:.3rem;font-weight:600;color:var(--olive)}
-.form input,.form select,.form textarea{width:100%;font:17px "Noto Serif TC",serif;padding:.8rem;min-height:52px;border:1.5px solid var(--brown);border-radius:4px;background:#fff;color:var(--ink)}
-.form fieldset{border:0;padding:0;margin:0;display:flex;gap:1.4rem;flex-wrap:wrap}
-.form .radio{display:flex;align-items:center;gap:.5rem;min-height:48px}
-.form .radio input{width:24px;min-height:24px;accent-color:var(--olive)}
-
-footer{text-align:center;padding:3rem 1rem calc(3rem + env(safe-area-inset-bottom));background:var(--olive-dark) var(--grain);color:var(--cream)}
-footer .hand{font-size:2.4rem;color:var(--gold);margin:0}
-footer p{margin:0}
-
-#toast{position:fixed;left:50%;bottom:calc(1.4rem + env(safe-area-inset-bottom));transform:translate(-50%,30px);background:var(--ink);color:#fff;
-  padding:.9rem 1.3rem;border-radius:6px;opacity:0;pointer-events:none;transition:.3s;z-index:200;max-width:90vw;text-align:center}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(min-width:700px){
-  .count-grid{grid-template-columns:repeat(4,1fr);max-width:720px}
-  .info-grid{grid-template-columns:1fr 1fr;max-width:820px}
-  .btn-row{flex-direction:row;max-width:none;justify-content:center}
-  .section{padding:5rem 2rem}
+/* ===== 倒數計時 ===== */
+function tick() {
+  let diff = Math.max(0, WEDDING.target - new Date());
+  const d = Math.floor(diff / 864e5); diff %= 864e5;
+  const h = Math.floor(diff / 36e5); diff %= 36e5;
+  const m = Math.floor(diff / 6e4);
+  const s = Math.floor((diff % 6e4) / 1e3);
+  $("#cd-d").textContent = d;
+  $("#cd-h").textContent = String(h).padStart(2, "0");
+  $("#cd-m").textContent = String(m).padStart(2, "0");
+  $("#cd-s").textContent = String(s).padStart(2, "0");
 }
-@media(prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important;scroll-behavior:auto!important}}
+tick();
+setInterval(tick, 1000);
 
-/* ===== Collage v2：更接近 Canva 手帳拼貼 ===== */
-.hero{display:block;padding:0}
-.hero-bg{background:linear-gradient(rgba(30,28,10,.45),rgba(30,28,10,.1) 45%,rgba(30,28,10,.6)),url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
-.hero-top{position:absolute;top:12%;left:0;right:0;text-align:center;color:#fbf3c9;text-shadow:0 2px 12px rgba(0,0,0,.55)}
-.hero-title{margin:0;font:600 clamp(3.2rem,17vw,5.4rem)/1.05 var(--serif);letter-spacing:.2em;padding-left:.2em}
-.hero-title small{display:block;font-size:1.4rem;letter-spacing:.4em;margin:.3rem 0}
-.hero-bottom{position:absolute;left:0;right:0;bottom:5.5rem;text-align:center;color:#fbf3c9;text-shadow:0 2px 10px rgba(0,0,0,.6)}
-.hero-date{margin:0;font:600 2.2rem var(--serif);letter-spacing:.2em}
-.hero-names{margin:.2rem 0 0;font:600 1.2rem var(--serif);letter-spacing:.3em}
-.hero-band{position:absolute;left:0;right:0;bottom:0;margin:0;background:var(--olive) var(--grain);color:#f3e7a8;text-align:center;
-  padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom));font:500 16px var(--serif);letter-spacing:.2em}
+/* ===== 2027 年 2 月月曆（2/1 為星期一，共 28 天） ===== */
+(function buildCalendar() {
+  const grid = $("#cal-grid");
+  const first = new Date(2027, 1, 1).getDay();
+  const days = new Date(2027, 2, 0).getDate();
+  let html = ["日", "一", "二", "三", "四", "五", "六"].map((w) => `<div class="dow">${w}</div>`).join("");
+  html += '<div></div>'.repeat(first);
+  for (let i = 1; i <= days; i++) {
+    html += `<div class="d${i === 27 ? " wedding" : ""}"${i === 27 ? ' aria-label="2月27日 婚禮"' : ""}>${i}</div>`;
+  }
+  grid.innerHTML = html;
+})();
 
-/* 撕破的報紙條 */
-.strip{position:relative;z-index:5;height:64px;margin:-1.4rem -4% -1.4rem;overflow:hidden;white-space:nowrap;background:var(--paper) var(--grain);
-  color:#8d8670;font:italic 500 18px/64px var(--serif);letter-spacing:.06em;box-shadow:0 3px 8px rgba(60,50,20,.25);transform:rotate(-1.2deg);
-  clip-path:polygon(0 12%,3% 0,8% 14%,14% 2%,21% 16%,28% 3%,36% 14%,44% 0,53% 15%,61% 2%,70% 14%,78% 0,86% 13%,94% 2%,100% 12%,
-  100% 88%,96% 100%,89% 86%,81% 100%,72% 87%,63% 100%,54% 86%,45% 100%,36% 88%,27% 100%,18% 86%,9% 100%,0 88%)}
+/* ===== 地圖導航 ===== */
+const q = encodeURIComponent(WEDDING.address);
+$("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api=1&query=${q}`;
+$("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
-/* 膠帶 */
-.tape,.polaroid::before{content:"";position:absolute;width:92px;height:26px;background:repeating-linear-gradient(135deg,rgba(200,169,106,.7) 0 8px,rgba(222,198,140,.7) 8px 16px);
-  box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.polaroid{position:relative}
-.polaroid::before{top:-12px;left:50%;margin-left:-46px;transform:rotate(-4deg);z-index:2}
+/* ===== 加入行事曆 ===== */
+$("#btn-google-cal").href =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  `&text=${encodeURIComponent(WEDDING.title)}` +
+  `&dates=${WEDDING.start}/${WEDDING.end}&ctz=${WEDDING.tz}` +
+  `&location=${q}&details=${encodeURIComponent("婚禮演講 14:30，13:30 開放入場")}`;
 
-/* 資訊區：米色紙 + 清單 + 貼照片 */
-.info-sec{background:var(--cream) var(--grain)}
-.info-wrap{display:grid;gap:2.2rem;max-width:860px;margin:0 auto;align-items:center}
-.info-list{list-style:none;margin:0;padding:0;display:grid;gap:1.3rem}
-.info-list li{display:flex;gap:1rem;align-items:center}
-.info-list i{font-size:1.9rem;color:var(--olive);width:2.4rem;text-align:center}
-.info-list h3{margin:0;font:600 1.1rem var(--serif);color:var(--brown);letter-spacing:.2em}
-.info-list p{margin:0;font-size:1.15rem;letter-spacing:.08em;color:var(--olive-dark);font-weight:600}
-.scrap{position:relative;margin:0 auto;width:min(86%,380px);background:#e0cfa8 var(--grain);padding:1rem;transform:rotate(2deg);box-shadow:var(--shadow)}
-.scrap img{aspect-ratio:4/5;object-fit:cover;width:100%;background:linear-gradient(135deg,#d9cfae,#b9b27a)}
-.scrap .tape{top:-14px;left:50%;margin-left:-46px;transform:rotate(3deg);z-index:2}
-.note{max-width:420px;margin:2.6rem auto 0;padding:1.2rem 1.4rem;background:var(--paper) var(--grain);border-left:4px solid var(--gold);
-  box-shadow:var(--shadow);font:600 1.25rem/1.8 "Noto Serif TC",serif;color:var(--olive-dark);transform:rotate(-1deg)}
-.note cite{display:block;text-align:right;font:600 1.5rem var(--hand);color:var(--brown);margin-top:.4rem}
+$("#btn-ical").addEventListener("click", () => {
+  const ics = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Jimmy and Shenny//Wedding//ZH", "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    "UID:wedding-20270227@jimmy-shenny",
+    "DTSTAMP:20261101T000000Z",
+    `DTSTART;TZID=${WEDDING.tz}:${WEDDING.start}`,
+    `DTEND;TZID=${WEDDING.tz}:${WEDDING.end}`,
+    `SUMMARY:${WEDDING.title}`,
+    `LOCATION:${WEDDING.address}`,
+    "DESCRIPTION:婚禮演講 14:30，13:30 開放入場",
+    "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:明天是哲鳴 & 心萱的婚禮", "END:VALARM",
+    "END:VEVENT", "END:VCALENDAR"
+  ].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: "jimmy-shenny-wedding.ics" });
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
 
-/* 月曆：手繪紅圈 */
-.cal-grid .d.wedding{background:none;box-shadow:none;color:#fff;font-weight:600;border:2.5px solid #e0453a;border-radius:52% 46% 50% 44%/46% 52% 44% 50%;transform:rotate(-8deg) scale(1.2)}
-.cal-grid .d.wedding::after{display:none}
+/* ===== RSVP（直接送進 Google 表單，不跳頁） ===== */
+$("#rsvp-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.elements.name.value.trim() || !f.elements.phone.value.trim()) return toast("請填寫姓名與聯絡電話");
+  if (!GOOGLE_FORM_URL) return toast("RSVP 表單尚未設定，請在 script.js 填入 GOOGLE_FORM_URL");
+  if (!FORM_ENTRY.name || !FORM_ENTRY.phone || !FORM_ENTRY.attend) return toast("RSVP 欄位 ID 尚未設定，請填入 FORM_ENTRY");
+  const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
+  const body = new URLSearchParams();
+  Object.keys(FORM_ENTRY).forEach((k) => {
+    const el = f.elements[k];
+    if (FORM_ENTRY[k] && el) body.append(FORM_ENTRY[k], el.value);
+  });
+  const btn = f.querySelector("button[type=submit]");
+  btn.disabled = true;
+  try {
+    await fetch(action, { method: "POST", mode: "no-cors", body });
+    toast("已送出，謝謝你的回覆！");
+    f.reset();
+  } catch (err) {
+    toast("送出失敗，請檢查網路後再試一次");
+  }
+  btn.disabled = false;
+});
 
-/* 相簿拼貼 */
-.collage{padding-top:5.5rem;padding-bottom:5.5rem}
-.polaroid{padding:.7rem .7rem .5rem}
+/* ===== 賓客照片上傳 ===== */
+$("#upload-btn").addEventListener("click", () => {
+  if (!PHOTO_UPLOAD_FORM_URL) return toast("照片上傳表單尚未設定，請在 script.js 填入 PHOTO_UPLOAD_FORM_URL");
+  window.open(PHOTO_UPLOAD_FORM_URL, "_blank", "noopener");
+});
 
-/* 貼紙（把 PNG 放進 assets/textures/，沒放會自動隱藏） */
-.sticker{position:absolute;width:clamp(72px,22vw,130px);pointer-events:none;z-index:3;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
-.st-a{top:4.5rem;right:3%;transform:rotate(12deg)}
-.st-b{bottom:1.5rem;left:3%;transform:rotate(-8deg)}
-.st-c{bottom:3.2rem;right:2%;transform:rotate(6deg)}
-@media(min-width:700px){.info-wrap{grid-template-columns:1.1fr 1fr}.hero-title{font-size:6rem}}
-
-/* 修正：首頁文字顏色與撕紙條 */
-.hero .hero-title{color:#fbf3c9}
-.hero .hero-title small{color:#fbf3c9}
-.hero .hero-date{color:#f3e7a8}
-.hero .hero-names{color:#fbf3c9}
-.strip{height:44px;margin:-1rem -4% -1rem}
-
-/* 修正：手機版首頁文字對比（照片偏亮時也看得清楚） */
-.hero .hero-bg{background:linear-gradient(rgba(25,22,8,.6),rgba(25,22,8,.35) 50%,rgba(25,22,8,.7)),url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive))}
-.hero .hero-top,.hero .hero-bottom{color:#fffbe6;text-shadow:0 2px 14px rgba(0,0,0,.8),0 0 4px rgba(0,0,0,.6)}
-.hero .hero-title,.hero .hero-title small,.hero .hero-names{color:#fffbe6}
-.hero .hero-date{color:#f6e7a6}
-.hero-top{z-index:2}.hero-bottom,.hero-band{z-index:2}
-
-/* 修正：信封三角形縮短、首頁文字間距 */
-.env-flap{clip-path:polygon(0 0,100% 0,50% 45%)}
-.env-front{clip-path:polygon(0 100%,0 0,50% 41%,100% 0,100% 100%)}
-.env-seal{top:45%}
-.env-label{z-index:5}
-.hero .hero-title{line-height:1.25}
-.hero .hero-title small{margin:1.2rem 0}
-
-/* 精緻名字：信封與頁尾 */
-.env-label h1{font-size:1.35rem;font-weight:400;letter-spacing:.35em;padding-left:.35em;color:var(--olive-dark)}
-.env-label p{font-size:1rem;letter-spacing:.18em}
-footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.4em}
-
-/* SAVE / THE / DATE 間距再加寬 */
-.hero .hero-title{line-height:1.35}
-.hero .hero-title small{margin:2.4rem 0;letter-spacing:.5em;padding-left:.5em}
-.hero-top{top:9%}
-
-/* ===== 拼貼裝飾：撕破報紙、各式紙膠帶、貼紙 ===== */
-.deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
-.deco img{position:absolute;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))}
-.washi{position:absolute;width:112px;height:30px;box-shadow:0 2px 4px rgba(0,0,0,.22);opacity:.92;
-  clip-path:polygon(0 0,3% 20%,0 40%,3% 60%,0 80%,3% 100%,100% 100%,97% 80%,100% 60%,97% 40%,100% 20%,97% 0)}
-.w-kraft{background:repeating-linear-gradient(90deg,#c9a977 0 7px,#d8bd8f 7px 14px)}
-.w-pink{background:repeating-linear-gradient(0deg,rgba(255,255,255,.45) 0 4px,transparent 4px 8px),repeating-linear-gradient(90deg,#e8bcc2 0 8px,#f4d9dc 8px 16px)}
-.w-gold{background:repeating-linear-gradient(135deg,#c8a96a 0 6px,#e2cb97 6px 12px)}
-.w-dots{background:radial-gradient(circle,#8a6a4a 2px,transparent 2.6px) 0 0/12px 12px,#efe3c4}
-.news{position:absolute;width:clamp(120px,36vw,200px);padding:.6rem .8rem .9rem;background:#f1ecdc var(--grain);color:#9a937a;
-  font:italic 500 16px/1.4 var(--serif);box-shadow:0 3px 8px rgba(60,50,20,.28);
-  clip-path:polygon(0 6%,6% 0,14% 5%,23% 0,33% 5%,44% 0,56% 5%,68% 0,80% 5%,91% 0,100% 6%,100% 92%,93% 100%,82% 94%,70% 100%,58% 94%,45% 100%,33% 94%,21% 100%,10% 94%,0 100%)}
-#info{padding-bottom:7.5rem}
-#memories{padding-bottom:7rem}
-#countdown{padding-bottom:6rem}
-.cal{position:relative}
-.cal::before{content:"";position:absolute;top:-14px;left:50%;width:100px;height:28px;margin-left:-50px;transform:rotate(-3deg);z-index:2;
-  background:repeating-linear-gradient(135deg,#c8a96a 0 6px,#e2cb97 6px 12px);box-shadow:0 2px 4px rgba(0,0,0,.22)}
-
-/* 暫時移除：紙膠帶、貼紙、報紙片 */
-.polaroid::before,.cal::before{display:none}
-#info,#memories,#countdown{padding-bottom:4rem}
-
-/* ===== 封面：婚禮雜誌風（參考 暖金磚牆婚期預告） ===== */
-.hero .hero-bg{background:url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive));
-  filter:sepia(.32) saturate(1.08) contrast(1.03) brightness(.97)}
-.hero .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(70,40,18,.5),rgba(70,40,18,.12) 42%,rgba(70,40,18,.5))}
-.hero .hero-top,.hero .hero-bottom{color:#f6edd9;text-shadow:0 2px 14px rgba(40,22,8,.5)}
-.hero-top{top:11%}
-.hero-bottom{bottom:5.8rem}
-
-/* SAVE THE DATE：高對比襯線 */
-.hero .hero-title{font-family:"Bodoni Moda","Cormorant Garamond",serif;font-weight:400;color:#f6edd9;
-  font-size:clamp(3.6rem,19vw,6.2rem);letter-spacing:.14em;padding-left:.14em;line-height:1.05}
-.hero .hero-title small{display:flex;align-items:center;gap:1rem;max-width:min(92vw,540px);margin:1.6rem auto;padding:0;
-  font:400 1.15rem var(--serif);letter-spacing:.55em;color:#f6edd9}
-.hero .hero-title small::before,.hero .hero-title small::after{content:"";flex:1;height:1px;background:rgba(230,207,154,.85)}
-
-/* 日期：香檳金 */
-.hero .hero-date{display:flex;align-items:center;gap:1rem;max-width:min(92vw,560px);margin:0 auto;
-  font:500 1.2rem var(--serif);letter-spacing:.38em;color:#e6cf9a}
-.hero .hero-date::before,.hero .hero-date::after{content:"";flex:1;height:1px;background:rgba(230,207,154,.85)}
-
-/* 中文姓名：細宋體、寬字距 */
-.hero .hero-names{font-family:"Noto Serif TC",serif;font-weight:300;font-size:1.5rem;letter-spacing:.55em;padding-left:.55em;color:#f6edd9;margin:.9rem 0 0}
-
-.hero-band{letter-spacing:.32em;color:#e8dfc4;font-weight:400}
-
-/* 微調：標題縮小上移、日期姓名下移、暖棕變淡、金色更亮 */
-.hero-top{top:7%}
-.hero .hero-title{font-size:clamp(3rem,15vw,5rem)}
-.hero .hero-title small{margin:1.3rem auto}
-.hero-bottom{bottom:4.3rem}
-.hero .hero-bg{filter:sepia(.14) saturate(1.05) contrast(1.02) brightness(.98)}
-.hero .hero-bg::after{background:linear-gradient(rgba(70,40,18,.32),rgba(70,40,18,.06) 42%,rgba(70,40,18,.34))}
-.hero .hero-date{color:#f6e2ad}
-.hero .hero-date::before,.hero .hero-date::after{background:rgba(246,226,173,.9)}
-.hero .hero-title small::before,.hero .hero-title small::after{background:rgba(246,226,173,.85)}
-
-/* SAVE THE DATE 再下移一點點 */
-.hero-top{top:9%}
-
-/* ===== 開場信封 v2：米白信封 + 金色封蠟（與封面同色系） ===== */
-#envelope-screen{gap:2.2rem;background:
-  radial-gradient(ellipse 60% 40% at 4% 10%,rgba(40,40,12,.38),transparent 70%),
-  radial-gradient(ellipse 50% 35% at 2% 85%,rgba(40,40,12,.32),transparent 70%),
-  var(--olive) var(--grain)}
-.envelope{width:min(88vw,400px);aspect-ratio:1.47;margin-top:4.5rem;perspective:1000px;filter:drop-shadow(0 18px 22px rgba(20,20,5,.38))}
-.ev-back{background:#e7dcc0;border-radius:3px}
-.ev-card{inset:6% 5% auto 5%;height:84%;background:#f8f3e5 var(--grain);padding:3.5%;border-radius:2px;z-index:1;
-  transition:transform 1s cubic-bezier(.5,0,.2,1) .55s}
-.card-in{height:100%;border:1px solid #c8a96a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:8%}
-.card-names{margin:0;font:500 clamp(1.4rem,6.4vw,1.9rem) "Noto Serif TC",serif;letter-spacing:.14em;color:var(--olive-dark)}
-.card-rule{display:block;position:relative;width:36%;height:1px;background:#c8a96a;margin:.6rem 0}
-.card-rule::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;background:#b8934d;transform:rotate(45deg)}
-.card-date{margin:0;font:600 clamp(1.05rem,4.4vw,1.25rem) var(--serif);letter-spacing:.16em;color:#8a6a4a}
-.ev-front{z-index:3}
-.ev-front i{position:absolute;inset:0}
-.ev-front .l{background:#efe6cf var(--grain);clip-path:polygon(0 0,50% 46%,0 100%)}
-.ev-front .r{background:#eadfc5 var(--grain);clip-path:polygon(100% 0,50% 46%,100% 100%)}
-.ev-front .b{background:#f4ecda var(--grain);clip-path:polygon(0 100%,50% 46%,100% 100%)}
-.ev-flap{z-index:4;transform-origin:top;transform-style:preserve-3d;transition:transform .8s ease,z-index 0s .4s}
-.ev-flap i{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 46%);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.ev-flap .ff{background:#f1e8d2 var(--grain)}
-.ev-flap .fb{background:#e2d6b8 var(--grain);transform:rotateX(180deg)}
-.ev-seal{inset:auto;left:50%;top:46%;width:13%;aspect-ratio:1;margin:-6.5% 0 0 -6.5%;border-radius:50%;z-index:5;display:grid;place-items:center;
-  background:radial-gradient(circle at 35% 30%,#ecd9a2,#c8a96a 55%,#a98a4a);box-shadow:0 3px 6px rgba(60,40,10,.45),inset 0 0 0 3px rgba(255,240,200,.25);transition:opacity .3s}
-.ev-seal i{color:rgba(120,88,28,.75);font-size:clamp(14px,4.5vw,20px);text-shadow:0 1px 0 rgba(255,240,200,.5)}
-.envelope.open .ev-flap{transform:rotateX(180deg);z-index:0}
-.envelope.open .ev-card{transform:translateY(-24%)}
-.envelope.open .ev-seal{opacity:0}
-
-.env-text{text-align:center;transition:opacity .4s}
-.envelope.open ~ .env-text{opacity:0}
-.env-names{margin:0;font:400 clamp(1.7rem,7vw,2.1rem) "Noto Serif TC",serif;letter-spacing:.35em;padding-left:.35em;color:#f6edd9}
-.env-sub{display:flex;align-items:center;gap:1.2rem;margin:.7rem auto 0;width:min(88vw,400px)}
-.env-sub::before,.env-sub::after{content:"";flex:1;height:1px;background:rgba(246,226,173,.6)}
-.env-sub span{font:italic 500 1.15rem var(--serif);letter-spacing:.3em;color:#f6e2ad}
-.btn-open{display:inline-flex;align-items:center;gap:.9rem;min-height:56px;padding:.8rem 2.4rem;background:transparent;border:1px solid rgba(246,226,173,.75);
-  border-radius:999px;color:#f6edd9;font:500 1.25rem var(--serif);letter-spacing:.08em;cursor:pointer;transition:opacity .3s,background .2s;-webkit-tap-highlight-color:transparent}
-.btn-open:active{background:rgba(246,226,173,.14)}
-.btn-open i{font-size:.9rem}
+/* ===== 相簿 / 動畫套件 ===== */
+document.querySelectorAll(".polaroid img").forEach((img) => {
+  img.addEventListener("error", () => { img.removeAttribute("src"); }, { once: true });
+});
+if (window.Swiper) {
+  new Swiper("#photo-swiper", {
+    slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: false,
+    pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    breakpoints: { 700: { slidesPerView: 2, centeredSlides: false } }
+  });
+}
+if (window.GLightbox) GLightbox({ selector: ".glightbox", touchNavigation: true, loop: true });
+if (window.AOS) AOS.init({ duration: 800, once: true, offset: 60 });
