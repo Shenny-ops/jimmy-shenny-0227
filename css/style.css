@@ -242,3 +242,28 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 /* 暫時移除：紙膠帶、貼紙、報紙片 */
 .polaroid::before,.cal::before{display:none}
 #info,#memories,#countdown{padding-bottom:4rem}
+
+/* ===== 封面：婚禮雜誌風（參考 暖金磚牆婚期預告） ===== */
+.hero .hero-bg{background:url("../assets/images/hero.jpg?v=2") center/cover,linear-gradient(135deg,#8a8a46,var(--olive));
+  filter:sepia(.32) saturate(1.08) contrast(1.03) brightness(.97)}
+.hero .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(70,40,18,.5),rgba(70,40,18,.12) 42%,rgba(70,40,18,.5))}
+.hero .hero-top,.hero .hero-bottom{color:#f6edd9;text-shadow:0 2px 14px rgba(40,22,8,.5)}
+.hero-top{top:11%}
+.hero-bottom{bottom:5.8rem}
+
+/* SAVE THE DATE：高對比襯線 */
+.hero .hero-title{font-family:"Bodoni Moda","Cormorant Garamond",serif;font-weight:400;color:#f6edd9;
+  font-size:clamp(3.6rem,19vw,6.2rem);letter-spacing:.14em;padding-left:.14em;line-height:1.05}
+.hero .hero-title small{display:flex;align-items:center;gap:1rem;max-width:min(92vw,540px);margin:1.6rem auto;padding:0;
+  font:400 1.15rem var(--serif);letter-spacing:.55em;color:#f6edd9}
+.hero .hero-title small::before,.hero .hero-title small::after{content:"";flex:1;height:1px;background:rgba(230,207,154,.85)}
+
+/* 日期：香檳金 */
+.hero .hero-date{display:flex;align-items:center;gap:1rem;max-width:min(92vw,560px);margin:0 auto;
+  font:500 1.2rem var(--serif);letter-spacing:.38em;color:#e6cf9a}
+.hero .hero-date::before,.hero .hero-date::after{content:"";flex:1;height:1px;background:rgba(230,207,154,.85)}
+
+/* 中文姓名：細宋體、寬字距 */
+.hero .hero-names{font-family:"Noto Serif TC",serif;font-weight:300;font-size:1.5rem;letter-spacing:.55em;padding-left:.55em;color:#f6edd9;margin:.9rem 0 0}
+
+.hero-band{letter-spacing:.32em;color:#e8dfc4;font-weight:400}
