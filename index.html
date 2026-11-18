@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=18">
+<link rel="stylesheet" href="css/style.css?v=19">
 </head>
 <body class="locked">
 
@@ -101,8 +101,29 @@
     <a class="btn btn-olive" id="btn-gmap" target="_blank" rel="noopener"><i class="fa-solid fa-location-arrow"></i> 立即導航<small>Google Maps</small></a>
     <a class="btn btn-brown" id="btn-amap" target="_blank" rel="noopener"><i class="fa-brands fa-apple"></i> Apple 地圖導航<small>Apple Maps</small></a>
   </div>
+  <div class="transit" data-aos="fade-up">
+    <h3 class="transit-title">交通資訊</h3>
+    <div class="acc-item">
+      <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-train"><span><span class="num">01</span>｜搭火車前往</span><span class="acc-hint"><i class="fa-solid fa-play"></i><b>點擊展開</b></span></button>
+      <div class="acc-panel" id="acc-train"><div class="acc-inner"><div>
+        <p>搭乘火車至富岡火車站後，轉乘計程車（10分鐘路程）即可抵達婚禮場地。</p>
+      </div></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-car"><span><span class="num">02</span>｜自行開車前往</span><span class="acc-hint"><i class="fa-solid fa-play"></i><b>點擊展開</b></span></button>
+      <div class="acc-panel" id="acc-car"><div class="acc-inner"><div>
+        <h4>南下旅客（台北、基隆、桃園方向）</h4>
+        <p>建議由楊梅交流道下高速公路，依導航前往會場。</p>
+        <h4>北上旅客（新竹、苗栗、台中方向）</h4>
+        <p>建議由幼獅交流道或楊梅交流道下高速公路，依導航前往會場。</p>
+      </div></div></div>
+    </div>
+    <figure class="entrance">
+      <figcaption>📷 入口照片</figcaption>
+      <img src="assets/images/entrance.jpg" alt="會場入口" loading="lazy" onerror="this.closest('figure').remove()">
+    </figure>
+  </div>
 </section>
-
 
 <!-- 相簿 -->
 <section class="section olive collage" id="gallery">
@@ -154,7 +175,8 @@
 <section class="section" id="memories">
   <h2 class="title hand" data-aos="fade-up">Share Your Memories</h2>
   <p class="center" data-aos="fade-up">分享婚禮美好時刻</p>
-  <div class="btn-row"><button id="upload-btn" class="btn btn-olive" type="button">📸 上傳婚禮照片</button></div>
+  <p class="center" data-aos="fade-up">可一次選擇多張，系統會自動壓縮</p>
+  <div class="btn-row"><button id="upload-btn" class="btn btn-olive" type="button">📸 上傳婚禮照片</button><input id="photo-input" type="file" accept="image/*" multiple hidden></div>
 </section>
 
 <!-- 倒數 -->
@@ -179,6 +201,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="js/script.js?v=6"></script>
+<script src="js/script.js?v=8"></script>
 </body>
 </html>
