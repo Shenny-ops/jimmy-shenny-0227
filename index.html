@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=17">
+<link rel="stylesheet" href="css/style.css?v=18">
 </head>
 <body class="locked">
 
@@ -33,6 +33,27 @@
   </div>
   <button id="open-btn" class="btn btn-gold" type="button">Open Invitation</button>
 </div>
+
+<script>
+/* 開啟信封：獨立於 script.js，即使其他程式載入失敗也能打開 */
+(function () {
+  var btn = document.getElementById("open-btn");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    if (window.__opened) return;
+    window.__opened = true;
+    btn.disabled = true;
+    btn.style.opacity = "0";
+    document.getElementById("envelope").classList.add("open");
+    setTimeout(function () {
+      document.getElementById("envelope-screen").classList.add("done");
+      document.body.classList.remove("locked");
+      window.scrollTo(0, 0);
+      if (window.AOS && AOS.refresh) AOS.refresh();
+    }, 1700);
+  });
+})();
+</script>
 
 <main id="site">
 
@@ -158,6 +179,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="js/script.js?v=5"></script>
+<script src="js/script.js?v=6"></script>
 </body>
 </html>
