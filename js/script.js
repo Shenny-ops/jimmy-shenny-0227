@@ -50,7 +50,7 @@ function tick() {
   const h = Math.floor(diff / 36e5); diff %= 36e5;
   const m = Math.floor(diff / 6e4);
   const s = Math.floor((diff % 6e4) / 1e3);
-  $("#cd-d").textContent = d;
+  $("#cd-d").textContent = String(d).padStart(3, "0");
   $("#cd-h").textContent = String(h).padStart(2, "0");
   $("#cd-m").textContent = String(m).padStart(2, "0");
   $("#cd-s").textContent = String(s).padStart(2, "0");
