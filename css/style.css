@@ -317,3 +317,61 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
   .collage .swiper{max-width:940px;padding-left:3.4rem;padding-right:3.4rem}
   .collage .swiper-button-prev,.collage .swiper-button-next{display:flex}
 }
+
+/* ===== 倒數：復古火車票（Vintage Railway Ticket） ===== */
+#countdown{padding:4rem .8rem 4.5rem}
+.ticket-wrap{max-width:800px;margin:0 auto;filter:drop-shadow(0 12px 16px rgba(18,18,4,.45))}
+.ticket{--stubh:140px;
+  --edges:radial-gradient(circle at 9px 0,#0000 5px,#000 5.6px) 0 0/18px 100% repeat-x,
+    radial-gradient(circle at 9px 100%,#0000 5px,#000 5.6px) 0 0/18px 100% repeat-x,
+    radial-gradient(circle at 0 9px,#0000 5px,#000 5.6px) 0 0/100% 18px repeat-y,
+    radial-gradient(circle at 100% 9px,#0000 5px,#000 5.6px) 0 0/100% 18px repeat-y;
+  --perf:radial-gradient(circle at 0 calc(100% - var(--stubh)),#0000 9px,#000 9.6px),
+    radial-gradient(circle at 100% calc(100% - var(--stubh)),#0000 9px,#000 9.6px);
+  position:relative;display:grid;grid-template-rows:auto var(--stubh);background:#f3ecd9 var(--grain);color:var(--olive-dark);
+  -webkit-mask:var(--edges),var(--perf);-webkit-mask-composite:source-in;mask:var(--edges),var(--perf);mask-composite:intersect}
+.ticket::before,.ticket::after{content:"";position:absolute;pointer-events:none;z-index:2}
+.ticket::before{inset:11px;border:1.5px solid rgba(85,85,31,.6)}
+.ticket::after{inset:16px;border:1px solid rgba(138,106,74,.45)}
+
+.tk-main{padding:2.1rem 1.3rem 1.4rem;text-align:center;position:relative;z-index:1}
+.tk-top{margin:0;font:600 16px/1.5 var(--serif);letter-spacing:.14em;color:var(--brown)}
+.tk-top i{margin-right:.5rem;color:var(--olive)}
+.tk-title{margin:.5rem 0 0;font:500 clamp(1.6rem,6.5vw,2.3rem)/1.1 "Bodoni Moda","Cormorant Garamond",serif;letter-spacing:.22em;padding-left:.22em;color:var(--olive-dark)}
+.tk-date{margin:.25rem 0 0;font:600 1.25rem var(--serif);letter-spacing:.3em;padding-left:.3em;color:var(--brown)}
+.tk-route{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.7rem;margin:1rem 0 .9rem;text-align:left}
+.tk-route small{display:block;font:500 16px var(--serif);letter-spacing:.2em;color:var(--brown)}
+.tk-route b{font:600 1.1rem/1.2 var(--serif);letter-spacing:.1em;color:var(--olive-dark)}
+.tk-route div:last-child{text-align:right}
+.tk-line{position:relative;height:0;border-top:2px dashed rgba(107,107,45,.55);margin-top:.7rem}
+.tk-line i{position:absolute;left:50%;top:-.65rem;transform:translateX(-50%);background:#f3ecd9;padding:0 .4rem;color:var(--olive);font-size:.95rem}
+.tk-live{display:flex;align-items:center;justify-content:center;gap:.5rem;margin:0 0 .3rem;font:600 16px var(--serif);letter-spacing:.22em;color:var(--olive)}
+.tk-live .dot{width:8px;height:8px;border-radius:50%;background:var(--olive);animation:tkblink 1.6s infinite}
+@keyframes tkblink{50%{opacity:.25}}
+.tk-count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:.5rem;border-top:1px solid rgba(138,106,74,.45);border-bottom:1px solid rgba(138,106,74,.45)}
+.tk-count>div{padding:.7rem 0 .6rem}
+.tk-count>div+div{border-left:1px solid rgba(138,106,74,.35)}
+.tk-count b{display:block;font:600 clamp(2rem,8.8vw,3.6rem)/1 "Bodoni Moda","Cormorant Garamond",serif;color:var(--olive-dark);font-variant-numeric:tabular-nums lining-nums}
+.tk-count span{display:block;margin-top:.35rem;font:500 16px var(--serif);letter-spacing:.03em;color:var(--brown)}
+@media(max-width:389px){
+  .tk-count{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tk-count>div:nth-child(3){border-left:0}
+  .tk-count>div:nth-child(n+3){border-top:1px solid rgba(138,106,74,.35)}
+}
+
+.tk-stub{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:.8rem;padding:0 1.4rem;
+  border-top:2px dashed rgba(138,106,74,.55);background:rgba(120,100,60,.07)}
+.tk-stub p{margin:0;font:600 16px/1.35 var(--serif);letter-spacing:.1em;color:var(--olive-dark)}
+.tk-stub p em{display:block;font-style:normal;font-weight:500;letter-spacing:.06em;color:var(--brown)}
+.tk-bars{display:block;width:60px;height:56px;background:repeating-linear-gradient(90deg,var(--olive-dark) 0 2px,transparent 2px 4px,var(--olive-dark) 4px 5px,transparent 5px 8px,var(--olive-dark) 8px 11px,transparent 11px 13px)}
+.tk-stamp{display:grid;place-items:center;width:82px;height:82px;border:2px solid rgba(138,106,74,.65);border-radius:50%;outline:1px solid rgba(138,106,74,.4);outline-offset:3px;
+  transform:rotate(-12deg);text-align:center;font:600 16px/1.25 var(--serif);letter-spacing:.05em;color:rgba(138,106,74,.9)}
+
+@media(min-width:700px){
+  .ticket{--perf:radial-gradient(circle at calc(100% - 200px) 0,#0000 9px,#000 9.6px),radial-gradient(circle at calc(100% - 200px) 100%,#0000 9px,#000 9.6px);
+    grid-template-columns:1fr 200px;grid-template-rows:auto}
+  .tk-main{padding:2.4rem 2rem 1.8rem}
+  .tk-stub{grid-template-columns:1fr;justify-items:center;text-align:center;gap:1rem;padding:1.6rem 1rem;border-top:0;border-left:2px dashed rgba(138,106,74,.55)}
+  .tk-bars{width:120px;height:44px}
+  .tk-stamp{width:92px;height:92px}
+}
