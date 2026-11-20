@@ -586,3 +586,32 @@ html,body{max-width:100%;overflow-x:hidden}
 .hero-band i{font-size:.95rem;color:#f6e2ad;animation:nudge 1.6s ease-in-out infinite}
 @keyframes nudge{0%,100%{transform:translateY(-2px)}50%{transform:translateY(4px)}}
 @media(prefers-reduced-motion:reduce){.hero-band i{animation:none}}
+
+/* ===== Wedding Details：旅行手帳精緻化 ===== */
+.info-list{gap:0}
+.info-list li{align-items:flex-start;padding:1rem 0;border-bottom:1px dashed rgba(200,169,106,.75)}
+.info-list li:first-child{padding-top:.2rem}
+.info-list li:last-child{border-bottom:0;padding-bottom:0}
+.info-list i{font-size:1.5rem;width:2rem;margin-top:.55rem;color:var(--olive)}
+.info-list .lab{display:block;font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.16em;color:#b08f52}
+.info-list h3{margin:.05rem 0 0;font-size:1.1rem;letter-spacing:.18em;color:var(--brown)}
+
+/* 照片：保留鋸齒撕紙框，膠帶與標籤放在裁切層外面 */
+.scrap{position:relative;width:min(86%,380px);margin:0 auto;padding:0;background:none;box-shadow:none;transform:none;filter:drop-shadow(0 5px 8px rgba(80,60,30,.28))}
+.scrap-paper{padding:1.1rem 1.1rem 1.6rem;background:var(--grain),#f3ead2;transform:rotate(1.6deg)}
+.scrap-paper img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;background:none}
+.washi-tape{position:absolute;top:-10px;left:50%;width:96px;height:26px;margin-left:-64px;transform:rotate(-5deg);z-index:2;
+  background:repeating-linear-gradient(90deg,rgba(107,107,45,.55) 0 8px,rgba(150,150,80,.5) 8px 16px);box-shadow:0 1px 2px rgba(0,0,0,.18);
+  clip-path:polygon(0 0,3% 25%,0 50%,3% 75%,0 100%,100% 100%,97% 75%,100% 50%,97% 25%,100% 0)}
+.scrap-tag{position:absolute;right:6%;bottom:-2px;z-index:2;padding:.15rem .6rem;background:#f8f2e1;border:1px solid rgba(138,106,74,.5);transform:rotate(-2.5deg);
+  font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.1em;color:var(--brown)}
+.washi-tape,.scrap-tag{opacity:0;transition:opacity .8s ease .5s}
+.scrap.aos-animate .washi-tape,.scrap.aos-animate .scrap-tag,html:not(.js) .scrap .washi-tape,html:not(.js) .scrap .scrap-tag{opacity:1}
+.scrap-paper{transition:transform 1s ease .2s}
+.scrap:not(.aos-animate) .scrap-paper{transform:rotate(3.2deg) scale(1.02)}
+
+/* 經文：珍藏筆記 */
+.note{background:radial-gradient(ellipse at 10% 0,rgba(255,255,255,.5),transparent 60%),var(--grain),#f6efdc;border-left:4px solid var(--gold);
+  box-shadow:0 2px 8px rgba(80,60,30,.14);transform:rotate(-.6deg)}
+.note cite{font-family:var(--hand);font-style:normal;color:#a07d52}
+@media(max-width:480px){.note{margin-left:.4rem;margin-right:.4rem;font-size:1.15rem}}
