@@ -454,3 +454,9 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
 .done-zh{margin:0 0 1.5rem;color:var(--olive)}
 
 @media(min-width:700px){.opts{grid-template-columns:1fr 1fr}.btn-pair{grid-template-columns:1fr 1fr}}
+
+/* 修正：送出後蓋章動畫造成手機版橫向溢出、畫面被縮到一邊 */
+html,body{max-width:100%;overflow-x:hidden}
+#rsvp{overflow:hidden}
+#rsvp-done{overflow:hidden;padding:.6rem 0}
+@keyframes stampIn{0%{opacity:0;transform:scale(1.8) rotate(-20deg)}60%{opacity:1;transform:scale(.95) rotate(-9deg)}100%{opacity:.92;transform:scale(1) rotate(-9deg)}}
