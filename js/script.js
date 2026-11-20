@@ -70,7 +70,7 @@ const CIRCLE = '<svg class="circ" viewBox="-12 -12 84 84" aria-hidden="true" foc
   const grid = $("#cal-grid");
   const first = new Date(2027, 1, 1).getDay();
   const days = new Date(2027, 2, 0).getDate();
-  let html = ["日", "一", "二", "三", "四", "五", "六"].map((w) => `<div class="dow">${w}</div>`).join("");
+  let html = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((w) => `<div class="dow">${w}</div>`).join("");
   html += '<div></div>'.repeat(first);
   for (let i = 1; i <= days; i++) {
     html += i === 27

@@ -750,3 +750,10 @@ html,body{max-width:100%;overflow-x:hidden}
 .pol-cap{white-space:nowrap;padding:.7rem 0 .6rem;font-size:clamp(16px,4.6vw,1.2rem);letter-spacing:.02em}
 @media(max-width:360px){.pol-cap{letter-spacing:0}}
 #info{padding-bottom:4rem}
+
+/* calendar: red circle, English weekdays */
+.circ .c1,.circ .c2{stroke:#e8352b}
+.circ .c2{opacity:.7}
+.circ .star{fill:#ff6a5c}
+.cal-grid .dow{font-size:16px;letter-spacing:.02em;white-space:nowrap}
+@media(max-width:420px){.cal-grid .dow{font-size:16px;letter-spacing:0}}
