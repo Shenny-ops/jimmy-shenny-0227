@@ -375,3 +375,82 @@ footer .hand{font-size:1.4rem;font-weight:400;letter-spacing:.4em;padding-left:.
   .tk-bars{width:120px;height:44px}
   .tk-stamp{width:92px;height:92px}
 }
+
+/* ===== RSVP：復古行李吊牌 ===== */
+[hidden]{display:none!important}
+#rsvp{padding:3rem 1rem 4.5rem}
+.tag-stage{position:relative;max-width:470px;margin:0 auto;padding-top:96px;transform-origin:50% 0;filter:drop-shadow(0 16px 18px rgba(18,18,4,.45))}
+.js .tag-stage:not(.in){opacity:0}
+.tag-stage.in{animation:tagDrop 1.1s cubic-bezier(.3,.7,.3,1) both}
+@keyframes tagDrop{0%{opacity:0;transform:translateY(-34px) rotate(-7deg)}55%{opacity:1;transform:translateY(4px) rotate(2.5deg)}78%{transform:rotate(-1.2deg)}100%{opacity:1;transform:none}}
+
+/* 細繩 */
+.tag-string{position:absolute;top:2px;left:50%;width:70px;height:118px;margin-left:-35px;border:5px solid #8a6a4a;border-bottom:0;border-radius:50% 50% 0 0/62% 62% 0 0;
+  box-shadow:inset 0 0 0 1px rgba(255,235,190,.25)}
+
+.tag{position:relative;background:#f3ecd9 var(--grain);color:var(--olive-dark);border-radius:30px 30px 20px 20px;
+  clip-path:polygon(2.5% 0,97.5% 0,100% 100%,0 100%)}
+.tag::before,.tag::after{content:"";position:absolute;pointer-events:none;border-radius:22px}
+.tag::before{inset:16px calc(2.5% + 9px);border:1.5px solid rgba(85,85,31,.6)}
+.tag::after{inset:22px calc(2.5% + 15px);border:1.5px dashed rgba(138,106,74,.65)}
+.tag-hole{position:absolute;z-index:2;top:26px;left:50%;width:30px;height:30px;margin-left:-15px;border-radius:50%;
+  background:radial-gradient(circle,#3b3a1a 0 8px,#d8bd7a 9px,#a98a4a 14px,#e6d29a 15px);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.tag-body{position:relative;z-index:1;padding:78px calc(2.5% + 28px) 2.4rem}
+.tag-kicker{margin:0;text-align:center;font:600 16px/1.4 var(--serif);letter-spacing:.2em;color:var(--brown)}
+.tag-kicker i{margin-right:.5rem;color:var(--olive)}
+.tag-title{margin:.5rem 0 0;text-align:center;font:500 clamp(1.7rem,7.2vw,2.3rem)/1.15 "Bodoni Moda","Cormorant Garamond",serif;letter-spacing:.16em;padding-left:.16em;color:var(--olive-dark)}
+.tag-sub{margin:.5rem 0 1.5rem;text-align:center;font:italic 500 1.1rem/1.5 var(--serif);color:var(--brown)}
+
+#rsvp form .fld,#rsvp .fld{margin:0 0 1.2rem;padding:0;border:0;min-width:0}
+.lbl{display:block;margin:0 0 .35rem;padding:0;font:600 16px/1.4 var(--serif);letter-spacing:.14em;color:var(--brown)}
+.lbl span{margin-left:.6rem;font-family:"Noto Serif TC",serif;font-weight:400;letter-spacing:.04em;color:var(--olive)}
+#rsvp input[type=text],#rsvp textarea{width:100%;min-height:52px;padding:.6rem .4rem;background:rgba(255,255,255,.4);border:0;border-bottom:2px solid var(--brown);
+  border-radius:2px 2px 0 0;font:17px "Noto Serif TC",serif;color:var(--ink)}
+#rsvp input[type=text]:focus,#rsvp textarea:focus{outline:0;background:rgba(255,255,255,.7);border-bottom-color:var(--olive)}
+#rsvp textarea{line-height:32px;resize:vertical;background:repeating-linear-gradient(transparent 0 31px,rgba(138,106,74,.3) 31px 32px),rgba(255,255,255,.35)}
+.err{margin:.35rem 0 0;font:500 16px/1.4 "Noto Serif TC",serif;color:#9a3b2b}
+.err:empty{display:none}
+
+.opts{display:grid;gap:.7rem}
+.opt,.chip{position:relative;display:grid;gap:.05rem;justify-items:center;text-align:center;min-height:62px;padding:.7rem .8rem;border:1.5px solid var(--brown);border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.3);transition:background .2s,color .2s;-webkit-tap-highlight-color:transparent}
+.opt input,.chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.opt:focus-within,.chip:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.opt b{font:600 1.1rem var(--serif);letter-spacing:.06em}
+.opt span,.chip span{font:500 16px "Noto Serif TC",serif}
+.opt.on{background:var(--olive);border-color:var(--olive);color:#fbf3dc}
+.opt:nth-child(2).on{background:var(--brown);border-color:var(--brown)}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem}
+.chip{min-height:52px;padding:.5rem 1.1rem}
+.chip.on{background:var(--olive);border-color:var(--olive);color:#fbf3dc}
+
+.stepper{display:flex;align-items:center;gap:.9rem}
+.stepper button{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--brown);background:rgba(255,255,255,.4);color:var(--olive-dark);font:600 1.6rem/1 var(--serif);cursor:pointer;touch-action:manipulation}
+.stepper button:active{background:rgba(107,107,45,.18)}
+.stepper output{min-width:2.2rem;text-align:center;font:600 2rem/1 "Bodoni Moda","Cormorant Garamond",serif;color:var(--olive-dark)}
+.stepper em{font:italic 500 16px var(--serif);color:var(--brown)}
+
+.tk-btn{width:100%;min-height:58px;padding:.7rem 1rem;border:0;border-radius:8px;background:var(--olive);color:#fbf3dc;font:600 1rem/1.3 var(--serif);letter-spacing:.14em;
+  cursor:pointer;box-shadow:0 4px 10px rgba(60,50,20,.3);transition:transform .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.tk-btn:active{transform:translateY(2px)}
+.tk-btn:disabled{opacity:.6}
+.tk-btn.ghost{background:transparent;color:var(--olive-dark);border:1.5px solid var(--olive);box-shadow:none}
+.btn-pair{display:grid;gap:.8rem;margin-top:1rem}
+
+.review-title{margin:0 0 1rem;text-align:center;font:600 1.3rem var(--serif);letter-spacing:.2em;color:var(--olive-dark)}
+.review-title span{display:block;margin-top:.15rem;font:400 16px "Noto Serif TC",serif;letter-spacing:.1em;color:var(--brown)}
+.review{display:grid;grid-template-columns:auto 1fr;gap:.7rem 1rem;margin:0;padding:1rem 0;border-top:1px dashed rgba(138,106,74,.6);border-bottom:1px dashed rgba(138,106,74,.6)}
+.review dt{font:600 16px/1.5 var(--serif);letter-spacing:.06em;color:var(--brown)}
+.review dd{margin:0;white-space:pre-wrap;word-break:break-word;font-size:17px;line-height:1.6}
+
+#rsvp-done{text-align:center}
+.stamp{display:inline-block;margin:.4rem 0 1.1rem;padding:.55rem 1.1rem;border:3px double var(--olive-dark);color:var(--olive-dark);transform:rotate(-9deg);opacity:.92;
+  font:600 1.15rem "Bodoni Moda","Cormorant Garamond",serif;letter-spacing:.2em;mix-blend-mode:multiply}
+.stamp small{display:block;font:500 16px var(--serif);letter-spacing:.3em}
+#rsvp-done.show .stamp{animation:stampIn .7s cubic-bezier(.2,1.4,.4,1) .2s both}
+@keyframes stampIn{0%{opacity:0;transform:scale(2.6) rotate(-24deg)}60%{opacity:1;transform:scale(.94) rotate(-9deg)}100%{opacity:.92;transform:scale(1) rotate(-9deg)}}
+.done-title{margin:0 0 .4rem;font:500 1.7rem/1.2 "Bodoni Moda","Cormorant Garamond",serif;letter-spacing:.06em;color:var(--olive-dark)}
+.done-text{margin:0 0 .4rem;font:italic 500 1.1rem/1.6 var(--serif);color:var(--brown)}
+.done-zh{margin:0 0 1.5rem;color:var(--olive)}
+
+@media(min-width:700px){.opts{grid-template-columns:1fr 1fr}.btn-pair{grid-template-columns:1fr 1fr}}
