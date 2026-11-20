@@ -60,6 +60,12 @@ tick();
 setInterval(tick, 1000);
 
 /* ===== 2027 年 2 月月曆（2/1 為星期一，共 28 天） ===== */
+const CIRCLE = '<svg class="circ" viewBox="-12 -12 84 84" aria-hidden="true" focusable="false">' +
+  '<path class="c1" pathLength="1" d="M31 5.5C46 3.8 57.5 15 55.8 30C54.2 45.5 41 56.5 26.5 54.2C12 52 3.8 40 6.2 26.5C8.6 13 21 5.2 35 7.6C41.5 8.8 47 12.4 50 17"/>' +
+  '<path class="c2" pathLength="1" d="M30 7.5C44 6.2 55 17 53.6 30C52.2 43.5 40 53.8 27 52C14 50.2 7.4 39.5 9 27.5"/>' +
+  '<path class="star" d="M62 -7Q62 -2 67 -2Q62 -2 62 3Q62 -2 57 -2Q62 -2 62 -7Z"/>' +
+  '<path class="star" d="M-5 54.5Q-5 58 -1.5 58Q-5 58 -5 61.5Q-5 58 -8.5 58Q-5 58 -5 54.5Z"/></svg>';
+
 (function buildCalendar() {
   const grid = $("#cal-grid");
   const first = new Date(2027, 1, 1).getDay();
@@ -67,7 +73,9 @@ setInterval(tick, 1000);
   let html = ["日", "一", "二", "三", "四", "五", "六"].map((w) => `<div class="dow">${w}</div>`).join("");
   html += '<div></div>'.repeat(first);
   for (let i = 1; i <= days; i++) {
-    html += `<div class="d${i === 27 ? " wedding" : ""}"${i === 27 ? ' aria-label="2月27日 婚禮"' : ""}>${i}</div>`;
+    html += i === 27
+      ? `<div class="d wedding" aria-label="2月27日 婚禮">${CIRCLE}<span>${i}</span></div>`
+      : `<div class="d"><span>${i}</span></div>`;
   }
   grid.innerHTML = html;
 })();
@@ -352,3 +360,13 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
     }
   });
 });
+
+/* ===== 月曆：手繪圈選進場時畫出來 ===== */
+(function () {
+  const cal = document.querySelector(".cal");
+  if (!cal) return;
+  if (!("IntersectionObserver" in window)) { cal.classList.add("drawn"); return; }
+  new IntersectionObserver((es, o) => {
+    es.forEach((e) => { if (e.isIntersecting) { cal.classList.add("drawn"); o.disconnect(); } });
+  }, { threshold: 0.35 }).observe(cal);
+})();
