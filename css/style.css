@@ -736,3 +736,12 @@ html,body{max-width:100%;overflow-x:hidden}
 
 /* 蠟封：玫瑰花圖案（暗綠壓印） */
 .seal .rose{position:absolute;left:50%;top:50%;width:62%;height:62%;transform:translate(-50%,-50%) rotate(-6deg);overflow:visible}
+
+/* Wedding Details 照片：拍立得 + 棕色紙膠帶 + 經文題字 */
+.scrap{filter:none}
+.pol{background:#fff;padding:.8rem .8rem .5rem;box-shadow:0 6px 14px rgba(80,60,30,.28);transform:rotate(1.6deg);transition:transform 1s ease .2s}
+.scrap:not(.aos-animate) .pol{transform:rotate(3.2deg) scale(1.02)}
+.pol img{display:block;width:100%;height:auto}
+.pol-cap{margin:0;padding:.7rem .3rem .6rem;text-align:center;font-size:1.3rem;line-height:1.5;letter-spacing:.06em;color:#8a6a4a}
+.scrap .washi-tape{top:-13px;left:50%;width:104px;height:28px;margin-left:-52px;transform:rotate(-4deg);
+  background:repeating-linear-gradient(90deg,rgba(138,106,74,.88) 0 8px,rgba(160,125,88,.85) 8px 16px)}
