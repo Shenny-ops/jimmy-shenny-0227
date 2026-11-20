@@ -402,3 +402,23 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
     btn.click();
   });
 })();
+
+/* ===== 背景音樂：點「開啟邀請函」後播放；右下角可暫停／播放 ===== */
+(function bgMusic() {
+  const audio = document.getElementById("bgm"), btn = document.getElementById("music-btn"), open = document.getElementById("open-btn");
+  if (!audio || !btn) return;
+  let ready = false;
+  const sync = () => btn.classList.toggle("on", !audio.paused);
+  audio.addEventListener("canplay", () => { ready = true; btn.hidden = false; });
+  audio.addEventListener("play", sync); audio.addEventListener("pause", sync);
+  audio.addEventListener("error", () => { btn.hidden = true; });
+  audio.load();
+  audio.volume = 0.6;
+  let userPaused = false;
+  if (open) open.addEventListener("click", () => { if (!userPaused) audio.play().catch(() => {}); });
+  btn.addEventListener("click", () => {
+    if (audio.paused) { userPaused = false; audio.play().catch(() => {}); }
+    else { userPaused = true; audio.pause(); }
+  });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) audio.pause(); else if (!userPaused && ready && window.__opened) audio.play().catch(() => {}); });
+})();
