@@ -764,3 +764,6 @@ html,body{max-width:100%;overflow-x:hidden}
 #music-btn:not(.on)::after{content:"";position:absolute;width:30px;height:2px;background:var(--brown);transform:rotate(-45deg)}
 #music-btn.on i{animation:mspin 3s linear infinite}
 @keyframes mspin{50%{transform:scale(1.15)}}
+
+.polaroid span.hand{font-size:1.4rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.polaroid span.hand i{color:#b5524a;font-size:1.3rem}
