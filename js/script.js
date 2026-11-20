@@ -370,3 +370,14 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
     es.forEach((e) => { if (e.isIntersecting) { cal.classList.add("drawn"); o.disconnect(); } });
   }, { threshold: 0.35 }).observe(cal);
 })();
+
+/* ===== 明信片上傳區：整塊照片空格都可點擊 ===== */
+(function () {
+  const zone = document.querySelector("#drop-zone");
+  const btn = document.querySelector("#upload-btn");
+  if (!zone || !btn) return;
+  zone.addEventListener("click", (e) => {
+    if (e.target === btn || btn.contains(e.target) || btn.disabled) return;
+    btn.click();
+  });
+})();

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=25">
+<link rel="stylesheet" href="css/style.css?v=26">
 </head>
 <body class="locked">
 
@@ -245,10 +245,25 @@
 
 <!-- 賓客上傳 -->
 <section class="section" id="memories">
-  <h2 class="title hand" data-aos="fade-up">Share Your Memories</h2>
-  <p class="center" data-aos="fade-up">分享婚禮美好時刻</p>
-  <p class="center" data-aos="fade-up">可一次選擇多張，系統會自動壓縮</p>
-  <div class="btn-row"><button id="upload-btn" class="btn btn-olive" type="button">📸 上傳婚禮照片</button><input id="photo-input" type="file" accept="image/*" multiple hidden></div>
+  <div class="pcard" data-aos="fade-up">
+    <div class="pcard-stamp" aria-hidden="true"><b>LOVE</b><small>27.02.27</small></div>
+    <div class="pcard-post" aria-hidden="true"><span>GREETINGS<br>FROM OUR<br>WEDDING</span></div>
+    <p class="pcard-no">POSTCARD NO. 04</p>
+    <h2 class="title hand">Share Your Memories</h2>
+    <p class="pcard-zh">把今天的美好，寄進我們的旅程。</p>
+    <p class="pcard-en">Share the moments you captured with us.</p>
+
+    <div class="drop" id="drop-zone">
+      <i class="fa-solid fa-camera drop-ico" aria-hidden="true"></i>
+      <p class="drop-en">ADD YOUR PHOTOS</p>
+      <p class="drop-zh">把照片寄給我們</p>
+      <button id="upload-btn" class="drop-btn" type="button">ADD YOUR PHOTOS</button>
+      <input id="photo-input" type="file" accept="image/*" multiple hidden>
+    </div>
+
+    <p class="pcard-note">MULTIPLE PHOTOS WELCOME<br>Photos will be compressed automatically.</p>
+    <p class="pcard-note zh">可一次選擇多張，系統會自動壓縮</p>
+  </div>
 </section>
 
 <!-- 倒數 -->
@@ -292,6 +307,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="js/script.js?v=12"></script>
+<script src="js/script.js?v=13"></script>
 </body>
 </html>
