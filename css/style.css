@@ -580,3 +580,9 @@ html,body{max-width:100%;overflow-x:hidden}
 .pcard-note{margin:1.1rem 0 0;font:400 16px/1.5 "Special Elite","Courier New",monospace;letter-spacing:.04em;color:rgba(138,106,74,.85)}
 .pcard-note.zh{margin-top:.2rem;font-family:"Noto Serif TC",serif}
 @media(max-width:420px){.pcard-post{display:none}.pcard .title{margin-top:4.4rem}}
+
+/* 封面底部提示：請往下滑 */
+.hero-band{display:flex;align-items:center;justify-content:center;gap:1rem;letter-spacing:.2em}
+.hero-band i{font-size:.95rem;color:#f6e2ad;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(-2px)}50%{transform:translateY(4px)}}
+@media(prefers-reduced-motion:reduce){.hero-band i{animation:none}}
