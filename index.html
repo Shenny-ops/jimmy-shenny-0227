@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=30">
+<link rel="stylesheet" href="css/style.css?v=31">
 </head>
 <body class="locked">
 
@@ -248,16 +248,29 @@
   <h2 class="title hand" data-aos="fade-up">Share Your Memories</h2>
   <p class="pb-zh" data-aos="fade-up">把今天的美好，寄進我們的旅程。</p>
 
-  <div class="pbox" data-aos="fade-up">
-    <div class="pbox-body">
-      <p class="pbox-label">POST</p>
+  <div class="mb" data-aos="fade-up">
+    <div class="mb-roof" aria-hidden="true"></div>
+    <div class="mb-body">
+      <p class="mb-post"><span>POST</span></p>
       <div class="drop" id="drop-zone">
-        <div class="slot" aria-hidden="true"><i class="fa-solid fa-camera"></i></div>
-        <button id="upload-btn" class="drop-btn" type="button">上傳你紀錄的婚禮畫面</button>
+        <div class="mb-slot" aria-hidden="true"></div>
+        <div class="mb-plaque">
+          <i class="fa-solid fa-camera" aria-hidden="true"></i>
+          <button id="upload-btn" class="drop-btn" type="button">上傳你紀錄的婚禮畫面</button>
+        </div>
         <input id="photo-input" type="file" accept="image/*" multiple hidden>
       </div>
     </div>
-    <div class="pbox-base" aria-hidden="true"></div>
+    <div class="mb-base" aria-hidden="true"></div>
+    <svg class="mb-mark" viewBox="0 0 130 130" aria-hidden="true" focusable="false">
+      <defs><path id="mk-top" d="M18 65a47 47 0 0 1 94 0"/><path id="mk-bot" d="M10 65a55 55 0 0 0 110 0"/></defs>
+      <circle cx="65" cy="65" r="60" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="65" cy="65" r="38" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <text font-size="16" letter-spacing="2" fill="currentColor" font-family="Special Elite,Courier New,monospace"><textPath href="#mk-top" startOffset="50%" text-anchor="middle">OUR WEDDING</textPath></text>
+      <text font-size="16" letter-spacing="2" fill="currentColor" font-family="Special Elite,Courier New,monospace"><textPath href="#mk-bot" startOffset="50%" text-anchor="middle" dominant-baseline="hanging">TAIWAN</textPath></text>
+      <text x="65" y="63" font-size="16" text-anchor="middle" fill="currentColor" font-family="Special Elite,Courier New,monospace">27 FEB</text>
+      <text x="65" y="81" font-size="16" text-anchor="middle" fill="currentColor" font-family="Special Elite,Courier New,monospace">2027</text>
+    </svg>
   </div>
 
   <p class="pcard-note">MULTIPLE PHOTOS WELCOME<br>Photos will be compressed automatically.</p>

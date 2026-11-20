@@ -649,3 +649,31 @@ html,body{max-width:100%;overflow-x:hidden}
 .pbox-base{width:70%;height:22px;margin:0 auto;background:var(--grain),#5a231c;border-radius:0 0 6px 6px;box-shadow:0 10px 14px rgba(60,30,20,.3)}
 #memories .pcard-note{margin-top:1.6rem}
 #memories .pcard-note+.pcard-note{margin-top:.2rem}
+
+/* ===== 復古紅郵筒 v2（壁掛式、斑駁、黃銅銘牌、寄信孔） ===== */
+.mb{--red:#9a3f31;--red-d:#6a271f;--brass:#d8bd7a;position:relative;width:min(80%,320px);margin:1.4rem auto 0}
+.mb-roof{position:relative;width:112%;height:30px;margin:0 -6%;background:linear-gradient(#b4503f,#8c372b);border:2px solid var(--red-d);border-bottom:0;
+  clip-path:polygon(5% 0,95% 0,100% 100%,0 100%);box-shadow:0 -1px 0 rgba(255,255,255,.18) inset}
+.mb-body{position:relative;padding:1.5rem 1.1rem 1.6rem;border:3px solid var(--red-d);border-top-width:0;
+  background:
+    radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat left 10px top 10px/12px 12px,
+    radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat right 10px top 10px/12px 12px,
+    radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat left 10px bottom 10px/12px 12px,
+    radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat right 10px bottom 10px/12px 12px,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.035 .09' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .86  0 0 0 0 .66  0 0 0 0 .5  0 0 0 -2.2 1.05'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
+    var(--grain),var(--red);
+  box-shadow:0 14px 20px rgba(60,30,20,.28),inset 0 0 0 5px rgba(0,0,0,.12),inset 0 0 18px rgba(60,15,10,.45)}
+.mb-post{display:flex;align-items:center;gap:.8rem;margin:.2rem 0 1.1rem}
+.mb-post::before,.mb-post::after{content:"";flex:1;height:2px;background:#e6cf9a;opacity:.85}
+.mb-post span{font:600 1.5rem "Bodoni Moda","Cormorant Garamond",serif;letter-spacing:.3em;padding-left:.3em;color:#f0dfb0;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.mb .drop{display:grid;gap:1rem;padding:0;border:0;outline:0;background:none;cursor:pointer}
+.mb-slot{height:46px;border-radius:5px;background:linear-gradient(#120807,#2e130e);border:3px solid var(--brass);box-shadow:inset 0 6px 9px rgba(0,0,0,.75),0 0 0 2px var(--red-d);transition:box-shadow .25s}
+.mb .drop:hover .mb-slot,.mb .drop:focus-within .mb-slot{box-shadow:inset 0 6px 9px rgba(0,0,0,.75),0 0 0 2px var(--red-d),0 0 14px rgba(230,207,154,.6)}
+.mb-plaque{position:relative;padding:.9rem .6rem .4rem;border-radius:5px;border:2px solid #b89a55;text-align:center;
+  background:radial-gradient(ellipse at 30% 0,rgba(255,255,255,.55),transparent 65%),var(--grain),#eadbb3;box-shadow:0 3px 6px rgba(40,15,10,.4),inset 0 0 0 3px rgba(255,255,255,.25)}
+.mb-plaque i{display:block;font-size:1.3rem;color:var(--olive-dark);margin-bottom:.15rem}
+.mb .drop-btn{width:100%;min-height:52px;padding:.5rem .4rem;border:0;border-radius:0;background:none;box-shadow:none;color:var(--olive-dark);font:600 1.05rem "Noto Serif TC",serif;letter-spacing:.1em}
+.mb .drop-btn:active{transform:none;opacity:.75}
+.mb-base{width:76%;height:20px;margin:0 auto;background:var(--grain),#4f1d17;border-radius:0 0 6px 6px;box-shadow:0 10px 14px rgba(60,30,20,.3)}
+.mb-mark{position:absolute;right:-26px;top:34px;width:104px;height:104px;transform:rotate(14deg);color:rgba(110,70,40,.55);pointer-events:none;mix-blend-mode:multiply}
+@media(min-width:520px){.mb-mark{right:-70px;width:120px;height:120px}}
