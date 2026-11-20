@@ -745,3 +745,8 @@ html,body{max-width:100%;overflow-x:hidden}
 .pol-cap{margin:0;padding:.7rem .3rem .6rem;text-align:center;font-size:1.3rem;line-height:1.5;letter-spacing:.06em;color:#8a6a4a}
 .scrap .washi-tape{top:-13px;left:50%;width:104px;height:28px;margin-left:-52px;transform:rotate(-4deg);
   background:repeating-linear-gradient(90deg,rgba(138,106,74,.88) 0 8px,rgba(160,125,88,.85) 8px 16px)}
+
+/* 拍立得題字：單行顯示 */
+.pol-cap{white-space:nowrap;padding:.7rem 0 .6rem;font-size:clamp(16px,4.6vw,1.2rem);letter-spacing:.02em}
+@media(max-width:360px){.pol-cap{letter-spacing:0}}
+#info{padding-bottom:4rem}
