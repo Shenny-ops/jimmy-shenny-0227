@@ -730,3 +730,6 @@ html,body{max-width:100%;overflow-x:hidden}
 @keyframes hintFade{0%,100%{opacity:.45}50%{opacity:1}}
 .env2.open .env2-names,.env2.open .env2-hint,.env2.open .env2-postmark{opacity:0}
 @media(prefers-reduced-motion:reduce){.seal,.env2-hint{animation:none}}
+
+/* 蠟封：飛機與圈圈改深綠（壓印感） */
+.seal i{color:#33330f;text-shadow:0 1px 0 rgba(190,190,120,.45),0 -1px 0 rgba(0,0,0,.3)}
