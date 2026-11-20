@@ -9,29 +9,48 @@
 <link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Bodoni+Moda:wght@400;500&family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Pinyon+Script&family=Caveat:wght@600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Bodoni+Moda:wght@400;500&family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=35">
+<link rel="stylesheet" href="css/style.css?v=36">
 </head>
 <body class="locked">
 
 <!-- 信封開啟動畫 -->
 <div id="envelope-screen" aria-label="Wedding invitation envelope">
-  <div class="envelope" id="envelope">
-    <div class="env-back"></div>
-    <div class="env-letter"><p class="hand">哲鳴 &amp; 心萱</p><p class="serif">2027.02.27</p></div>
-    <div class="env-front"></div>
-    <div class="env-flap"></div>
-    <div class="env-seal"><i class="fa-solid fa-heart"></i></div>
-    <div class="env-label">
-      <h1 class="hand">哲鳴 &amp; 心萱</h1>
-      <p class="serif">Wedding Invitation</p>
+  <div class="env2" id="envelope">
+    <svg class="env2-folds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M0 100 L50 50 L100 100" fill="none" stroke="rgba(138,106,74,.28)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+      <path d="M0 100.6 L50 50.6 L100 100.6" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+      <path d="M0 0 L50 50 L100 0" fill="none" stroke="rgba(138,106,74,.2)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="env2-flapwrap" aria-hidden="true"><div class="env2-flap"></div></div>
+
+    <svg class="env2-postmark" viewBox="0 0 120 60" aria-hidden="true" focusable="false">
+      <path d="M2 10 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#b8993f" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M2 22 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#b8993f" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M2 34 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#b8993f" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M2 46 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#b8993f" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+
+    <button id="open-btn" class="seal" type="button" aria-label="點擊開啟邀請函 Open Invitation">
+      <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <defs><radialGradient id="sg" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#8c8c42"/><stop offset=".6" stop-color="#6b6b2d"/><stop offset="1" stop-color="#4a4a1c"/></radialGradient></defs>
+        <path d="M97.6,50.0 L97.4,54.1 L95.8,58.1 L94.4,61.9 L93.1,65.7 L91.1,69.2 L88.0,71.9 L84.8,74.4 L82.9,77.6 L82.0,82.0 L80.5,86.4 L77.3,88.9 L72.6,89.1 L67.9,88.5 L64.3,89.2 L61.2,91.8 L57.9,94.7 L54.1,96.3 L50.0,96.6 L45.9,96.5 L41.8,96.6 L37.7,95.7 L34.4,92.9 L32.0,88.6 L29.8,85.0 L26.4,83.6 L21.7,83.8 L16.7,83.3 L13.3,80.8 L11.8,76.7 L11.0,72.5 L9.6,68.8 L7.7,65.4 L6.5,61.7 L6.4,57.7 L6.2,53.8 L4.9,50.0 L3.2,45.9 L2.9,41.7 L5.4,38.1 L9.7,35.3 L13.1,32.8 L14.2,29.3 L13.9,24.7 L14.3,20.1 L16.5,16.5 L19.7,13.9 L23.1,11.6 L26.5,9.4 L30.4,8.0 L34.8,8.3 L39.1,9.5 L42.9,9.5 L46.3,7.2 L50.0,3.9 L54.2,2.3 L58.2,3.7 L61.6,6.8 L64.8,9.4 L68.4,10.6 L72.4,11.2 L76.1,12.7 L79.2,15.2 L82.3,17.7 L85.8,20.0 L89.1,22.6 L90.7,26.5 L90.1,31.3 L88.6,35.9 L88.8,39.6 L91.6,42.7 L95.4,46.0Z" fill="url(#sg)"/>
+        <circle cx="50" cy="50" r="33" fill="none" stroke="#d8bd7a" stroke-width="1.6" opacity=".85"/>
+        <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="1"/>
+      </svg>
+      <i class="fa-solid fa-plane" aria-hidden="true"></i>
+    </button>
+
+    <div class="env2-names">
+      <p class="env2-zh">哲鳴 &amp; 心萱</p>
+      <p class="env2-en">Wedding Invitation</p>
     </div>
+    <p class="env2-hint">點擊開啟邀請函</p>
   </div>
-  <button id="open-btn" class="btn btn-gold" type="button">Open Invitation</button>
 </div>
 
 <script>
@@ -43,7 +62,6 @@
     if (window.__opened) return;
     window.__opened = true;
     btn.disabled = true;
-    btn.style.opacity = "0";
     document.getElementById("envelope").classList.add("open");
     setTimeout(function () {
       document.getElementById("envelope-screen").classList.add("done");
