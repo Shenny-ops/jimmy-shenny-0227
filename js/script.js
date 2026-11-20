@@ -332,15 +332,31 @@ $("#photo-input").addEventListener("change", async (e) => {
 document.querySelectorAll(".polaroid img").forEach((img) => {
   img.addEventListener("error", () => { img.removeAttribute("src"); }, { once: true });
 });
+/* 相簿：循環輪播（滑到最後一張再往後會回到第一張） */
+const galleryLinks = Array.from(document.querySelectorAll("#photo-swiper .swiper-slide a.glightbox"));
+const galleryHrefs = galleryLinks.map((a) => a.getAttribute("href"));
 if (window.Swiper) {
   new Swiper("#photo-swiper", {
-    slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: false,
+    slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: true,
     pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     breakpoints: { 700: { slidesPerView: 2, centeredSlides: false }, 1000: { slidesPerView: 3, centeredSlides: false } }
   });
 }
-if (window.GLightbox) GLightbox({ selector: ".glightbox", touchNavigation: true, loop: true });
+/* 點擊放大：循環時 Swiper 會複製投影片，所以用原本那一份清單建立燈箱，再依網址找出第幾張 */
+if (window.GLightbox) {
+  const lightbox = GLightbox({
+    elements: galleryHrefs.map((href) => ({ href, type: "image" })),
+    touchNavigation: true, loop: true
+  });
+  document.querySelector("#photo-swiper").addEventListener("click", (e) => {
+    const a = e.target.closest("a.glightbox");
+    if (!a) return;
+    e.preventDefault();
+    const idx = galleryHrefs.indexOf(a.getAttribute("href"));
+    lightbox.openAt(idx < 0 ? 0 : idx);
+  });
+}
 if (window.AOS) AOS.init({ duration: 800, once: true, offset: 60 });
 
 /* ===== 交通資訊手風琴：預設收合，同時只展開一項 ===== */
