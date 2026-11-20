@@ -660,7 +660,7 @@ html,body{max-width:100%;overflow-x:hidden}
     radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat right 10px top 10px/12px 12px,
     radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat left 10px bottom 10px/12px 12px,
     radial-gradient(circle,#e6cf9a 0 2.4px,#4d1d17 3px 4.6px,transparent 5.2px) no-repeat right 10px bottom 10px/12px 12px,
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.035 .09' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .86  0 0 0 0 .66  0 0 0 0 .5  0 0 0 -2.2 1.05'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.035 .09' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 .86  0 0 0 0 .66  0 0 0 0 .5  0 0 0 -3.6 .95'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
     var(--grain),var(--red);
   box-shadow:0 14px 20px rgba(60,30,20,.28),inset 0 0 0 5px rgba(0,0,0,.12),inset 0 0 18px rgba(60,15,10,.45)}
 .mb-post{display:flex;align-items:center;gap:.8rem;margin:.2rem 0 1.1rem}
@@ -677,3 +677,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .mb-base{width:76%;height:20px;margin:0 auto;background:var(--grain),#4f1d17;border-radius:0 0 6px 6px;box-shadow:0 10px 14px rgba(60,30,20,.3)}
 .mb-mark{position:absolute;right:-26px;top:34px;width:104px;height:104px;transform:rotate(14deg);color:rgba(110,70,40,.55);pointer-events:none;mix-blend-mode:multiply}
 @media(min-width:520px){.mb-mark{right:-70px;width:120px;height:120px}}
+
+/* 郵筒微調：金色相機取代投信口、扁平按鈕、減少鏽斑 */
+.mb-body{box-shadow:0 14px 20px rgba(60,30,20,.28),inset 0 0 0 5px rgba(0,0,0,.08),inset 0 0 12px rgba(60,15,10,.3)}
+.mb-cam{display:block;margin:.2rem auto 1.1rem;text-align:center;font-size:2.2rem;color:#e6cf9a;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));transition:transform .2s}
+.mb .drop:hover .mb-cam{transform:scale(1.06)}
+.mb .drop{gap:0}
+.mb-plaque{padding:0}
+.mb .drop-btn{min-height:48px;white-space:nowrap;font-size:1rem;letter-spacing:.06em}
