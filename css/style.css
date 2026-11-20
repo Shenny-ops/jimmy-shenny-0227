@@ -615,3 +615,16 @@ html,body{max-width:100%;overflow-x:hidden}
   box-shadow:0 2px 8px rgba(80,60,30,.14);transform:rotate(-.6deg)}
 .note cite{font-family:var(--hand);font-style:normal;color:#a07d52}
 @media(max-width:480px){.note{margin-left:.4rem;margin-right:.4rem;font-size:1.15rem}}
+
+/* Find Us 精簡：交通按鈕改深色、導航按鈕文字不換行 */
+.nav-tags .cal-tag{padding-left:2.2rem;padding-right:.8rem;gap:.6rem}
+.nav-tags .cal-tag small{white-space:nowrap;letter-spacing:.04em}
+.nav-tags .cal-tag b{font-size:1.05rem;white-space:nowrap;letter-spacing:0}
+.acc-item{background:var(--grain),var(--olive);border-color:var(--olive-dark);box-shadow:0 3px 8px rgba(40,40,10,.25)}
+.acc-item::before,.acc-item::after{border-color:var(--olive-dark)}
+.acc-head,.acc-item .ah-l small,.acc-item .ah-ico,.acc-item .acc-hint{color:#f3ecd9}
+.acc-item .ah-l small,.acc-item .acc-hint{color:#e4d6a6}
+.acc-item .ah-ico{color:#f6e2ad}
+.acc-item.open .acc-head{background:var(--olive-dark);color:#f3ecd9}
+.acc-item.open .acc-head{border-bottom-color:rgba(246,226,173,.4)}
+.acc-inner>div{background:repeating-linear-gradient(transparent 0 31px,rgba(138,106,74,.16) 31px 32px),#f7f1e0}
