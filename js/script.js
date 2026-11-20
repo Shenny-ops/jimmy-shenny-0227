@@ -1,4 +1,5 @@
 "use strict";
+document.documentElement.classList.add("js");
 
 /* ===== 可自行修改的設定 ===== */
 const GOOGLE_MAP_URL = "https://www.google.com/maps/dir/?api=1&destination=%E6%A1%83%E5%9C%92%E5%B8%82%E6%96%B0%E5%B1%8B%E5%8D%80%E7%A4%BE%E5%AD%90%E9%87%8C%E7%A4%BE%E7%A6%8F%E8%B7%AF325%E8%99%9F";          // 留空會自動用地址搜尋
@@ -105,30 +106,167 @@ $("#btn-ical").addEventListener("click", () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 
-/* ===== RSVP（直接送進 Google 表單，不跳頁） ===== */
-$("#rsvp-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const f = e.target;
-  if (!f.elements.name.value.trim() || !f.elements.phone.value.trim()) return toast("請填寫姓名與聯絡電話");
-  if (!GOOGLE_FORM_URL) return toast("RSVP 表單尚未設定，請在 script.js 填入 GOOGLE_FORM_URL");
-  if (!FORM_ENTRY.name || !FORM_ENTRY.phone || !FORM_ENTRY.attend) return toast("RSVP 欄位 ID 尚未設定，請填入 FORM_ENTRY");
-  const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
-  const body = new URLSearchParams();
-  Object.keys(FORM_ENTRY).forEach((k) => {
-    const el = f.elements[k];
-    if (FORM_ENTRY[k] && el) body.append(FORM_ENTRY[k], el.value);
-  });
-  const btn = f.querySelector("button[type=submit]");
-  btn.disabled = true;
-  try {
-    await fetch(action, { method: "POST", mode: "no-cors", body });
-    toast("已送出，謝謝你的回覆！");
-    f.reset();
-  } catch (err) {
-    toast("送出失敗，請檢查網路後再試一次");
+/* ===== RSVP 行李吊牌（確認內容 → 送進 Google 表單） ===== */
+/* 邀請類型：網址加 ?invite=family 就會套用對應設定；沒設定的類型用 default。
+   types 留空 = 不顯示「出席方式」；maxGuests 最多 6（需與 Google 表單的下拉選項一致） */
+const RSVP_GROUPS = {
+  default: { types: [], maxGuests: 6 }
+  // 範例：family: { types: ["婚禮儀式", "婚宴"], maxGuests: 6 },
+  //       friend: { types: ["婚宴"], maxGuests: 2 }
+};
+
+(function initRsvp() {
+  const form = $("#rsvp-form");
+  if (!form) return;
+  const group = new URLSearchParams(location.search).get("invite") || "default";
+  const cfg = RSVP_GROUPS[group] || RSVP_GROUPS.default;
+  const types = cfg.types || [];
+  const max = Math.max(1, Math.min(cfg.maxGuests || 6, 6));
+  const st = { join: "", type: "", count: 1 };
+  const yes = $("#yes-only"), typeFld = $("#type-fld"), chips = $("#type-chips");
+  const review = $("#rsvp-review"), done = $("#rsvp-done");
+
+  /* 吊牌垂落動畫 */
+  const stage = $("#tag-stage");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((es, o) => {
+      es.forEach((e) => { if (e.isIntersecting) { stage.classList.add("in"); o.disconnect(); } });
+    }, { threshold: 0.12 }).observe(stage);
+  } else {
+    stage.classList.add("in");
   }
-  btn.disabled = false;
-});
+
+  /* 出席方式選項 */
+  types.forEach((t) => {
+    const lab = document.createElement("label");
+    lab.className = "chip";
+    const inp = document.createElement("input");
+    inp.type = "radio"; inp.name = "atype"; inp.value = t;
+    const sp = document.createElement("span");
+    sp.textContent = t;
+    lab.append(inp, sp);
+    chips.appendChild(lab);
+  });
+  $("#g-max").textContent = `最多 ${max} 位`;
+
+  const setErr = (k, msg) => {
+    const p = form.querySelector(`[data-for="${k}"]`);
+    if (p) p.textContent = msg || "";
+  };
+  const markOn = (name) => {
+    form.querySelectorAll(`input[name="${name}"]`).forEach((r) => r.parentElement.classList.toggle("on", r.checked));
+  };
+
+  form.addEventListener("change", (e) => {
+    if (e.target.name === "join") {
+      st.join = e.target.value;
+      markOn("join");
+      yes.hidden = st.join !== "accept";
+      typeFld.hidden = !(st.join === "accept" && types.length);
+      setErr("join", "");
+    }
+    if (e.target.name === "atype") { st.type = e.target.value; markOn("atype"); setErr("type", ""); }
+  });
+  $("#rsvp-name").addEventListener("input", () => setErr("name", ""));
+
+  const setCount = (n) => {
+    st.count = Math.max(1, Math.min(max, n));
+    $("#g-count").textContent = st.count;
+  };
+  $("#g-minus").addEventListener("click", () => setCount(st.count - 1));
+  $("#g-plus").addEventListener("click", () => setCount(st.count + 1));
+
+  const data = () => ({
+    name: $("#rsvp-name").value.trim(),
+    join: st.join,
+    type: st.join === "accept" ? st.type : "",
+    count: st.count,
+    contact: st.join === "accept" ? $("#rsvp-contact").value.trim() : "",
+    note: $("#rsvp-note").value.trim()
+  });
+
+  function validate() {
+    const v = data();
+    let first = null;
+    ["name", "join", "type"].forEach((k) => setErr(k, ""));
+    if (!v.name) { setErr("name", "請填寫姓名 Please enter your name"); first = first || $("#rsvp-name"); }
+    if (!v.join) { setErr("join", "請選擇是否出席 Please choose one"); first = first || form.querySelector(".opts"); }
+    if (v.join === "accept" && types.length && !v.type) { setErr("type", "請選擇出席方式 Please choose one"); first = first || chips; }
+    if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+    return !first;
+  }
+
+  const show = (which) => {
+    form.hidden = which !== "form";
+    review.hidden = which !== "review";
+    done.hidden = which !== "done";
+    done.classList.toggle("show", which === "done");
+    stage.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    const v = data();
+    const rows = [["NAME 姓名", v.name], ["RSVP 是否出席", v.join === "accept" ? "Joyfully Accept 欣然出席" : "Regretfully Decline 遺憾無法出席"]];
+    if (v.type) rows.push(["TYPE 出席方式", v.type]);
+    if (v.join === "accept") rows.push(["GUESTS 出席人數", String(v.count)]);
+    if (v.contact) rows.push(["CONTACT 聯絡方式", v.contact]);
+    if (v.note) rows.push(["NOTES 備註", v.note]);
+    const dl = $("#review-list");
+    dl.textContent = "";
+    rows.forEach(([k, val]) => {
+      const dt = document.createElement("dt"); dt.textContent = k;
+      const dd = document.createElement("dd"); dd.textContent = val;
+      dl.append(dt, dd);
+    });
+    $("#send-err").textContent = "";
+    show("review");
+  });
+
+  $("#btn-edit").addEventListener("click", () => show("form"));
+
+  $("#btn-send").addEventListener("click", async () => {
+    const err = $("#send-err");
+    if (!GOOGLE_FORM_URL || !FORM_ENTRY.name || !FORM_ENTRY.phone || !FORM_ENTRY.attend) {
+      err.textContent = "RSVP 表單尚未設定，請在 script.js 填入 GOOGLE_FORM_URL 與 FORM_ENTRY";
+      return;
+    }
+    const v = data();
+    const body = new URLSearchParams();
+    body.append(FORM_ENTRY.name, v.name);
+    body.append(FORM_ENTRY.phone, v.contact || "（未填）");
+    body.append(FORM_ENTRY.attend, v.join === "accept" ? "出席" : "不克出席");
+    if (v.join === "accept" && FORM_ENTRY.guests) body.append(FORM_ENTRY.guests, String(v.count));
+    const parts = [];
+    if (v.type) parts.push("出席方式：" + v.type);
+    if (group !== "default") parts.push("邀請類型：" + group);
+    if (v.note) parts.push(v.note);
+    if (parts.length && FORM_ENTRY.note) body.append(FORM_ENTRY.note, parts.join("｜"));
+
+    const btn = $("#btn-send");
+    btn.disabled = true;
+    btn.textContent = "SENDING…";
+    err.textContent = "";
+    try {
+      const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
+      await fetch(action, { method: "POST", mode: "no-cors", body });
+      show("done");
+    } catch (e2) {
+      err.textContent = "送出失敗，請檢查網路後再試一次";
+    }
+    btn.disabled = false;
+    btn.textContent = "CONFIRM · 確認送出";
+  });
+
+  $("#btn-again").addEventListener("click", () => {
+    form.reset();
+    st.join = ""; st.type = ""; setCount(1);
+    form.querySelectorAll(".on").forEach((n) => n.classList.remove("on"));
+    yes.hidden = true; typeFld.hidden = true;
+    show("form");
+  });
+})();
 
 /* ===== 賓客照片上傳（直接上傳到 Google 雲端；未設定時退回表單） ===== */
 async function compressImage(file) {
