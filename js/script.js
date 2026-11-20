@@ -147,7 +147,6 @@ const RSVP_GROUPS = {
     lab.append(inp, sp);
     chips.appendChild(lab);
   });
-  $("#g-max").textContent = `最多 ${max} 位`;
 
   const setErr = (k, msg) => {
     const p = form.querySelector(`[data-for="${k}"]`);
@@ -212,7 +211,7 @@ const RSVP_GROUPS = {
     if (v.type) rows.push(["TYPE 出席方式", v.type]);
     if (v.join === "accept") rows.push(["GUESTS 出席人數", String(v.count)]);
     if (v.contact) rows.push(["CONTACT 聯絡方式", v.contact]);
-    if (v.note) rows.push(["NOTES 備註", v.note]);
+    if (v.note) rows.push(["NOTES 想和我們說的話", v.note]);
     const dl = $("#review-list");
     dl.textContent = "";
     rows.forEach(([k, val]) => {
