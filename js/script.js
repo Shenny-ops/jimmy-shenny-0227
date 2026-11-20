@@ -336,12 +336,17 @@ document.querySelectorAll(".polaroid img").forEach((img) => {
 const galleryLinks = Array.from(document.querySelectorAll("#photo-swiper .swiper-slide a.glightbox"));
 const galleryHrefs = galleryLinks.map((a) => a.getAttribute("href"));
 if (window.Swiper) {
-  new Swiper("#photo-swiper", {
+  const gallerySwiper = new Swiper("#photo-swiper", {
     slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: true,
+    initialSlide: 0, loopAdditionalSlides: 3, observer: true, observeParents: true,
     pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     breakpoints: { 700: { slidesPerView: 2, centeredSlides: false }, 1000: { slidesPerView: 3, centeredSlides: false } }
   });
+
+  /* 一律從第一張（photo2）開始：初始化後與頁面載入完成後各校正一次 */
+  gallerySwiper.slideToLoop(0, 0);
+  window.addEventListener("load", () => { gallerySwiper.update(); gallerySwiper.slideToLoop(0, 0); });
 }
 /* 點擊放大：循環時 Swiper 會複製投影片，所以用原本那一份清單建立燈箱，再依網址找出第幾張 */
 if (window.GLightbox) {
