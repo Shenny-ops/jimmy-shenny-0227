@@ -685,3 +685,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .mb .drop{gap:0}
 .mb-plaque{padding:0}
 .mb .drop-btn{min-height:48px;white-space:nowrap;font-size:1rem;letter-spacing:.06em}
+
+/* 車票精簡：拿掉頂部小字後，標題上方留白補回 */
+.tk-main{padding-top:2.4rem}
+.tk-title{margin-top:0}
