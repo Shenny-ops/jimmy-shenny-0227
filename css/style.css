@@ -692,3 +692,7 @@ html,body{max-width:100%;overflow-x:hidden}
 
 /* RSVP 吊牌：拿掉頂部小字後標題位置 */
 .tag-title{margin-top:0}
+
+/* 郵筒：相機縮小、按鈕文字改棕色 */
+.mb-cam{font-size:1.5rem;margin:.1rem auto .9rem}
+.mb .drop-btn{color:#7a5636}
