@@ -733,3 +733,6 @@ html,body{max-width:100%;overflow-x:hidden}
 
 /* 蠟封：飛機與圈圈改深綠（壓印感） */
 .seal i{color:#33330f;text-shadow:0 1px 0 rgba(190,190,120,.45),0 -1px 0 rgba(0,0,0,.3)}
+
+/* 蠟封：玫瑰花圖案（暗綠壓印） */
+.seal .rose{position:absolute;left:50%;top:50%;width:62%;height:62%;transform:translate(-50%,-50%) rotate(-6deg);overflow:visible}
