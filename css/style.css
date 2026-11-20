@@ -689,3 +689,6 @@ html,body{max-width:100%;overflow-x:hidden}
 /* 車票精簡：拿掉頂部小字後，標題上方留白補回 */
 .tk-main{padding-top:2.4rem}
 .tk-title{margin-top:0}
+
+/* RSVP 吊牌：拿掉頂部小字後標題位置 */
+.tag-title{margin-top:0}
