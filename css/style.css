@@ -766,4 +766,4 @@ html,body{max-width:100%;overflow-x:hidden}
 @keyframes mspin{50%{transform:scale(1.15)}}
 
 .polaroid span.hand{font-size:1.4rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.polaroid span.hand i{color:#b5524a;font-size:1.3rem}
+.polaroid span.hand i{color:inherit;font-size:1.3rem}
