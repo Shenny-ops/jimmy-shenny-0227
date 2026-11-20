@@ -500,3 +500,51 @@ html,body{max-width:100%;overflow-x:hidden}
 .cal-tag .go{margin-left:auto;color:var(--brown)}
 .cal-tag:active{transform:translateY(1px);background-color:rgba(107,107,45,.1)}
 @media(min-width:700px){.cal-tags{grid-template-columns:1fr 1fr;max-width:660px}}
+
+/* ===== Find Us：旅行明信片 + 車票式交通選單 ===== */
+.travel{background:radial-gradient(ellipse at 12% 0,rgba(255,255,255,.35),transparent 55%),var(--grain),#e9e0c9}
+.tv-kicker{margin:0 0 .3rem;text-align:center;font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.14em;color:var(--brown)}
+.travel .title{margin-bottom:1.6rem}
+
+.postcard{position:relative;max-width:520px;margin:0 auto;padding:2rem 1.3rem 1.5rem;background:var(--grain),#f7f1e0;border:1px solid rgba(138,106,74,.55);box-shadow:0 2px 0 rgba(138,106,74,.25),0 10px 18px rgba(80,60,30,.18);transform:rotate(-.6deg)}
+.postcard::after{content:"";position:absolute;inset:8px;border:1px dashed rgba(138,106,74,.45);pointer-events:none}
+.pc-edge{position:absolute;left:0;right:0;top:0;height:9px;background:repeating-linear-gradient(135deg,var(--olive) 0 10px,#f7f1e0 10px 16px,var(--brown) 16px 26px,#f7f1e0 26px 32px)}
+.pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;min-height:84px;position:relative}
+.pc-label{margin:.2rem 0 0;font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.14em;color:var(--brown)}
+.pc-label i{margin-right:.5rem;color:var(--olive)}
+.pc-stamp{position:relative;width:56px;height:68px;display:grid;place-items:center;align-content:center;gap:.15rem;margin-left:auto;background:var(--paper);color:var(--olive);
+  outline:2px dotted rgba(138,106,74,.7);outline-offset:-5px;border:3px solid var(--paper);box-shadow:0 0 0 1px rgba(138,106,74,.45)}
+.pc-stamp i{font-size:1.4rem}
+.pc-stamp small{font:400 16px "Special Elite","Courier New",monospace;color:var(--brown)}
+.pc-post{position:absolute;right:50px;top:18px;width:74px;height:74px;display:grid;place-items:center;border:2px solid rgba(107,107,45,.6);border-radius:50%;outline:1px solid rgba(107,107,45,.4);outline-offset:3px;
+  transform:rotate(-14deg);font:400 16px/1.2 "Special Elite","Courier New",monospace;text-align:center;color:rgba(85,85,31,.8);pointer-events:none}
+.pc-addr{margin:.6rem 0 0;padding-bottom:.5rem;border-bottom:1.5px solid rgba(138,106,74,.5);text-align:center;font:600 1.2rem/1.6 "Noto Serif TC",serif;letter-spacing:.06em;color:var(--olive-dark)}
+.pc-route{display:flex;align-items:center;gap:.5rem;margin:.9rem 0 1.2rem;font:400 16px "Special Elite","Courier New",monospace;color:var(--brown);justify-content:center}
+.pc-route span{white-space:nowrap}
+.pc-route i:not(.fa-location-dot){flex:1;height:0;border-top:2px dashed rgba(107,107,45,.5)}
+.pc-route .fa-location-dot{color:var(--olive)}
+.nav-tags{margin-top:0}
+.nav-tags .cal-tag{background:var(--grain),rgba(255,255,255,.55)}
+@media(max-width:380px){.pc-post{display:none}}
+@media(min-width:700px){.nav-tags{grid-template-columns:1fr 1fr;max-width:none}}
+
+.transit{max-width:520px;margin:3rem auto 0}
+.transit-title{display:flex;flex-direction:column;align-items:center;gap:.2rem;margin:0 0 1.3rem;font:600 1.6rem var(--serif);letter-spacing:.25em;padding-left:.25em;color:var(--olive)}
+.transit-title span{font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.16em;color:var(--brown)}
+.acc-item{position:relative;border:1.5px solid rgba(138,106,74,.7);border-radius:6px;box-shadow:0 3px 8px rgba(80,60,30,.14);background:var(--grain),#f7f1e0;overflow:hidden}
+.acc-item::before,.acc-item::after{content:"";position:absolute;top:30px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:#e9e0c9;border:1.5px solid rgba(138,106,74,.7);z-index:2}
+.acc-item::before{left:-9px}.acc-item::after{right:-9px}
+.acc-head{padding:.8rem 1.4rem;border-bottom:2px dashed transparent}
+.acc-item.open .acc-head{border-bottom-color:rgba(246,226,173,.5)}
+.ah-l{display:flex;align-items:center;gap:.9rem}
+.ah-l>span{display:grid;line-height:1.35}
+.ah-l small{font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.14em;color:var(--brown)}
+.ah-ico{width:1.8rem;text-align:center;font-size:1.4rem;color:var(--olive)}
+.acc-item.open .ah-l small,.acc-item.open .ah-ico{color:#f6e2ad}
+.acc-inner>div{padding:1.1rem 1.4rem 1.3rem;background:repeating-linear-gradient(transparent 0 31px,rgba(138,106,74,.16) 31px 32px)}
+.acc-inner p{line-height:32px;margin-bottom:.6rem}
+.acc-inner h4{line-height:32px;margin:.2rem 0 0;font-family:"Noto Serif TC",serif}
+.entrance{max-width:360px;margin:2rem auto 0;padding:.7rem .7rem 1rem;background:#fff;box-shadow:var(--shadow);transform:rotate(1.5deg)}
+.entrance img{border:0;box-shadow:none;transform:none}
+.entrance figcaption{order:2;margin:.6rem 0 0;font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.1em}
+.entrance{display:flex;flex-direction:column}
