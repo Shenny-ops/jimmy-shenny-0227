@@ -776,3 +776,8 @@ body.locked{overflow:hidden}
 #envelope-screen.done{pointer-events:none;display:none}
 #photo-swiper,#photo-swiper .swiper-wrapper,#photo-swiper .swiper-slide{touch-action:pan-y}
 .hero-bg,.deco,.circ,.mb-mark{pointer-events:none}
+
+/* 主畫面（全螢幕）模式：避開瀏覽器狀態列與底部 Home 指示條 */
+.hero{min-height:100svh;min-height:100dvh}
+.hero-top{top:calc(7% + env(safe-area-inset-top))}
+.hero-bottom{bottom:calc(5rem + env(safe-area-inset-bottom))}
