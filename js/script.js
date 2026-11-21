@@ -337,7 +337,7 @@ const galleryLinks = Array.from(document.querySelectorAll("#photo-swiper .swiper
 const galleryHrefs = galleryLinks.map((a) => a.getAttribute("href"));
 if (window.Swiper) {
   const gallerySwiper = new Swiper("#photo-swiper", {
-    slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: true,
+    slidesPerView: "auto", centeredSlides: true, spaceBetween: 16, grabCursor: true, loop: true, touchStartPreventDefault: false, touchAngle: 30, threshold: 6, touchReleaseOnEdges: true,
     initialSlide: 0, loopAdditionalSlides: 3, observer: true, observeParents: true,
     pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
