@@ -781,3 +781,4 @@ body.locked{overflow:hidden}
 .hero{min-height:100svh;min-height:100dvh}
 .hero-top{top:calc(7% + env(safe-area-inset-top))}
 .hero-bottom{bottom:calc(5rem + env(safe-area-inset-bottom))}
+.acc-head .en{font:italic 500 16px "Cormorant Garamond",serif;letter-spacing:.04em;opacity:.85;margin-left:.25rem;white-space:nowrap}
