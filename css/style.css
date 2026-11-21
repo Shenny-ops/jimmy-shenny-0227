@@ -787,3 +787,5 @@ body.locked{overflow:hidden}
 .acc-panel h4 .en-line{margin:.1rem 0 0;font-weight:500}
 
 .pol-en{width:min(86%,380px);margin:1.4rem auto 0;text-align:center;font-size:clamp(20px,5.6vw,1.5rem);line-height:1.4;color:#8a6a4a;letter-spacing:.02em}
+
+.pol-cap{font-family:"LXGW WenKai TC","Kaiti TC","DFKai-SB","KaiTi","STKaiti",cursive;font-weight:400;letter-spacing:.04em}
