@@ -782,3 +782,6 @@ body.locked{overflow:hidden}
 .hero-top{top:calc(7% + env(safe-area-inset-top))}
 .hero-bottom{bottom:calc(5rem + env(safe-area-inset-bottom))}
 .acc-head .en{font:italic 500 16px "Cormorant Garamond",serif;letter-spacing:.04em;opacity:.85;margin-left:.25rem;white-space:nowrap}
+
+.acc-panel .en-line{display:block;font:italic 500 16px/1.6 "Cormorant Garamond",serif;opacity:.85;margin:.1rem 0 .9rem}
+.acc-panel h4 .en-line{margin:.1rem 0 0;font-weight:500}
