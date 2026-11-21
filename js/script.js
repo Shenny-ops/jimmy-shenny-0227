@@ -258,6 +258,11 @@ const RSVP_GROUPS = {
     try {
       const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
       await fetch(action, { method: "POST", mode: "no-cors", body });
+      const ok = v.join === "accept";
+      $("#done-stamp").textContent = ok ? "RSVP CONFIRMED" : "RSVP RECEIVED";
+      $("#done-title").textContent = ok ? "Your tag is checked in!" : "Thank you for letting us know";
+      $("#done-text").textContent = ok ? "Thank you for being part of our journey. We can't wait to celebrate with you!" : "We'll miss you on our big day, and we'll carry your blessings with us.";
+      $("#done-zh").textContent = ok ? "謝謝你，婚禮當天見！" : "謝謝你的回覆，我們會把你的祝福放在心裡。";
       show("done");
     } catch (e2) {
       err.textContent = "送出失敗，請檢查網路後再試一次";
