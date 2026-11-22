@@ -483,7 +483,7 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
   audio.addEventListener("play", sync); audio.addEventListener("pause", sync);
   audio.addEventListener("error", () => { btn.hidden = true; });
   audio.load();
-  audio.volume = 0.6;
+  audio.volume = 0.4;
   let userPaused = false;
   if (open) open.addEventListener("click", () => { if (!userPaused) audio.play().catch(() => {}); });
   btn.addEventListener("click", () => {
