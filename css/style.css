@@ -808,3 +808,5 @@ body.locked{overflow:hidden}
 .banquet.olive .info-list p{color:#fbf3dc}
 .banquet.olive .info-list .lab{color:#d9c892}
 .banquet.olive+#rsvp{border-top:1px dashed rgba(246,226,173,.5)}
+.banquet .info-list,.banquet .info-list li,.banquet .info-list li>div{text-align:left}
+.banquet .info-list li>div{flex:1;min-width:0}
