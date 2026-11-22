@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=57">
+<link rel="stylesheet" href="css/style.css?v=58">
 </head>
 <body class="locked">
 
@@ -98,9 +98,10 @@
   <div class="info-wrap">
     <ul class="info-list" data-aos="fade-up">
       <li><i class="fa-regular fa-calendar-days"></i><div><small class="lab">DATE</small><h3>日期</h3><p>2027年2月27日 星期六</p></div></li>
-      <li><i class="fa-solid fa-location-dot"></i><div><small class="lab">DESTINATION</small><h3>地點</h3><p>桃園市新屋區社子里社福路325號</p></div></li>
+      <li data-hide="online"><i class="fa-solid fa-location-dot"></i><div><small class="lab">DESTINATION</small><h3>地點</h3><p>桃園市新屋區社子里社福路325號</p></div></li>
+      <li data-only="online"><i class="fa-solid fa-video"></i><div><small class="lab">ZOOM</small><h3>線上婚禮</h3><div class="zoom-info" data-zoom></div></div></li>
       <li><i class="fa-regular fa-gem"></i><div><small class="lab">CEREMONY</small><h3>婚禮演講</h3><p>14:30</p></div></li>
-      <li><i class="fa-solid fa-door-open"></i><div><small class="lab">GUEST ARRIVAL</small><h3>開放入場</h3><p>13:30</p></div></li>
+      <li data-hide="online"><i class="fa-solid fa-door-open"></i><div><small class="lab">GUEST ARRIVAL</small><h3>開放入場</h3><p>13:30</p></div></li>
     </ul>
     <figure class="scrap" data-aos="fade-up">
       <div class="pol">
@@ -126,7 +127,7 @@
 </section>
 
 <!-- 導航 -->
-<section class="section cream2 travel" id="map">
+<section class="section cream2 travel" id="map" data-hide="online">
   <h2 class="title hand" data-aos="fade-up">Find Us</h2>
 
   <div class="postcard" data-aos="fade-up">
@@ -197,6 +198,19 @@
   </div>
 </section>
 
+<!-- 婚宴資訊（僅「婚禮＋婚宴」邀請顯示） -->
+<section class="section info-sec banquet" id="banquet" data-only="feast" hidden>
+  <h2 class="title hand" data-aos="fade-up">Wedding Banquet</h2>
+  <p class="banquet-lead" data-aos="fade-up">婚宴資訊<br>誠摯邀請您於婚禮後與我們一同享用家宴，<br>感謝您一路以來的幫忙與照顧。</p>
+  <div class="info-wrap">
+    <ul class="info-list" data-aos="fade-up">
+      <li><i class="fa-regular fa-calendar-days"></i><div><small class="lab">DATE</small><h3>日期</h3><p>同一天（2027年2月27日）</p></div></li>
+      <li><i class="fa-regular fa-clock"></i><div><small class="lab">TIME</small><h3>時間</h3><p>17:00 入場</p></div></li>
+      <li><i class="fa-solid fa-utensils"></i><div><small class="lab">VENUE</small><h3>地點</h3><p>竹北春耕</p></div></li>
+    </ul>
+  </div>
+</section>
+
 <!-- RSVP -->
 <section class="section olive" id="rsvp">
   <div class="tag-stage" id="tag-stage">
@@ -205,7 +219,7 @@
       <i class="tag-hole" aria-hidden="true"></i>
       <div class="tag-body">
         <h2 class="tag-title">JOIN OUR JOURNEY</h2>
-        <p class="tag-sub">誠摯地邀請你來參加我們的婚禮！請填寫下列表單。</p>
+        <p class="tag-sub" id="rsvp-sub">誠摯地邀請你來參加我們的婚禮！請填寫下列表單。</p>
 
         <form id="rsvp-form" novalidate>
           <div class="fld">
@@ -216,10 +230,7 @@
 
           <fieldset class="fld">
             <legend class="lbl">WILL YOU JOIN US?<span>是否出席</span></legend>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="join" value="accept"><b>Joyfully Accept</b><span>欣然出席</span></label>
-              <label class="opt"><input type="radio" name="join" value="decline"><b>Regretfully Decline</b><span>遺憾無法出席</span></label>
-            </div>
+            <div class="opts" id="join-opts"></div>
             <p class="err" data-for="join"></p>
           </fieldset>
 
@@ -229,7 +240,7 @@
               <div class="chips" id="type-chips"></div>
               <p class="err" data-for="type"></p>
             </fieldset>
-            <div class="fld" role="group" aria-labelledby="lbl-guests">
+            <div class="fld" id="count-fld" role="group" aria-labelledby="lbl-guests">
               <p class="lbl" id="lbl-guests">NUMBER OF GUESTS<span>出席人數</span></p>
               <div class="stepper">
                 <button type="button" id="g-minus" aria-label="減少人數">−</button>
@@ -237,6 +248,14 @@
                 <button type="button" id="g-plus" aria-label="增加人數">+</button>
               </div>
             </div>
+            <fieldset class="fld" id="ride-fld" hidden>
+              <legend class="lbl">TRANSPORT<span>是否需要幫忙協調新屋（婚禮）－竹北（婚宴）的交通</span></legend>
+              <div class="chips" id="ride-chips">
+                <label class="chip"><input type="radio" name="ride" value="需要"><span>需要 Yes, please</span></label>
+                <label class="chip"><input type="radio" name="ride" value="不需要"><span>不需要 No, thanks</span></label>
+              </div>
+              <p class="err" data-for="ride"></p>
+            </fieldset>
             <div class="fld">
               <label class="lbl" for="rsvp-contact">CONTACT<span>聯絡方式（選填）</span></label>
               <input id="rsvp-contact" type="text" autocomplete="tel" placeholder="電話或 LINE ID，必要時才需填寫" maxlength="60">
@@ -244,7 +263,7 @@
           </div>
 
           <div class="fld">
-            <label class="lbl" for="rsvp-note">NOTES<span>想和我們說的話</span></label>
+            <label class="lbl" for="rsvp-note">NOTES<span>想和我們說的話（飲食需求）</span></label>
             <textarea id="rsvp-note" rows="3" maxlength="300"></textarea>
           </div>
           <button class="tk-btn" type="submit">REVIEW MY TAG · 確認內容</button>
@@ -265,6 +284,7 @@
           <h3 class="done-title" id="done-title">Your tag is checked in!</h3>
           <p class="done-text" id="done-text">Thank you for being part of our journey. We can't wait to celebrate with you!</p>
           <p class="done-zh" id="done-zh">謝謝你，婚禮當天見！</p>
+          <div class="zoom-box" id="done-zoom" hidden><p class="zoom-ttl">ZOOM 線上婚禮資訊</p><div data-zoom></div></div>
           <button class="tk-btn ghost" type="button" id="btn-again">FILL IN ANOTHER TAG · 為另一位賓客填寫</button>
         </div>
       </div>
@@ -319,7 +339,7 @@
         </div>
       </div>
       <div class="tk-stub">
-        <p><em>GATE 13:30</em><em>DEPART 14:30</em></p>
+        <p><em data-hide="online">GATE 13:30</em><em>DEPART 14:30</em></p>
         <i class="tk-bars" aria-hidden="true"></i>
       </div>
     </div>
@@ -335,6 +355,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="js/script.js?v=19"></script>
+<script src="js/script.js?v=20"></script>
 </body>
 </html>

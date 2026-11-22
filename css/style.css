@@ -789,3 +789,14 @@ body.locked{overflow:hidden}
 .pol-en{width:min(86%,380px);margin:1.4rem auto 0;text-align:center;font-size:clamp(20px,5.6vw,1.5rem);line-height:1.4;color:#8a6a4a;letter-spacing:.02em}
 
 .pol-cap{font-family:"LXGW WenKai TC","Kaiti TC","DFKai-SB","KaiTi","STKaiti",cursive;font-weight:400;letter-spacing:.04em}
+
+/* invite variants */
+[hidden]{display:none!important}
+.opt-decline.on{background:var(--brown);border-color:var(--brown)}
+.opt:nth-child(2).on:not(.opt-decline){background:var(--olive);border-color:var(--olive)}
+.zoom-info p,.zoom-box p{margin:0 0 .2rem;font-size:1.05rem;letter-spacing:.04em;word-break:break-all}
+.zoom-info a,.zoom-box a{color:var(--olive-dark);text-decoration:underline}
+.zoom-box{margin:1rem auto;padding:.9rem 1rem;max-width:420px;border:1.5px dashed var(--brown);border-radius:8px;background:rgba(255,255,255,.45);text-align:left}
+.zoom-ttl{font:600 16px "Special Elite","Courier New",monospace!important;letter-spacing:.08em;color:var(--brown)}
+.banquet{text-align:center}
+.banquet-lead{max-width:420px;margin:0 auto 1.4rem;font-size:1.05rem;line-height:1.9;color:var(--brown)}

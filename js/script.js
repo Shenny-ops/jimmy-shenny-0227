@@ -21,6 +21,44 @@ const WEDDING = {
 
 const $ = (s) => document.querySelector(s);
 
+/* ===== 邀請類型：網址加 ?invite=xxx =====
+   （沒加）或 ceremony：現場婚禮（RSVP 另有「線上參與」選項）
+   feast：現場婚禮＋婚宴（顯示婚宴資訊、交通協調題）
+   online：只邀請線上參加（顯示 Zoom、隱藏地點與 Find Us） */
+const _inv = (new URLSearchParams(location.search).get("invite") || "").toLowerCase();
+const INVITE = _inv === "online" || _inv === "feast" ? _inv : "ceremony";
+
+/* Zoom 資訊：請在這裡填寫；留空的欄位會顯示「將於婚禮前提供」 */
+const ZOOM = { url: "", id: "", passcode: "" };
+
+(function applyInvite() {
+  document.body.dataset.invite = INVITE;
+  document.querySelectorAll("[data-only]").forEach((el) => { el.hidden = el.dataset.only !== INVITE; });
+  document.querySelectorAll("[data-hide]").forEach((el) => { if (el.dataset.hide === INVITE) el.hidden = true; });
+})();
+
+function fillZoom(box) {
+  box.textContent = "";
+  const add = (label, val, href) => {
+    const p = document.createElement("p");
+    p.append(label + "：");
+    if (href) { const a = document.createElement("a"); a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = val; p.append(a); }
+    else p.append(val);
+    box.appendChild(p);
+  };
+  if (!ZOOM.url && !ZOOM.id) {
+    const p = document.createElement("p");
+    p.textContent = "Zoom 連結將於婚禮前提供給你";
+    box.appendChild(p);
+    return;
+  }
+  if (ZOOM.url) add("連結 Link", ZOOM.url.replace(/^https?:\/\//, ""), ZOOM.url);
+  if (ZOOM.id) add("會議 ID", ZOOM.id);
+  if (ZOOM.passcode) add("密碼 Passcode", ZOOM.passcode);
+}
+document.querySelectorAll("[data-zoom]").forEach(fillZoom);
+const zoomText = () => [ZOOM.url && "Zoom: " + ZOOM.url, ZOOM.id && "ID: " + ZOOM.id, ZOOM.passcode && "Passcode: " + ZOOM.passcode].filter(Boolean).join(" ");
+
 function toast(msg) {
   const t = $("#toast");
   t.textContent = msg;
@@ -86,11 +124,16 @@ $("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api
 $("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
 /* ===== 加入行事曆 ===== */
+const CAL_DESC = [
+  INVITE === "online" ? "線上婚禮（Zoom），婚禮演講 14:30" : "婚禮演講 14:30，13:30 開放入場",
+  INVITE === "feast" ? "婚宴 17:00 入場（竹北春耕）" : "",
+  INVITE === "online" ? zoomText() : ""
+].filter(Boolean).join("\n");
 $("#btn-google-cal").href =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   `&text=${encodeURIComponent(WEDDING.title)}` +
   `&dates=${WEDDING.start}/${WEDDING.end}&ctz=${WEDDING.tz}` +
-  `&location=${q}&details=${encodeURIComponent("婚禮演講 14:30，13:30 開放入場")}`;
+  (INVITE === "online" ? "" : `&location=${q}`) + `&details=${encodeURIComponent(CAL_DESC)}`;
 
 $("#btn-ical").addEventListener("click", () => {
   const ics = [
@@ -101,8 +144,8 @@ $("#btn-ical").addEventListener("click", () => {
     `DTSTART;TZID=${WEDDING.tz}:${WEDDING.start}`,
     `DTEND;TZID=${WEDDING.tz}:${WEDDING.end}`,
     `SUMMARY:${WEDDING.title}`,
-    `LOCATION:${WEDDING.address}`,
-    "DESCRIPTION:婚禮演講 14:30，13:30 開放入場",
+    ...(INVITE === "online" ? [] : [`LOCATION:${WEDDING.address}`]),
+    "DESCRIPTION:" + CAL_DESC.replace(/\n/g, "\\n"),
     "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:明天是哲鳴 & 心萱的婚禮", "END:VALARM",
     "END:VEVENT", "END:VCALENDAR"
   ].join("\r\n");
@@ -115,24 +158,52 @@ $("#btn-ical").addEventListener("click", () => {
 });
 
 /* ===== RSVP 行李吊牌（確認內容 → 送進 Google 表單） ===== */
-/* 邀請類型：網址加 ?invite=family 就會套用對應設定；沒設定的類型用 default。
-   types 留空 = 不顯示「出席方式」；maxGuests 最多 6（需與 Google 表單的下拉選項一致） */
-const RSVP_GROUPS = {
-  default: { types: [], maxGuests: 6 }
-  // 範例：family: { types: ["婚禮儀式", "婚宴"], maxGuests: 6 },
-  //       friend: { types: ["婚宴"], maxGuests: 2 }
+const JOIN_OPTS = {
+  ceremony: [
+    { v: "onsite", en: "Joyfully Accept", zh: "欣然出席（現場）", note: "現場出席" },
+    { v: "online", en: "Join Online", zh: "線上參與婚禮", note: "線上參與" },
+    { v: "decline", en: "Regretfully Decline", zh: "遺憾無法出席" }
+  ],
+  feast: [
+    { v: "both", en: "Wedding & Banquet", zh: "可以出席婚禮&家宴", note: "出席婚禮＋家宴" },
+    { v: "onsite", en: "Wedding Only", zh: "可以出席婚禮", note: "只出席婚禮" },
+    { v: "online", en: "Join Online", zh: "參與線上婚禮", note: "線上參與" },
+    { v: "decline", en: "Regretfully Decline", zh: "無法出席" }
+  ],
+  online: [
+    { v: "online", en: "Join Online", zh: "欣然線上參與", note: "線上參與" },
+    { v: "decline", en: "Regretfully Decline", zh: "遺憾無法出席" }
+  ]
+};
+const RSVP_SUB = {
+  ceremony: "誠摯地邀請你來參加我們的婚禮！請填寫下列表單。",
+  feast: "誠摯地邀請你來參加我們的婚禮！請填寫下列表單。",
+  online: "因為現場座位有限，我們很想誠摯地邀請你線上參加我們的婚禮！請填寫下列表單。"
 };
 
 (function initRsvp() {
   const form = $("#rsvp-form");
   if (!form) return;
-  const group = new URLSearchParams(location.search).get("invite") || "default";
-  const cfg = RSVP_GROUPS[group] || RSVP_GROUPS.default;
-  const types = cfg.types || [];
-  const max = Math.max(1, Math.min(cfg.maxGuests || 6, 6));
-  const st = { join: "", type: "", count: 1 };
-  const yes = $("#yes-only"), typeFld = $("#type-fld"), chips = $("#type-chips");
+  const opts = JOIN_OPTS[INVITE];
+  const max = 6;
+  const st = { join: "", ride: "", count: 1 };
+  const yes = $("#yes-only"), countFld = $("#count-fld"), rideFld = $("#ride-fld");
   const review = $("#rsvp-review"), done = $("#rsvp-done");
+  const optOf = (v) => opts.find((o) => o.v === v);
+  $("#rsvp-sub").textContent = RSVP_SUB[INVITE];
+
+  /* 出席選項 */
+  const box = $("#join-opts");
+  opts.forEach((o) => {
+    const lab = document.createElement("label");
+    lab.className = "opt" + (o.v === "decline" ? " opt-decline" : "");
+    const inp = document.createElement("input");
+    inp.type = "radio"; inp.name = "join"; inp.value = o.v;
+    const b = document.createElement("b"); b.textContent = o.en;
+    const sp = document.createElement("span"); sp.textContent = o.zh;
+    lab.append(inp, b, sp);
+    box.appendChild(lab);
+  });
 
   /* 吊牌垂落動畫 */
   const stage = $("#tag-stage");
@@ -144,18 +215,6 @@ const RSVP_GROUPS = {
     stage.classList.add("in");
   }
 
-  /* 出席方式選項 */
-  types.forEach((t) => {
-    const lab = document.createElement("label");
-    lab.className = "chip";
-    const inp = document.createElement("input");
-    inp.type = "radio"; inp.name = "atype"; inp.value = t;
-    const sp = document.createElement("span");
-    sp.textContent = t;
-    lab.append(inp, sp);
-    chips.appendChild(lab);
-  });
-
   const setErr = (k, msg) => {
     const p = form.querySelector(`[data-for="${k}"]`);
     if (p) p.textContent = msg || "";
@@ -163,16 +222,17 @@ const RSVP_GROUPS = {
   const markOn = (name) => {
     form.querySelectorAll(`input[name="${name}"]`).forEach((r) => r.parentElement.classList.toggle("on", r.checked));
   };
+  const attending = () => st.join && st.join !== "decline";
+  const inPerson = () => st.join === "both" || st.join === "onsite";
+  const refresh = () => {
+    yes.hidden = !attending();
+    countFld.hidden = !inPerson();
+    rideFld.hidden = !(INVITE === "feast" && st.join === "both");
+  };
 
   form.addEventListener("change", (e) => {
-    if (e.target.name === "join") {
-      st.join = e.target.value;
-      markOn("join");
-      yes.hidden = st.join !== "accept";
-      typeFld.hidden = !(st.join === "accept" && types.length);
-      setErr("join", "");
-    }
-    if (e.target.name === "atype") { st.type = e.target.value; markOn("atype"); setErr("type", ""); }
+    if (e.target.name === "join") { st.join = e.target.value; markOn("join"); refresh(); setErr("join", ""); }
+    if (e.target.name === "ride") { st.ride = e.target.value; markOn("ride"); setErr("ride", ""); }
   });
   $("#rsvp-name").addEventListener("input", () => setErr("name", ""));
 
@@ -186,19 +246,20 @@ const RSVP_GROUPS = {
   const data = () => ({
     name: $("#rsvp-name").value.trim(),
     join: st.join,
-    type: st.join === "accept" ? st.type : "",
-    count: st.count,
-    contact: st.join === "accept" ? $("#rsvp-contact").value.trim() : "",
+    label: st.join && st.join !== "decline" ? optOf(st.join).note : "",
+    count: inPerson() ? st.count : (st.join === "online" ? 1 : 0),
+    ride: rideFld.hidden ? "" : st.ride,
+    contact: attending() ? $("#rsvp-contact").value.trim() : "",
     note: $("#rsvp-note").value.trim()
   });
 
   function validate() {
     const v = data();
     let first = null;
-    ["name", "join", "type"].forEach((k) => setErr(k, ""));
+    ["name", "join", "ride"].forEach((k) => setErr(k, ""));
     if (!v.name) { setErr("name", "請填寫姓名 Please enter your name"); first = first || $("#rsvp-name"); }
     if (!v.join) { setErr("join", "請選擇是否出席 Please choose one"); first = first || form.querySelector(".opts"); }
-    if (v.join === "accept" && types.length && !v.type) { setErr("type", "請選擇出席方式 Please choose one"); first = first || chips; }
+    if (!rideFld.hidden && !v.ride) { setErr("ride", "請選擇 Please choose one"); first = first || $("#ride-chips"); }
     if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
     return !first;
   }
@@ -215,9 +276,10 @@ const RSVP_GROUPS = {
     e.preventDefault();
     if (!validate()) return;
     const v = data();
-    const rows = [["NAME 姓名", v.name], ["RSVP 是否出席", v.join === "accept" ? "Joyfully Accept 欣然出席" : "Regretfully Decline 遺憾無法出席"]];
-    if (v.type) rows.push(["TYPE 出席方式", v.type]);
-    if (v.join === "accept") rows.push(["GUESTS 出席人數", String(v.count)]);
+    const o = optOf(v.join);
+    const rows = [["NAME 姓名", v.name], ["RSVP 是否出席", o.en + " " + o.zh]];
+    if (v.join === "both" || v.join === "onsite") rows.push(["GUESTS 出席人數", String(v.count)]);
+    if (v.ride) rows.push(["TRANSPORT 交通協調", v.ride]);
     if (v.contact) rows.push(["CONTACT 聯絡方式", v.contact]);
     if (v.note) rows.push(["NOTES 想和我們說的話", v.note]);
     const dl = $("#review-list");
@@ -240,16 +302,19 @@ const RSVP_GROUPS = {
       return;
     }
     const v = data();
+    const going = v.join !== "decline";
     const body = new URLSearchParams();
     body.append(FORM_ENTRY.name, v.name);
     body.append(FORM_ENTRY.phone, v.contact || "（未填）");
-    body.append(FORM_ENTRY.attend, v.join === "accept" ? "出席" : "不克出席");
-    if (v.join === "accept" && FORM_ENTRY.guests) body.append(FORM_ENTRY.guests, String(v.count));
+    /* 表單的「是否出席」選項維持「出席／不克出席」；細節寫在備註欄 */
+    body.append(FORM_ENTRY.attend, going ? "出席" : "不克出席");
+    if (going && FORM_ENTRY.guests) body.append(FORM_ENTRY.guests, String(v.count));
     const parts = [];
-    if (v.type) parts.push("出席方式：" + v.type);
-    if (group !== "default") parts.push("邀請類型：" + group);
+    if (going) parts.push("出席方式：" + v.label);
+    if (v.ride) parts.push("交通協調：" + v.ride);
+    parts.push("邀請類型：" + INVITE);
     if (v.note) parts.push(v.note);
-    if (parts.length && FORM_ENTRY.note) body.append(FORM_ENTRY.note, parts.join("｜"));
+    if (FORM_ENTRY.note) body.append(FORM_ENTRY.note, parts.join("｜"));
 
     const btn = $("#btn-send");
     btn.disabled = true;
@@ -258,11 +323,11 @@ const RSVP_GROUPS = {
     try {
       const action = GOOGLE_FORM_URL.split("?")[0].replace(/\/viewform.*$/, "") + "/formResponse";
       await fetch(action, { method: "POST", mode: "no-cors", body });
-      const ok = v.join === "accept";
-      $("#done-stamp").textContent = ok ? "RSVP CONFIRMED" : "RSVP RECEIVED";
-      $("#done-title").textContent = ok ? "Your tag is checked in!" : "Thank you for letting us know";
-      $("#done-text").textContent = ok ? "Thank you for being part of our journey. We can't wait to celebrate with you!" : "We'll miss you on our big day, and we'll carry your blessings with us.";
-      $("#done-zh").textContent = ok ? "謝謝你，婚禮當天見！" : "謝謝你的回覆，我們會把你的祝福放在心裡。";
+      $("#done-stamp").textContent = going ? "RSVP CONFIRMED" : "RSVP RECEIVED";
+      $("#done-title").textContent = going ? "Your tag is checked in!" : "Thank you for letting us know";
+      $("#done-text").textContent = going ? "Thank you for being part of our journey. We can't wait to celebrate with you!" : "We'll miss you on our big day, and we'll carry your blessings with us.";
+      $("#done-zh").textContent = !going ? "謝謝你的回覆，我們會把你的祝福放在心裡。" : v.join === "online" ? "謝謝你，我們線上見！" : "謝謝你，婚禮當天見！";
+      $("#done-zoom").hidden = v.join !== "online";
       show("done");
     } catch (e2) {
       err.textContent = "送出失敗，請檢查網路後再試一次";
@@ -273,9 +338,9 @@ const RSVP_GROUPS = {
 
   $("#btn-again").addEventListener("click", () => {
     form.reset();
-    st.join = ""; st.type = ""; setCount(1);
+    st.join = ""; st.ride = ""; setCount(1);
     form.querySelectorAll(".on").forEach((n) => n.classList.remove("on"));
-    yes.hidden = true; typeFld.hidden = true;
+    refresh();
     show("form");
   });
 })();
