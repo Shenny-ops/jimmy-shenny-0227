@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-<link rel="stylesheet" href="css/style.css?v=58">
+<link rel="stylesheet" href="css/style.css?v=59">
 </head>
 <body class="locked">
 
@@ -111,6 +111,87 @@
       <i class="washi-tape" aria-hidden="true"></i>
     </figure>
     <p class="pol-en hand" data-aos="fade-up">A threefold cord cannot quickly be torn apart.</p>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="section olive" id="rsvp">
+  <div class="tag-stage" id="tag-stage">
+    <i class="tag-string" aria-hidden="true"></i>
+    <div class="tag">
+      <i class="tag-hole" aria-hidden="true"></i>
+      <div class="tag-body">
+        <h2 class="tag-title">JOIN OUR JOURNEY</h2>
+        <p class="tag-sub" id="rsvp-sub">誠摯地邀請你來參加我們的婚禮！請填寫下列表單。</p>
+
+        <form id="rsvp-form" novalidate>
+          <div class="fld">
+            <label class="lbl" for="rsvp-name">NAME<span>姓名</span></label>
+            <input id="rsvp-name" type="text" autocomplete="name" maxlength="40">
+            <p class="err" data-for="name"></p>
+          </div>
+
+          <fieldset class="fld">
+            <legend class="lbl">WILL YOU JOIN US?<span>是否出席</span></legend>
+            <div class="opts" id="join-opts"></div>
+            <p class="err" data-for="join"></p>
+          </fieldset>
+
+          <div id="yes-only" hidden>
+            <fieldset class="fld" id="type-fld" hidden>
+              <legend class="lbl">ATTENDANCE TYPE<span>出席方式</span></legend>
+              <div class="chips" id="type-chips"></div>
+              <p class="err" data-for="type"></p>
+            </fieldset>
+            <div class="fld" id="count-fld" role="group" aria-labelledby="lbl-guests">
+              <p class="lbl" id="lbl-guests">NUMBER OF GUESTS<span>出席人數</span></p>
+              <div class="stepper">
+                <button type="button" id="g-minus" aria-label="減少人數">−</button>
+                <output id="g-count" aria-live="polite">1</output>
+                <button type="button" id="g-plus" aria-label="增加人數">+</button>
+              </div>
+            </div>
+            <fieldset class="fld" id="ride-fld" hidden>
+              <legend class="lbl">TRANSPORT<span>是否需要幫忙協調新屋（婚禮）－竹北（婚宴）的交通</span></legend>
+              <div class="chips" id="ride-chips">
+                <label class="chip"><input type="radio" name="ride" value="需要"><span>需要 Yes, please</span></label>
+                <label class="chip"><input type="radio" name="ride" value="不需要"><span>不需要 No, thanks</span></label>
+              </div>
+              <p class="err" data-for="ride"></p>
+            </fieldset>
+            <div class="fld">
+              <label class="lbl" for="rsvp-contact">CONTACT<span>聯絡方式（選填）</span></label>
+              <input id="rsvp-contact" type="text" autocomplete="tel" placeholder="電話或 LINE ID，必要時才需填寫" maxlength="60">
+            </div>
+          </div>
+
+          <div class="fld">
+            <label class="lbl" for="rsvp-note">NOTES<span>想和我們說的話（飲食需求）</span></label>
+            <textarea id="rsvp-note" rows="3" maxlength="300"></textarea>
+          </div>
+          <button class="tk-btn" type="submit">REVIEW MY TAG · 確認內容</button>
+        </form>
+
+        <div id="rsvp-review" hidden>
+          <p class="review-title">CHECK YOUR TAG<span>送出前請確認</span></p>
+          <dl class="review" id="review-list"></dl>
+          <p class="err" id="send-err"></p>
+          <div class="btn-pair">
+            <button class="tk-btn ghost" type="button" id="btn-edit">EDIT · 返回修改</button>
+            <button class="tk-btn" type="button" id="btn-send">CONFIRM · 確認送出</button>
+          </div>
+        </div>
+
+        <div id="rsvp-done" hidden>
+          <div class="stamp"><span id="done-stamp">RSVP CONFIRMED</span><small>2027.02.27</small></div>
+          <h3 class="done-title" id="done-title">Your tag is checked in!</h3>
+          <p class="done-text" id="done-text">Thank you for being part of our journey. We can't wait to celebrate with you!</p>
+          <p class="done-zh" id="done-zh">謝謝你，婚禮當天見！</p>
+          <div class="zoom-box" id="done-zoom" hidden><p class="zoom-ttl">ZOOM 線上婚禮資訊</p><div data-zoom></div></div>
+          <button class="tk-btn ghost" type="button" id="btn-again">FILL IN ANOTHER TAG · 為另一位賓客填寫</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -208,87 +289,6 @@
       <li><i class="fa-regular fa-clock"></i><div><small class="lab">TIME</small><h3>時間</h3><p>17:00 入場</p></div></li>
       <li><i class="fa-solid fa-utensils"></i><div><small class="lab">VENUE</small><h3>地點</h3><p>竹北春耕</p></div></li>
     </ul>
-  </div>
-</section>
-
-<!-- RSVP -->
-<section class="section olive" id="rsvp">
-  <div class="tag-stage" id="tag-stage">
-    <i class="tag-string" aria-hidden="true"></i>
-    <div class="tag">
-      <i class="tag-hole" aria-hidden="true"></i>
-      <div class="tag-body">
-        <h2 class="tag-title">JOIN OUR JOURNEY</h2>
-        <p class="tag-sub" id="rsvp-sub">誠摯地邀請你來參加我們的婚禮！請填寫下列表單。</p>
-
-        <form id="rsvp-form" novalidate>
-          <div class="fld">
-            <label class="lbl" for="rsvp-name">NAME<span>姓名</span></label>
-            <input id="rsvp-name" type="text" autocomplete="name" maxlength="40">
-            <p class="err" data-for="name"></p>
-          </div>
-
-          <fieldset class="fld">
-            <legend class="lbl">WILL YOU JOIN US?<span>是否出席</span></legend>
-            <div class="opts" id="join-opts"></div>
-            <p class="err" data-for="join"></p>
-          </fieldset>
-
-          <div id="yes-only" hidden>
-            <fieldset class="fld" id="type-fld" hidden>
-              <legend class="lbl">ATTENDANCE TYPE<span>出席方式</span></legend>
-              <div class="chips" id="type-chips"></div>
-              <p class="err" data-for="type"></p>
-            </fieldset>
-            <div class="fld" id="count-fld" role="group" aria-labelledby="lbl-guests">
-              <p class="lbl" id="lbl-guests">NUMBER OF GUESTS<span>出席人數</span></p>
-              <div class="stepper">
-                <button type="button" id="g-minus" aria-label="減少人數">−</button>
-                <output id="g-count" aria-live="polite">1</output>
-                <button type="button" id="g-plus" aria-label="增加人數">+</button>
-              </div>
-            </div>
-            <fieldset class="fld" id="ride-fld" hidden>
-              <legend class="lbl">TRANSPORT<span>是否需要幫忙協調新屋（婚禮）－竹北（婚宴）的交通</span></legend>
-              <div class="chips" id="ride-chips">
-                <label class="chip"><input type="radio" name="ride" value="需要"><span>需要 Yes, please</span></label>
-                <label class="chip"><input type="radio" name="ride" value="不需要"><span>不需要 No, thanks</span></label>
-              </div>
-              <p class="err" data-for="ride"></p>
-            </fieldset>
-            <div class="fld">
-              <label class="lbl" for="rsvp-contact">CONTACT<span>聯絡方式（選填）</span></label>
-              <input id="rsvp-contact" type="text" autocomplete="tel" placeholder="電話或 LINE ID，必要時才需填寫" maxlength="60">
-            </div>
-          </div>
-
-          <div class="fld">
-            <label class="lbl" for="rsvp-note">NOTES<span>想和我們說的話（飲食需求）</span></label>
-            <textarea id="rsvp-note" rows="3" maxlength="300"></textarea>
-          </div>
-          <button class="tk-btn" type="submit">REVIEW MY TAG · 確認內容</button>
-        </form>
-
-        <div id="rsvp-review" hidden>
-          <p class="review-title">CHECK YOUR TAG<span>送出前請確認</span></p>
-          <dl class="review" id="review-list"></dl>
-          <p class="err" id="send-err"></p>
-          <div class="btn-pair">
-            <button class="tk-btn ghost" type="button" id="btn-edit">EDIT · 返回修改</button>
-            <button class="tk-btn" type="button" id="btn-send">CONFIRM · 確認送出</button>
-          </div>
-        </div>
-
-        <div id="rsvp-done" hidden>
-          <div class="stamp"><span id="done-stamp">RSVP CONFIRMED</span><small>2027.02.27</small></div>
-          <h3 class="done-title" id="done-title">Your tag is checked in!</h3>
-          <p class="done-text" id="done-text">Thank you for being part of our journey. We can't wait to celebrate with you!</p>
-          <p class="done-zh" id="done-zh">謝謝你，婚禮當天見！</p>
-          <div class="zoom-box" id="done-zoom" hidden><p class="zoom-ttl">ZOOM 線上婚禮資訊</p><div data-zoom></div></div>
-          <button class="tk-btn ghost" type="button" id="btn-again">FILL IN ANOTHER TAG · 為另一位賓客填寫</button>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
