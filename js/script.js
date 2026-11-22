@@ -191,6 +191,7 @@ const RSVP_SUB = {
   const review = $("#rsvp-review"), done = $("#rsvp-done");
   const optOf = (v) => opts.find((o) => o.v === v);
   $("#rsvp-sub").textContent = RSVP_SUB[INVITE];
+  if (INVITE === "feast") $("#notes-zh").textContent = "想和我們說的話（飲食需求）";
 
   /* 出席選項 */
   const box = $("#join-opts");
