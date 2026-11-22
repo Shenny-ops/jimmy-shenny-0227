@@ -800,3 +800,11 @@ body.locked{overflow:hidden}
 .zoom-ttl{font:600 16px "Special Elite","Courier New",monospace!important;letter-spacing:.08em;color:var(--brown)}
 .banquet{text-align:center}
 .banquet-lead{max-width:420px;margin:0 auto 1.4rem;font-size:1.05rem;line-height:1.9;color:var(--brown)}
+
+/* banquet on olive */
+.banquet.olive .banquet-lead{color:#f3e7c6}
+.banquet.olive .info-list i{color:#e6c98f}
+.banquet.olive .info-list h3{color:#e6c98f}
+.banquet.olive .info-list p{color:#fbf3dc}
+.banquet.olive .info-list .lab{color:#d9c892}
+.banquet.olive+#rsvp{border-top:1px dashed rgba(246,226,173,.5)}
