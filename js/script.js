@@ -277,6 +277,7 @@ const RSVP_SUB = {
 
   const show = (which) => {
     form.hidden = which !== "form";
+    subBox.hidden = which !== "form";
     review.hidden = which !== "review";
     done.hidden = which !== "done";
     done.classList.toggle("show", which === "done");
