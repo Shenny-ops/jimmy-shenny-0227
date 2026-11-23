@@ -175,10 +175,12 @@ const JOIN_OPTS = {
     { v: "decline", en: "Regretfully Decline", zh: "遺憾無法出席" }
   ]
 };
+const FAMILY_ZH = "（受邀家人可填寫同一張）";
+const FAMILY_EN = "Invited family members may fill out one form together.";
 const RSVP_SUB = {
-  ceremony: "誠摯地邀請你來參加我們的婚禮！請填寫下列表單。",
-  feast: "誠摯地邀請你來參加我們的婚禮！請填寫下列表單。",
-  online: "因為現場座位有限，我們很想誠摯地邀請你線上參加我們的婚禮！請填寫下列表單。"
+  ceremony: ["誠摯地邀請你來參加我們的婚禮！請填寫下列表單。" + FAMILY_ZH, "We warmly invite you to our wedding! Please fill out the form below. " + FAMILY_EN],
+  feast: ["誠摯地邀請你來參加我們的婚禮！請填寫下列表單。" + FAMILY_ZH, "We warmly invite you to our wedding! Please fill out the form below. " + FAMILY_EN],
+  online: ["因為現場座位有限，我們很想誠摯地邀請你線上參加我們的婚禮！請填寫下列表單。" + FAMILY_ZH, "Seating at the venue is limited, so we'd love to invite you to join our wedding online! Please fill out the form below. " + FAMILY_EN]
 };
 
 (function initRsvp() {
@@ -190,7 +192,12 @@ const RSVP_SUB = {
   const yes = $("#yes-only"), compFld = $("#comp-fld"), countFld = $("#count-fld"), rideFld = $("#ride-fld");
   const review = $("#rsvp-review"), done = $("#rsvp-done");
   const optOf = (v) => opts.find((o) => o.v === v);
-  $("#rsvp-sub").textContent = RSVP_SUB[INVITE];
+  const subBox = $("#rsvp-sub");
+  subBox.textContent = RSVP_SUB[INVITE][0];
+  const subEn = document.createElement("span");
+  subEn.className = "sub-en";
+  subEn.textContent = RSVP_SUB[INVITE][1];
+  subBox.appendChild(subEn);
   if (INVITE === "feast") $("#notes-zh").textContent = "想和我們說的話（飲食需求）";
 
   /* 出席選項 */

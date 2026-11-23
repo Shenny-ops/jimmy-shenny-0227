@@ -810,3 +810,5 @@ body.locked{overflow:hidden}
 .banquet.olive+#rsvp{border-top:1px dashed rgba(246,226,173,.5)}
 .banquet .info-list,.banquet .info-list li,.banquet .info-list li>div{text-align:left}
 .banquet .info-list li>div{flex:1;min-width:0}
+
+.tag-sub .sub-en{display:block;margin-top:.5rem;font:italic 500 16px/1.6 "Cormorant Garamond",serif;opacity:.9}
