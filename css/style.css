@@ -859,3 +859,8 @@ body.locked{overflow:hidden}
 .banquet .info-list li>div.find-panel{flex:0 0 100%;width:100%}
 .info-list .park-steps li{display:block;padding:0 0 0 2.4rem;border:0;gap:0}
 .info-list .park-steps li:first-child{padding-top:0}
+
+/* 中文主標題＋英文小標 */
+.title.title-zh{font-family:"Noto Serif TC",serif;font-weight:700;letter-spacing:.18em;margin-bottom:.2rem}
+.title-en{text-align:center;margin:0 0 1.6rem;font-size:1.5rem;line-height:1.2;color:var(--brown)}
+.title-en.light{color:#e6c98f}
