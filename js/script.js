@@ -187,7 +187,7 @@ const RSVP_SUB = {
   const opts = JOIN_OPTS[INVITE];
   const max = 6;
   const st = { join: "", ride: "", count: 1 };
-  const yes = $("#yes-only"), countFld = $("#count-fld"), rideFld = $("#ride-fld");
+  const yes = $("#yes-only"), compFld = $("#comp-fld"), countFld = $("#count-fld"), rideFld = $("#ride-fld");
   const review = $("#rsvp-review"), done = $("#rsvp-done");
   const optOf = (v) => opts.find((o) => o.v === v);
   $("#rsvp-sub").textContent = RSVP_SUB[INVITE];
@@ -229,6 +229,7 @@ const RSVP_SUB = {
     yes.hidden = !attending();
     countFld.hidden = !inPerson();
     rideFld.hidden = !(INVITE === "feast" && st.join === "both");
+    compFld.hidden = !(inPerson() && st.count > 1);
   };
 
   form.addEventListener("change", (e) => {
@@ -240,6 +241,7 @@ const RSVP_SUB = {
   const setCount = (n) => {
     st.count = Math.max(1, Math.min(max, n));
     $("#g-count").textContent = st.count;
+    if (typeof refresh === "function") refresh();
   };
   $("#g-minus").addEventListener("click", () => setCount(st.count - 1));
   $("#g-plus").addEventListener("click", () => setCount(st.count + 1));
@@ -250,6 +252,7 @@ const RSVP_SUB = {
     label: st.join && st.join !== "decline" ? optOf(st.join).note : "",
     count: inPerson() ? st.count : (st.join === "online" ? 1 : 0),
     ride: rideFld.hidden ? "" : st.ride,
+    comp: compFld.hidden ? "" : $("#rsvp-comp").value.trim(),
     contact: attending() ? $("#rsvp-contact").value.trim() : "",
     note: $("#rsvp-note").value.trim()
   });
@@ -280,6 +283,7 @@ const RSVP_SUB = {
     const o = optOf(v.join);
     const rows = [["NAME 姓名", v.name], ["RSVP 是否出席", o.en + " " + o.zh]];
     if (v.join === "both" || v.join === "onsite") rows.push(["GUESTS 出席人數", String(v.count)]);
+    if (v.comp) rows.push(["COMPANIONS 同行者", v.comp]);
     if (v.ride) rows.push(["TRANSPORT 交通協調", v.ride]);
     if (v.contact) rows.push(["CONTACT 聯絡方式", v.contact]);
     if (v.note) rows.push(["NOTES 想和我們說的話", v.note]);
@@ -312,6 +316,7 @@ const RSVP_SUB = {
     if (going && FORM_ENTRY.guests) body.append(FORM_ENTRY.guests, String(v.count));
     const parts = [];
     if (going) parts.push("出席方式：" + v.label);
+    if (v.comp) parts.push("同行者：" + v.comp);
     if (v.ride) parts.push("交通協調：" + v.ride);
     parts.push("邀請類型：" + INVITE);
     if (v.note) parts.push(v.note);
