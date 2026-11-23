@@ -123,10 +123,15 @@ const q = encodeURIComponent(WEDDING.address);
 $("#btn-gmap").href = GOOGLE_MAP_URL || `https://www.google.com/maps/search/?api=1&query=${q}`;
 $("#btn-amap").href = APPLE_MAP_URL || `https://maps.apple.com/?q=${q}`;
 
+/* ===== 婚宴地點導航 ===== */
+const BQ_ADDR = "新竹縣竹北市莊敬北路326號", BQ_NAME = "春耕餐廳";
+$("#btn-bq-gmap").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BQ_NAME + " " + BQ_ADDR)}`;
+$("#btn-bq-amap").href = `https://maps.apple.com/?q=${encodeURIComponent(BQ_NAME + " " + BQ_ADDR)}`;
+
 /* ===== 加入行事曆 ===== */
 const CAL_DESC = [
   INVITE === "online" ? "線上婚禮（Zoom），婚禮演講 14:30" : "婚禮演講 14:30，13:30 開放入場",
-  INVITE === "feast" ? "婚宴 17:00 入場（竹北春耕）" : "",
+  INVITE === "feast" ? "婚宴 17:00 入場（春耕餐廳，新竹縣竹北市莊敬北路326號）" : "",
   INVITE === "online" ? zoomText() : ""
 ].filter(Boolean).join("\n");
 $("#btn-google-cal").href =

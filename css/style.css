@@ -812,3 +812,20 @@ body.locked{overflow:hidden}
 .banquet .info-list li>div{flex:1;min-width:0}
 
 .tag-sub .sub-en{display:block;margin-top:.5rem;font:italic 500 16px/1.6 "Cormorant Garamond",serif;opacity:.9}
+
+/* banquet venue + parking */
+.info-list p.addr{margin-top:.15rem;font-size:1rem;font-weight:500;letter-spacing:.04em}
+.banquet-nav{max-width:520px;margin:2rem auto 0;text-align:left}
+.banquet-nav .nav-tags{margin-bottom:1rem}
+.banquet-nav .acc-item{margin-bottom:0}
+.park-steps{list-style:none;counter-reset:ps;margin:.6rem 0 0;padding:0;display:grid;gap:.8rem}
+.park-steps li{counter-increment:ps;position:relative;padding-left:2.4rem}
+.park-steps li::before{content:counter(ps);position:absolute;left:0;top:.1rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--olive);color:#f6ead2;font:600 16px/1.7rem var(--serif);text-align:center}
+.park-steps b{display:block;font:600 1.05rem "Noto Serif TC",serif;color:var(--olive-dark)}
+.park-steps .en-line{display:block;margin:0}
+.parking-fig{margin-top:1.2rem}
+.banquet .acc-panel,.banquet .acc-inner{color:var(--ink)}
+.banquet .acc-panel p{color:var(--olive-dark)}
+.banquet .acc-panel .en-line{color:var(--brown);opacity:1}
+.banquet .nav-tags .cal-tag{background:var(--grain),#f5eedb;color:var(--olive-dark)}
+.banquet .nav-tags .cal-tag small{color:var(--brown)}
