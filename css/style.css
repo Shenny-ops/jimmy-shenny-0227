@@ -848,3 +848,14 @@ body.locked{overflow:hidden}
 .info-list li>div,.info-list li{min-width:0}
 .find-panel,.find-inner,.find-inner>.travel,.find-panel .postcard{min-width:0;max-width:100%}
 .find-panel .nav-tags{grid-template-columns:1fr!important;max-width:none}
+
+/* banquet panel inside list item */
+.banquet .info-list li:has(.map-toggle){flex-wrap:wrap}
+.banquet .find-panel{text-align:left}
+.banquet .banquet-nav{margin:1.4rem 0 .4rem;max-width:none}
+.banquet .banquet-nav .nav-tags{margin:1rem 0 0}
+.banquet .map-toggle{background:#f3ecd9;color:var(--olive-dark)}
+.banquet .info-list .map-toggle i{color:var(--olive)}
+.banquet .info-list li>div.find-panel{flex:0 0 100%;width:100%}
+.info-list .park-steps li{display:block;padding:0 0 0 2.4rem;border:0;gap:0}
+.info-list .park-steps li:first-child{padding-top:0}

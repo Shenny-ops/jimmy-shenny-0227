@@ -512,10 +512,10 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
   document.addEventListener("visibilitychange", () => { if (document.hidden) audio.pause(); else if (!userPaused && ready && window.__opened) audio.play().catch(() => {}); });
 })();
 
-/* ===== Wedding Details：地圖與交通展開／收合 ===== */
-(function () {
-  const btn = document.getElementById("map-toggle"), panel = document.getElementById("find-panel");
-  if (!btn || !panel) return;
+/* ===== 地圖與交通展開／收合（Wedding Details、婚宴資訊） ===== */
+document.querySelectorAll(".map-toggle").forEach((btn) => {
+  const panel = document.getElementById(btn.getAttribute("aria-controls"));
+  if (!panel) return;
   btn.addEventListener("click", () => {
     const open = !panel.classList.contains("open");
     panel.classList.toggle("open", open);
@@ -523,4 +523,4 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
     btn.classList.toggle("on", open);
     if (open) setTimeout(() => panel.scrollIntoView({ behavior: "smooth", block: "nearest" }), 380);
   });
-})();
+});
