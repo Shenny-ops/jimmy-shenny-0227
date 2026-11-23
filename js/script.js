@@ -511,3 +511,16 @@ document.querySelectorAll(".acc-head").forEach((btn) => {
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden) audio.pause(); else if (!userPaused && ready && window.__opened) audio.play().catch(() => {}); });
 })();
+
+/* ===== Wedding Details：地圖與交通展開／收合 ===== */
+(function () {
+  const btn = document.getElementById("map-toggle"), panel = document.getElementById("find-panel");
+  if (!btn || !panel) return;
+  btn.addEventListener("click", () => {
+    const open = !panel.classList.contains("open");
+    panel.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.classList.toggle("on", open);
+    if (open) setTimeout(() => panel.scrollIntoView({ behavior: "smooth", block: "nearest" }), 380);
+  });
+})();

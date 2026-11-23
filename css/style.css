@@ -163,9 +163,9 @@ footer p{margin:0}
 .info-wrap{display:grid;gap:2.2rem;max-width:860px;margin:0 auto;align-items:center}
 .info-list{list-style:none;margin:0;padding:0;display:grid;gap:1.3rem}
 .info-list li{display:flex;gap:1rem;align-items:center}
-.info-list i{font-size:1.9rem;color:var(--olive);width:2.4rem;text-align:center}
-.info-list h3{margin:0;font:600 1.1rem var(--serif);color:var(--brown);letter-spacing:.2em}
-.info-list p{margin:0;font-size:1.15rem;letter-spacing:.08em;color:var(--olive-dark);font-weight:600}
+.info-list li>i{font-size:1.9rem;color:var(--olive);width:2.4rem;text-align:center}
+.info-list li>div>h3{margin:0;font:600 1.1rem var(--serif);color:var(--brown);letter-spacing:.2em}
+.info-list li>div>p{margin:0;font-size:1.15rem;letter-spacing:.08em;color:var(--olive-dark);font-weight:600}
 .scrap{position:relative;margin:0 auto;width:min(86%,380px);background:#e0cfa8 var(--grain);padding:1rem;transform:rotate(2deg);box-shadow:var(--shadow)}
 .scrap img{aspect-ratio:4/5;object-fit:cover;width:100%;background:linear-gradient(135deg,#d9cfae,#b9b27a)}
 .scrap .tape{top:-14px;left:50%;margin-left:-46px;transform:rotate(3deg);z-index:2}
@@ -593,9 +593,9 @@ body{overflow-x:clip}
 .info-list li{align-items:flex-start;padding:1rem 0;border-bottom:1px dashed rgba(200,169,106,.75)}
 .info-list li:first-child{padding-top:.2rem}
 .info-list li:last-child{border-bottom:0;padding-bottom:0}
-.info-list i{font-size:1.5rem;width:2rem;margin-top:.55rem;color:var(--olive)}
+.info-list li>i{font-size:1.5rem;width:2rem;margin-top:.55rem;color:var(--olive)}
 .info-list .lab{display:block;font:400 16px "Special Elite","Courier New",monospace;letter-spacing:.16em;color:#b08f52}
-.info-list h3{margin:.05rem 0 0;font-size:1.1rem;letter-spacing:.18em;color:var(--brown)}
+.info-list li>div>h3{margin:.05rem 0 0;font-size:1.1rem;letter-spacing:.18em;color:var(--brown)}
 
 /* 照片：保留鋸齒撕紙框，膠帶與標籤放在裁切層外面 */
 .scrap{position:relative;width:min(86%,380px);margin:0 auto;padding:0;background:none;box-shadow:none;transform:none;filter:drop-shadow(0 5px 8px rgba(80,60,30,.28))}
@@ -803,9 +803,9 @@ body.locked{overflow:hidden}
 
 /* banquet on olive */
 .banquet.olive .banquet-lead{color:#f3e7c6}
-.banquet.olive .info-list i{color:#e6c98f}
-.banquet.olive .info-list h3{color:#e6c98f}
-.banquet.olive .info-list p{color:#fbf3dc}
+.banquet.olive .info-list li>i{color:#e6c98f}
+.banquet.olive .info-list li>div>h3{color:#e6c98f}
+.banquet.olive .info-list li>div>p{color:#fbf3dc}
 .banquet.olive .info-list .lab{color:#d9c892}
 .banquet.olive+#rsvp{border-top:1px dashed rgba(246,226,173,.5)}
 .banquet .info-list,.banquet .info-list li,.banquet .info-list li>div{text-align:left}
@@ -814,7 +814,7 @@ body.locked{overflow:hidden}
 .tag-sub .sub-en{display:block;margin-top:.5rem;font:italic 500 16px/1.6 "Cormorant Garamond",serif;opacity:.9}
 
 /* banquet venue + parking */
-.info-list p.addr{margin-top:.15rem;font-size:1rem;font-weight:500;letter-spacing:.04em}
+.info-list li>div>p.addr{margin-top:.15rem;font-size:1rem;font-weight:500;letter-spacing:.04em}
 .banquet-nav{max-width:520px;margin:2rem auto 0;text-align:left}
 .banquet-nav .nav-tags{margin-bottom:1rem}
 .banquet-nav .acc-item{margin-bottom:0}
@@ -829,3 +829,18 @@ body.locked{overflow:hidden}
 .banquet .acc-panel .en-line{color:var(--brown);opacity:1}
 .banquet .nav-tags .cal-tag{background:var(--grain),#f5eedb;color:var(--olive-dark)}
 .banquet .nav-tags .cal-tag small{color:var(--brown)}
+
+/* details: map toggle + collapsible Find Us */
+.travel{background:none;padding:0}
+.map-toggle{display:inline-flex;align-items:center;gap:.6rem;margin-top:.7rem;min-height:48px;padding:.5rem 1rem;border:0;border-radius:6px;background:var(--olive-dark);color:#f3ecd9;font:600 16px "Noto Serif TC",serif;cursor:pointer;box-shadow:0 2px 6px rgba(60,50,20,.3);-webkit-tap-highlight-color:transparent;touch-action:manipulation;text-align:left}
+.info-list .map-toggle i{font-size:1.1rem;width:auto;color:#e6c98f}
+.map-toggle .en{font:italic 500 16px "Cormorant Garamond",serif;opacity:.9;margin-left:.2rem}
+.info-list .map-toggle .mt-arrow{font-size:.9rem;transition:transform .3s}
+.map-toggle.on .mt-arrow{transform:rotate(180deg)}
+.info-list li:has(#map-toggle){flex-wrap:wrap}
+.find-panel{flex:0 0 100%;width:100%;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.find-panel.open{grid-template-rows:1fr}
+.find-inner{overflow:hidden;min-height:0}
+.find-inner>.travel{padding-top:1.6rem}
+/* 展開區內不套用詳細資訊清單的排版 */
+.find-panel .postcard,.find-panel .transit{text-align:left}
