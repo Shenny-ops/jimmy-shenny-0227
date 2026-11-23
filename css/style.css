@@ -844,3 +844,7 @@ body.locked{overflow:hidden}
 .find-inner>.travel{padding-top:1.6rem}
 /* 展開區內不套用詳細資訊清單的排版 */
 .find-panel .postcard,.find-panel .transit{text-align:left}
+/* desktop: 展開區在左欄內，導航按鈕改單欄、避免被切到 */
+.info-list li>div,.info-list li{min-width:0}
+.find-panel,.find-inner,.find-inner>.travel,.find-panel .postcard{min-width:0;max-width:100%}
+.find-panel .nav-tags{grid-template-columns:1fr!important;max-width:none}
