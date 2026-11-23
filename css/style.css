@@ -864,3 +864,7 @@ body.locked{overflow:hidden}
 .title.title-zh{font-family:"Noto Serif TC",serif;font-weight:700;letter-spacing:.18em;margin-bottom:.2rem}
 .title-en{text-align:center;margin:0 0 1.6rem;font-size:1.5rem;line-height:1.2;color:var(--brown)}
 .title-en.light{color:#e6c98f}
+
+/* 項目：中文標題在第一行，英文副標在第二行 */
+.info-list li>div>h3{margin:.05rem 0 0}
+.info-list li>div>.lab{margin:.1rem 0 .35rem}
