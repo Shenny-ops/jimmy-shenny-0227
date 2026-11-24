@@ -8,7 +8,11 @@ const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSevk9-oICKqWG-
 const PHOTO_UPLOAD_SCRIPT_URL = ""; // Google Apps Script 網頁應用程式網址（結尾是 /exec），填了就能在網站直接上傳
 const PHOTO_UPLOAD_FORM_URL = "https://photos.app.goo.gl/ybbu48afMHoQkgUr8";   // 照片上傳連結（Google 相簿或表單）
 // RSVP 欄位 ID（格式 "entry.123456789"），name、phone、attend 必填
-const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846" };
+const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846",
+  mode: "entry.1755009130",    // 出席方式（簡答題）
+  invite: "entry.1393620551",  // 邀請類型（簡答題）
+  ride: "entry.609793453"      // 交通協調（簡答題）
+};
 
 const WEDDING = {
   title: "哲鳴 & 心萱 婚禮",
@@ -328,13 +332,22 @@ const RSVP_SUB = {
     /* 表單的「是否出席」選項維持「出席／不克出席」；細節寫在備註欄 */
     body.append(FORM_ENTRY.attend, going ? "出席" : "不克出席");
     if (going && FORM_ENTRY.guests) body.append(FORM_ENTRY.guests, String(v.count));
+    const INVITE_ZH = { ceremony: "婚禮", feast: "婚禮＋家宴", online: "線上" };
     const parts = [];
-    if (going) parts.push("出席方式：" + v.label);
+    /* 有填欄位 ID 就送到各自的欄位；沒填的話照舊寫進備註欄 */
+    if (going) {
+      if (FORM_ENTRY.mode) body.append(FORM_ENTRY.mode, v.label);
+      else parts.push("出席方式：" + v.label);
+    }
+    if (v.ride) {
+      if (FORM_ENTRY.ride) body.append(FORM_ENTRY.ride, v.ride);
+      else parts.push("交通協調：" + v.ride);
+    }
+    if (FORM_ENTRY.invite) body.append(FORM_ENTRY.invite, INVITE_ZH[INVITE]);
+    else parts.push("邀請類型：" + INVITE);
     if (v.comp) parts.push("同行者：" + v.comp);
-    if (v.ride) parts.push("交通協調：" + v.ride);
-    parts.push("邀請類型：" + INVITE);
     if (v.note) parts.push(v.note);
-    if (FORM_ENTRY.note) body.append(FORM_ENTRY.note, parts.join("｜"));
+    if (FORM_ENTRY.note && parts.length) body.append(FORM_ENTRY.note, parts.join("｜"));
 
     const btn = $("#btn-send");
     btn.disabled = true;
