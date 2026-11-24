@@ -11,7 +11,8 @@ const PHOTO_UPLOAD_FORM_URL = "https://photos.app.goo.gl/ybbu48afMHoQkgUr8";   /
 const FORM_ENTRY = { name: "entry.151767687", phone: "entry.836183749", email: "entry.1779917657", attend: "entry.1990709987", guests: "entry.868612213", diet: "", note: "entry.1737563846",
   mode: "entry.1755009130",    // 出席方式（簡答題）
   invite: "entry.1393620551",  // 邀請類型（簡答題）
-  ride: "entry.609793453"      // 交通協調（簡答題）
+  ride: "entry.609793453",     // 交通協調（簡答題）
+  comp: "entry.950970841"      // 同行者（簡答題）
 };
 
 const WEDDING = {
@@ -345,7 +346,10 @@ const RSVP_SUB = {
     }
     if (FORM_ENTRY.invite) body.append(FORM_ENTRY.invite, INVITE_ZH[INVITE]);
     else parts.push("邀請類型：" + INVITE);
-    if (v.comp) parts.push("同行者：" + v.comp);
+    if (v.comp) {
+      if (FORM_ENTRY.comp) body.append(FORM_ENTRY.comp, v.comp);
+      else parts.push("同行者：" + v.comp);
+    }
     if (v.note) parts.push(v.note);
     if (FORM_ENTRY.note && parts.length) body.append(FORM_ENTRY.note, parts.join("｜"));
 
