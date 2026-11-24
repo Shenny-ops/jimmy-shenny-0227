@@ -203,7 +203,7 @@ const RSVP_SUB = {
   subEn.className = "sub-en";
   subEn.textContent = RSVP_SUB[INVITE][1];
   subBox.appendChild(subEn);
-  if (INVITE === "feast") $("#notes-zh").textContent = "想和我們說的話（飲食需求）";
+  const notesZh = $("#notes-zh");
 
   /* 出席選項 */
   const box = $("#join-opts");
@@ -242,6 +242,7 @@ const RSVP_SUB = {
     countFld.hidden = !inPerson();
     rideFld.hidden = !(INVITE === "feast" && st.join === "both");
     compFld.hidden = !(inPerson() && st.count > 1);
+    notesZh.textContent = INVITE === "feast" && st.join === "both" ? "想和我們說的話（飲食需求）" : "想和我們說的話";
   };
 
   form.addEventListener("change", (e) => {
