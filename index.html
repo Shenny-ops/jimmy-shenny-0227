@@ -13,9 +13,10 @@
 <meta name="apple-mobile-web-app-title" content="哲鳴 &amp; 心萱">
 <link rel="icon" href="favicon.ico">
 <script>
-/* 只有「婚禮邀請函」(沒加 ?invite 或 ?invite=ceremony) 加入主畫面時使用封蠟 icon；婚宴、線上維持原樣 */
+/* 加入主畫面 icon：婚禮(預設/ceremony)=橄欖綠、婚宴(feast)=暗紅、線上(online)=霧藍 封蠟 */
 (function(){var v=(new URLSearchParams(location.search).get("invite")||"").toLowerCase();
-if(v!=="online"&&v!=="feast"){var l=document.createElement("link");l.rel="apple-touch-icon";l.href="assets/icons/ceremony-touch-icon.png";document.head.appendChild(l);}})();
+if(v!=="online"&&v!=="feast")v="ceremony";
+var l=document.createElement("link");l.rel="apple-touch-icon";l.href="assets/icons/"+v+"-touch-icon.png";document.head.appendChild(l);})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
