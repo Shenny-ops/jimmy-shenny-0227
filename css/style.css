@@ -868,3 +868,43 @@ body.locked{overflow:hidden}
 /* 項目：中文標題在第一行，英文副標在第二行 */
 .info-list li>div>h3{margin:.05rem 0 0}
 .info-list li>div>.lab{margin:.1rem 0 .35rem}
+
+/* ===== 開場信封 v4：實體信封照片 + 依邀請類型變色的貓咪封蠟 ===== */
+#envelope-screen{background:#e8dfca;container-type:size}
+.env3-stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100vw,46.15vh);width:max(100cqw,calc(100cqh * 852 / 1846));aspect-ratio:852/1846;
+  container-type:inline-size;perspective:1400px;
+  background:url("../assets/envelope/envelope-bg.jpg") center/100% 100% no-repeat}
+@media (min-aspect-ratio:62/100){
+  .env3-stage{width:46.15vh;width:calc(100cqh * 852 / 1846);box-shadow:0 10px 40px rgba(70,55,25,.28)}
+}
+.env3-inside{position:absolute;left:0;right:0;top:0;height:43.07%;clip-path:polygon(0 0,100% 0,50% 100%);
+  background:linear-gradient(#d9ccad,#e7dcc2);opacity:0;transition:opacity .2s .35s}
+.env3-flapwrap{position:absolute;left:0;right:0;top:0;height:43.07%;transform-origin:top center;z-index:2;
+  transition:transform 1s cubic-bezier(.5,0,.2,1) .35s}
+.env3-flap{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);
+  background:url("../assets/envelope/envelope-bg.jpg") top center/100% calc(100% * 1846 / 795) no-repeat}
+.env3.open .env3-inside{opacity:1}
+.env3.open .env3-flapwrap{transform:rotateX(-178deg)}
+
+#open-btn.seal3{position:absolute;left:30.05%;top:37.6%;width:39.91%;height:auto;aspect-ratio:1;margin:0;padding:0;border:0;z-index:4;cursor:pointer;
+  background:url("../assets/envelope/seal-ceremony.png") center/100% 100% no-repeat;
+  filter:drop-shadow(0 .6cqw .7cqw rgba(60,45,15,.38)) drop-shadow(0 .15cqw .2cqw rgba(60,45,15,.3));
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  animation:sealPulse 2.8s ease-in-out infinite;transition:transform .5s ease,opacity .5s ease .15s}
+html[data-invite="feast"] #open-btn.seal3{background-image:url("../assets/envelope/seal-feast.png")}
+html[data-invite="online"] #open-btn.seal3{background-image:url("../assets/envelope/seal-online.png")}
+#open-btn.seal3:focus-visible{outline:3px solid #6b6630;outline-offset:4px;border-radius:50%}
+.env3.open #open-btn.seal3{animation:none;transform:scale(1.25) rotate(8deg);opacity:0;pointer-events:none}
+
+.env3-text{position:absolute;left:0;right:0;top:61.6%;z-index:3;text-align:center;color:#6b6630;transition:opacity .4s}
+.env3-text p{margin:0;display:flex;align-items:center;justify-content:center}
+.env3-zh{font:600 8.4vw/1.2 "Noto Serif TC",serif;font-size:8.4cqw;letter-spacing:.39em;padding-left:.39em}
+.env3-en{margin-top:4.2vw!important;margin-top:4.2cqw!important;gap:3.3cqw;
+  font:600 3.5vw/1 "Cormorant Garamond","Noto Serif TC",serif;font-size:3.5cqw;letter-spacing:.2em}
+.env3-en span:not(.env3-line){padding-left:.2em}
+.env3-paw{margin-top:5.4vw!important;margin-top:5.4cqw!important;gap:3.3cqw;font-size:4.3vw;font-size:4.3cqw;line-height:1}
+.env3-line{display:block;width:12.2cqw;height:max(1px,.2cqw);background:currentColor;opacity:.85}
+.env3.open .env3-text{opacity:0}
+@media(prefers-reduced-motion:reduce){#open-btn.seal3{animation:none}}
+.env3-pawsvg{display:block;width:4.4cqw;height:4.4cqw}
